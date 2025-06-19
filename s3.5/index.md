@@ -1,4 +1,6 @@
+---
 title: "Season 3.5 - MODOK League - Kree Precon Party"
+---
 
 ![Ronan banner](ronan_banner.png)
 
