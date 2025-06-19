@@ -17,7 +17,7 @@ All dates are 2025
 
 # The Draft
 
-Season 3.5 is a hero-only draft. Kouples will be sorted into divisions, with a maximum of 16 kouples per division. A preview of the draft-pool randomizer is available at [https://modokleague.github.io/s3.5/pool.html](https://modokleague.github.io/s3.5/pool.html)
+Season 3.5 is a hero-only draft. Kouples will be sorted into divisions, with a maximum of 16 kouples per division. A preview of the draft-pool randomizer is available at < a href="[https://example.com](https://modokleague.github.io/s3.5/pool/)" target="_blank">[Visit Example.com](https://modokleague.github.io/s3.5/pool/)</a>
 
 All heroes up to and including Winter Soldier and Falcon are in the pool of eligible heroes, with the following exceptions:
 
