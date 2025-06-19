@@ -4,7 +4,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ![Ronan banner](ronan_banner.png)
 
-<h1 class="title" style="font-family: Georgia, serif; font-size: 3em; font-weight: normal;">MODOK League Season 3.5 - Kree Precon Party</h1>
+<h1 class="title" style="font-family: Georgia, serif; font-size: 2em; font-weight: normal;">MODOK League Season 3.5 - Kree Precon Party</h1>
 
 MODOK League Season 3.5 is a one-round off-season event between Seasons 3 and 4. It features print-and-play content and experimental deck-building restrictions.
 
