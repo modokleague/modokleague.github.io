@@ -1,3 +1,5 @@
+![Ronan banner](ronan_banner.png)
+
 # **MODOK LEAGUE SEASON 3.5 - KREE PRECON PARTY**
 
 MODOK League Season 3.5 is a one-round off-season event between Seasons 3 and 4. It features print-and-play content and experimental deck-building restrictions.
