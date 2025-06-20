@@ -14,10 +14,10 @@ Each kouple drafts two heroes and uses modified precons to face Klaw with the Kr
 
 All dates are 2025
 
-- **Registration closes:** Sunday, June 29, 11:59 PM PDT. Please use the Season 3.5 registration channel on the discord server to register
-- **Draft order and draft pool announced:** Monday, June 30 PDT, in the morning
-- **Draft begins:** Thursday, July 4, 10:00 AM PDT
-- **Season ends:** Sunday, July 27, 11:59 PM PDT
+- **Registration closes:** Thursday, July 3, 11:59 PM PDT. Please use the Season 3.5 registration channel on the discord server to register
+- **Draft order and draft pool announced:** Friday, July 4, in the morning
+- **Draft begins:** Sunday, July 6, 10:00 AM PDT
+- **Season ends:** Sunday, Aug 3, 11:59 PM PDT
 
 # The Draft
 
