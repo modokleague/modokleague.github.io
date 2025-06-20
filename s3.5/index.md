@@ -62,7 +62,7 @@ Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games i
 | ☆☆☆☆<br> (slightly easier than a regular MODOK round) | Standard I, Expert I | Expert Mode side | – | Sonic Converter (Klaw) |
 | ☆☆☆ | Standard I, Expert I | – | – | – |
 | ☆☆ | Standard I, Expert I | – | – | Milano¹ (Ship Command) |
-| ☆ | Standard I⁵ | – | – | Milano¹ (Ship Command)<br>One card per identity from "The Market"⁴ |
+| ☆ | Standard I⁵ | – | – | Milano¹ (Ship Command);<br>One card per identity from "The Market"⁴ |
 
 **Notes:**
 1. The Milano is the only card from Ship Command being added to the game.
