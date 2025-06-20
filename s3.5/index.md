@@ -55,7 +55,7 @@ You are allowed to modify your decks and practice before and in-between attempts
 
 Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games in 2020: <a href="https://hallofheroeslcg.com/ronan-the-accuser/" target="_blank">https://hallofheroeslcg.com/ronan-the-accuser/
 
-| Difficulty Level (Stars) | Encounter Set | Setup: Formidable Foe Environment | Setup: Kree Supremacy Side Scheme² | Other cards added during setup |
+| Difficulty Level | Encounter Set | Setup: Formidable Foe Environment | Setup: Kree Supremacy Side Scheme² | Other cards added during setup |
 |-------------------------|---------------|-----------------------------------|-----------------------------------|------------------------------|
 | ☆☆☆☆☆★ | Standard II, Expert II | Expert Mode side | Expert Mode side | Sonic Converter (Klaw) |
 | ☆☆☆☆☆ | Standard 1\*, Expert 1\* (see note 3) | Expert Mode side | Standard Mode side | Sonic Converter (Klaw) |
