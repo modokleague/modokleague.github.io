@@ -62,13 +62,13 @@ Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games i
 | ☆☆☆☆<br> (slightly easier than a regular MODOK round) | Standard I, Expert I | Expert Mode side | – | Sonic Converter (Klaw) |
 | ☆☆☆ | Standard I, Expert I | – | – | – |
 | ☆☆ | Standard I, Expert I | – | – | Milano¹ (Ship Command) |
-| ☆ | Standard I⁵ | – | – | Milano¹ (Ship Command) One card per identity from "The Market"⁴ |
+| ☆ | Standard I⁵ | – | – | Milano¹ (Ship Command)<br>One card per identity from "The Market"⁴ |
 
 **Notes:**
 1. The Milano is the only card from Ship Command being added to the game.
 2. Kree Supremacy (side scheme) is from the Galaxy's Most Wanted campaign.
-3. Standard \1*, Expert 1\* is from MODOK League Season 02 and is itemized om a subsection below below.
-4. Each identity may add one card, with any unit cost, to their deck from "The Market" (Galaxy's Most Wanted campaign). This card does not count against card count when deck-building.
+3. Standard 1\*, Expert 1\* is from MODOK League Season 02 and is itemized om a subsection below below.
+4. Each identity may add one card, with any unit cost, to their deck from "The Market" (Galaxy's Most Wanted campaign). This card does not count toward or against card count when deck-building.
 5. Expert villain difficulty (Klaw II & III), but no Expert encounter set.
 
 ### Scoring
