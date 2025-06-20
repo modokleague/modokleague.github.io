@@ -58,8 +58,8 @@ Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games i
 | Difficulty Level (Stars) | Encounter Set | Setup: Formidable Foe Environment | Setup: Kree Supremacy Side Scheme² | Other cards added during setup |
 |-------------------------|---------------|-----------------------------------|-----------------------------------|------------------------------|
 | ☆☆☆☆☆★ | Standard II, Expert II | Expert Mode side | Expert Mode side | Sonic Converter (Klaw) |
-| ☆☆☆☆☆<br> (slightly more difficult than a regular MODOK round) | Standard 1\*, Expert 1\* (see note 3) | Expert Mode side | Standard Mode side | Sonic Converter (Klaw) |
-| ☆☆☆☆<br> (slightly easier than a regular MODOK round) | Standard I, Expert I | Expert Mode side | – | Sonic Converter (Klaw) |
+| ☆☆☆☆☆ | Standard 1\*, Expert 1\* (see note 3) | Expert Mode side | Standard Mode side | Sonic Converter (Klaw) |
+| ☆☆☆☆ | Standard I, Expert I | Expert Mode side | – | Sonic Converter (Klaw) |
 | ☆☆☆ | Standard I, Expert I | – | – | – |
 | ☆☆ | Standard I, Expert I | – | – | Milano¹ (Ship Command) |
 | ☆ | Standard I⁵ | – | – | Milano¹ (Ship Command);<br>One card per identity from "The Market"⁴ |
