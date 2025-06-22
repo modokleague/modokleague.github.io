@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MODOK League S3 Hero Pool Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #heroesList {
+      margin-bottom: 20px;
+    }
+    #result {
+      margin-top: 20px;
+    }
+    .hero-list {
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+    .hero-group {
+      margin: 10px 0;
+    }
+    .banned-list {
+      margin: 10px 0;
+    }
+    .footer-note {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #666;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      display: none; /* Hide by default */
+    }
+  </style>
+</head>
+<body>
+  <h1>MODOK League Draft Pool Builder, Season 3.5</h1>
+  
+  <div class="hero-list">
+    <strong>Available Heroes:</strong><br>
+    <div id="allHeroes"></div>
+  </div>
+  <div class="banned-list">
+    <strong>Banned Heroes:</strong><br>
+    <div id="bannedHeroes"></div>
+  </div>
+  <div id="heroesList"></div>
+  <br>
+
+  <label for="teamsInput"><strong>Number of teams:</strong></label>
+  <input type="number" id="teamsInput" min="6" max="10" value="10">
+  <br><br>
+  <label for="seedInput"><strong>Enter seed (optional):</strong></label>
+  <input type="text" id="seedInput">
+  <button id="goButton">Generate Pool</button>
+  <div id="result"></div>
+
+  <div class="footer-note" id="footerNote">
+    Note: Draft-bot order is based on <a href = "https://www.youtube.com/watch?v=2bRm-ZxtNjM" target="_blank">Villain Theory's May, 2025 tierlist</a>
+  </div>
+
+  <script>
+  // Banned: 
+  const bannedHeroes = [
+    'Maria Hill - Leadership', 'Cyclops - Leadership', 'Cable - Leadership', 'Doctor Strange - Protection', 'Adam Warlock', 'Gamora - Aggression'
+  ];
+
+  // Bot draft order based on Villain Theory
+  const draftOrder = [
+    // Ludicrously Powerful
+    'Spider-Ham - Justice', 'Cable - Leadership', 'Cyclops', 'Storm - Leadership', 'Magik - Aggression', 'Psylocke - Justice', 'Maria Hill - Leadership',
+    // Immensely Powerful
+    'Bishop - Leadership', 'Spider-Man (Peter Parker) - Justice', 'Doctor Strange - Protection', 'Spider-Man (Miles Morales) - Justice',
+    'Captain Marvel - Leadership', 'Scarlet Witch - Justice', 'X-23 - Aggression', 'Deadpool - Pool',
+    // Extremely Powerful
+    'Black Panther (Shuri) - Justice', 'Magneto - Leadership', 'Ironheart - Leadership', 'Vision - Protection', 'Captain America - Leadership', 
+    'Domino - Justice', 'Angel - Protection', 'Shadowcat - Aggression', 'Nova - Aggression',
+    // Very Powerful
+    'Nick Fury - Justice', 'Iron Man - Aggression', 'Silk - Protection', 'Spider-Woman - Aggression / Justice', 'SP//dr - Protection',
+    'Phoenix - Justice', 'Wolverine - Aggression', 'Venom - Justice', 'Rogue - Protection', "Black Panther (T'Challa) - Protection",
+    // Powerful
+    'Ant-Man - Leadership', 'Star-Lord - Leadership', 'Spectrum - Leadership', 'Colossus - Protection', 'Jubilee - Justice', 
+    'Gambit - Justice', 'Iceman - Aggression', 'Rocket - Aggression',
+    // New and not enough info
+    'Falcon - Leadership', 'Winter Soldier - Aggression',
+    // Usually Powerful
+    'Adam Warlock', 'Gamora - Aggression', 'Ghost-Spider - Protection', 'Drax - Protection', 'Black Widow - Justice', 'Nightcrawler - Protection', 'Wasp - Aggression',
+    // Often Powerful
+    'Ms Marvel - Protection', 'Nebula - Justice', 'She-Hulk - Aggression', 'Thor - Aggression', 'War Machine - Leadership', 'Quicksilver - Protection',
+    // Sometimes Powerful
+    'Hawkeye - Leadership', 'Groot - Protection', 'Valkyrie - Aggression', 'Hulk - Aggression'
+  ];
+
+  // Filter out banned heroes from the draft order first
+  const filteredDraftOrder = draftOrder.filter(hero => !bannedHeroes.includes(hero));
+
+  // Alphabetical of the filtered draft order list
+  const marvelHeroes = [...filteredDraftOrder].sort();
+
+  // console.log('Filtered Draft Order:', filteredDraftOrder);
+  // console.log('Alphabetical Marvel Heroes:', marvelHeroes);
+
+    // Display all heroes and banned heroes on page load
+    document.getElementById('allHeroes').innerHTML = marvelHeroes.join(', ');
+    document.getElementById('bannedHeroes').innerHTML = bannedHeroes.join(', ');
+
+    class Random {
+      constructor(seed = Math.random()) {
+        this.seed = this.hash(seed.toString());
+      }
+
+      hash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash;
+        }
+        return hash;
+      }
+
+      next() {
+        this.seed = (1664525 * this.seed + 1013904223) >>> 0;
+        return this.seed / 0xFFFFFFFF;
+      }
+    }
+
+    function shuffleArray(array, rng) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(rng.next() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    document.getElementById('goButton').addEventListener('click', function() {
+      const seedInput = document.getElementById('seedInput').value;
+      const rng = new Random(seedInput || Math.random());
+      
+      const numberOfTeams = parseInt(document.getElementById('teamsInput').value);
+      const numberOfHeroes = 2 * numberOfTeams + 15;
+
+      if (numberOfHeroes > marvelHeroes.length) {
+        document.getElementById('result').innerText = 'Not enough heroes available for the given number of teams.';
+        return;
+      }
+
+      const heroesPool = [...marvelHeroes];
+      shuffleArray(heroesPool, rng);
+
+      const selectedHeroes = heroesPool.slice(0, numberOfHeroes).sort();
+      const excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
+      
+      const draftBot = draftOrder.filter(hero => selectedHeroes.includes(hero));
+
+      const teams = Array.from({ length: numberOfTeams }, (_, i) => `Team ${String.fromCharCode(65 + i)}`);
+      shuffleArray(teams, rng);
+
+      document.getElementById('result').innerHTML = 
+        `<div class="hero-group">
+          <strong>Hero Pool (${numberOfHeroes} heroes):</strong><br>
+          ${selectedHeroes.join(', ')}
+        </div><br>
+        <strong>Draft-bot:</strong><br>${draftBot.join(', ')}<br><br>
+        <strong>Draft order:</strong><br>${teams.join('<br>')}<br><br>
+        <strong>Excluded Heroes:</strong><br>${excludedHeroes.join(', ')}`;
+      
+      // Make the footnote visible
+      document.getElementById('footerNote').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
