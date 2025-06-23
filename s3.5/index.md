@@ -53,7 +53,7 @@ You are allowed to modify your decks and practice before and in-between attempts
 
 ### The Scenario: Expert Klaw + Kree Fanatic
 
-Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games in 2020: <a href="https://hallofheroeslcg.com/ronan-the-accuser/" target="_blank">https://hallofheroeslcg.com/ronan-the-accuser/
+Kree Fanatic was a Print and Play modular set released by Fantasy Flight Games in 2020: <a href="https://hallofheroeslcg.com/ronan-the-accuser/" target="_blank">https://hallofheroeslcg.com/ronan-the-accuser/</a>. This modular set is also availaible on many of the online play options, such as Hitch's Mod on Table Top Simulator, OCTGN and DragnCards.
 
 | Difficulty Level | Encounter Set | Setup: Formidable Foe Environment | Setup: Kree Supremacy Side Scheme² | Other cards added during setup |
 |-------------------------|---------------|-----------------------------------|-----------------------------------|------------------------------|
