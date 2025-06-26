@@ -19,9 +19,15 @@ All dates are 2025
 - **Draft begins:** Sunday, July 6, 10:00 AM PDT
 - **Season ends:** Sunday, Aug 3, 11:59 PM PDT
 
+# Competitive and Non-Competitive Options
+
+This season introduces options for competitive (with scoring) and non-competitive play (without scoring). Those engageing in non-competitive play can play each scenario at any chosen difficulty as many times as they like and will be asked to report each play so that we can report aggregate stats. Those engaging in competitive play will also be welcome to submit results from practice games using the reporting mechanism for non-competitive play. Although we ask people to self-declare as competitive or non-competitive play for a given season, kouples choosing competitive play are welcome to transition to non-competitive play mid-season to avoid making the league feel like an obligation.
+
 # The Draft
 
-Season 3.5 is a hero-only draft. Kouples will be sorted into divisions, with a maximum of 16 kouples per division. A preview of the draft-pool randomizer is available at <a href="https://modokleague.github.io/s3.5/pool/" target="_blank">https://modokleague.github.io/s3.5/pool/</a>
+Season 3.5 is a hero-only draft. Kouples will be sorted into divisions, with a maximum of 16 kouples per division, with the first-order splitting priority being Competitive vs Non-Competitive. 
+
+A preview of the draft-pool randomizer is available at <a href="https://modokleague.github.io/s3.5/pool/" target="_blank">https://modokleague.github.io/s3.5/pool/</a>
 
 All heroes up to and including Winter Soldier and Falcon are in the pool of eligible heroes, with the following exceptions:
 
