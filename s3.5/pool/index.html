@@ -316,6 +316,63 @@
         <h3>Excluded Heroes</h3>
         <div class="hero-grid" id="resultExcluded"></div>
       </div>
+      
+      <div style="text-align: center; margin-top: 30px; padding: 20px;">
+        <button class="btn" id="startDraftButton" onclick="startDraftSimulator()" style="font-size: 1rem; padding: 12px 25px;">
+          🎯 Start Draft Simulator
+        </button>
+      </div>
+    </div>
+
+    <div class="draft-setup" id="draftSetup" style="display: none;">
+      <div class="result-section">
+        <h3>🎯 Draft Simulator - Setup</h3>
+        <div style="padding: 20px;">
+          <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #ff6b6b;">
+            <h4 style="margin-bottom: 10px; color: #ff6b6b;">Your Team</h4>
+            <p style="font-size: 1.2rem; font-weight: bold;" id="playerTeamDisplay"></p>
+          </div>
+          
+          <div style="background: rgba(72, 219, 251, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #48dbfb;">
+            <h4 style="margin-bottom: 15px; color: #48dbfb;">Draft Information</h4>
+            <p style="margin-bottom: 10px;">Heroes available for draft: <strong id="heroCountDisplay"></strong></p>
+            <p>Teams participating: <strong id="teamCountDisplay"></strong></p>
+          </div>
+          
+          <div style="background: rgba(160, 160, 160, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #a0a0a0;">
+            <h4 style="margin-bottom: 15px; color: #2c2c54;">All Teams' Picks (Draft Order)</h4>
+            <div id="allTeamsPicksDisplay">
+              <p style="color: #666; font-style: italic;">Draft not started</p>
+            </div>
+          </div>
+          
+          <div style="background: rgba(254, 202, 87, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px; border: 2px solid #feca57;">
+            <h4 style="margin-bottom: 15px; color: #2c2c54;">Team Draft Order</h4>
+            <div id="draftOrderDisplay" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;"></div>
+          </div>
+          
+          <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2; text-align: center;">
+            <h4 style="margin-bottom: 10px; color: #8A2BE2; font-size: 1.2rem;">Draft Status</h4>
+            <p id="draftStatusMessage" style="font-size: 1.1rem; font-weight: bold; color: #2c2c54;">🎯 Your Turn - Click a hero to draft!</p>
+          </div>
+          
+          <div style="background: rgba(144, 238, 144, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #90EE90;">
+            <h4 style="margin-bottom: 15px; color: #2c2c54;">Available Heroes for Draft</h4>
+            <div id="availableHeroesDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+          </div>
+          
+          <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2;">
+            <h4 style="margin-bottom: 15px; color: #2c2c54;">Bot Priority</h4>
+            <div id="botPriorityDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+          </div>
+          
+          <div style="background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ffc107;">
+            <p style="color: #2c2c54; font-size: 0.9rem; margin: 0; text-align: center;">
+              <strong>Bot Team Strategy:</strong> Other teams pick strategically 85% of the time (from top 5 priority heroes with weighted probability: 1st choice 41%, 2nd choice 27%, 3rd choice 18%, 4th choice 12%, 5th choice 8%) and make wildcard picks 15% of the time (random from any available hero).
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="footer-note" id="footerNote">
@@ -371,7 +428,7 @@
       6: ['Gwen Stacy', 'George Stacy', 'Gorgon', 'Giganto', 'Gilgamesh', 'Grandmaster', 'Gorr'], // Team G
       7: ['Harry Osborn', 'Howard Stark', 'Hope Pym', 'Hobgoblin', 'Helmut Zemo', 'Happy Hogan', 'Howard the Duck', 'Husk', 'High Evolutionary'], // Team H
       8: ['Illyana Rasputin', 'Imperial Guard', 'Iron Fist'], // Team I
-      9: ['J. Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'], // Team J
+      9: ['J Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'], // Team J
       10: ['Karnak', 'Kurt Wagner', 'Kitty Pryde', 'Kaluu', 'Kamala Khan', 'Kang the Conqueror', 'Kid Omega', 'Killmonger', 'Kingpin', 'Klaw'], // Team K
       11: ['Laufey', 'Leo Fitz', 'Lucia von Bardas', 'Luke Cage', 'Loki', 'Lizard', 'Lorna Dane', 'Logan'] // Team L
     };
@@ -526,6 +583,386 @@
       // Smooth scroll to results
       document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Track draft state
+    let currentTurnIndex = 0;
+    let currentRound = 1;
+    let maxRounds = 2;
+    let draftOrderTeams = [];
+    let playerTeamName = '';
+    let teamPicks = {};
+    let isPlayerTurn = false;
+    let draftedHeroes = [];
+    let allHeroes = [];
+
+    // Simple draft simulator navigation functions
+    function startDraftSimulator() {
+      // Get the data we need from the generated results
+      const userTeamName = document.getElementById('userTeamName').value.trim();
+      const heroCards = document.getElementById('resultPool').children;
+      const teamCards = document.getElementById('resultDraftOrder').children;
+      
+      // Determine player team name
+      let playerTeam = userTeamName;
+      if (!playerTeam) {
+        // Find the team that comes from the "A" team pool
+        const aTeamPool = ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'];
+        
+        for (let i = 0; i < teamCards.length; i++) {
+          const teamText = teamCards[i].textContent;
+          const teamName = teamText.split('. ')[1];
+          
+          if (aTeamPool.includes(teamName)) {
+            playerTeam = teamName;
+            break;
+          }
+        }
+        
+        // Fallback to first team if somehow no A team found
+        if (!playerTeam && teamCards.length > 0) {
+          const firstTeamText = teamCards[0].textContent;
+          playerTeam = firstTeamText.split('. ')[1];
+        }
+      }
+      
+      // Store all heroes for tracking
+      allHeroes = [];
+      draftedHeroes = [];
+      for (let i = 0; i < heroCards.length; i++) {
+        allHeroes.push(heroCards[i].textContent);
+      }
+      
+      // Store team information for draft order
+      playerTeamName = playerTeam;
+      draftOrderTeams = [];
+      teamPicks = {};
+      for (let i = 0; i < teamCards.length; i++) {
+        const teamText = teamCards[i].textContent;
+        const teamName = teamText.split('. ')[1];
+        draftOrderTeams.push(teamName);
+        teamPicks[teamName] = [];
+      }
+      
+      // Start with first team in draft order
+      currentTurnIndex = 0;
+      currentRound = 1;
+      isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
+      
+      // Initialize displays
+      updateAllTeamsDisplay();
+      
+      // Update the display elements if they exist
+      const playerDisplay = document.getElementById('playerTeamDisplay');
+      const heroDisplay = document.getElementById('heroCountDisplay');
+      const teamDisplay = document.getElementById('teamCountDisplay');
+      const draftDisplay = document.getElementById('draftOrderDisplay');
+      const availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
+      
+      if (playerDisplay) playerDisplay.textContent = playerTeam || 'Unknown Team';
+      if (heroDisplay) heroDisplay.textContent = heroCards.length;
+      if (teamDisplay) teamDisplay.textContent = teamCards.length;
+      
+      // Show available heroes for drafting (with greyed out support)
+      if (availableHeroesDisplay && heroCards.length > 0) {
+        let heroesHtml = '';
+        for (let i = 0; i < heroCards.length; i++) {
+          const heroName = heroCards[i].textContent;
+          heroesHtml += `<div class="hero-card" data-hero="${heroName}" style="border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;" onclick="draftHero('${heroName.replace(/'/g, "\\'")}')">${heroName}</div>`;
+        }
+        availableHeroesDisplay.innerHTML = heroesHtml;
+      } else if (availableHeroesDisplay) {
+        availableHeroesDisplay.innerHTML = '<p style="color: #666; text-align: center;">No heroes available</p>';
+      }
+      
+      // Update bot priority display
+      updateBotPriorityDisplay();
+      
+      // Show team draft order
+      if (draftDisplay) {
+        let draftOrderHtml = '';
+        for (let i = 0; i < teamCards.length; i++) {
+          const teamText = teamCards[i].textContent;
+          const teamName = teamText.split('. ')[1];
+          const isPlayerTeam = (teamName === playerTeam);
+          
+          draftOrderHtml += `<div style="padding: 8px; background: ${isPlayerTeam ? 'rgba(255, 107, 107, 0.2)' : 'rgba(255,255,255,0.3)'}; border-radius: 6px; text-align: center; font-weight: ${isPlayerTeam ? 'bold' : 'normal'}; border: ${isPlayerTeam ? '2px solid #ff6b6b' : '1px solid #ddd'};">
+            ${teamText}
+          </div>`;
+        }
+        draftDisplay.innerHTML = draftOrderHtml;
+      }
+      
+      // Show draft setup below existing results
+      const draftSetup = document.getElementById('draftSetup');
+      if (draftSetup) {
+        draftSetup.style.display = 'block';
+        draftSetup.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // Start the draft
+      updateDraftStatus();
+      if (!isPlayerTurn) {
+        setTimeout(processNextTurn, 1000);
+      }
+    }
+    
+    // Update bot priority display
+    function updateBotPriorityDisplay() {
+      const botPriorityDisplay = document.getElementById('botPriorityDisplay');
+      if (!botPriorityDisplay) return;
+      
+      // Get all heroes from draft bot order that are in the current pool
+      const botPriorityInPool = draftOrder.filter(hero => allHeroes.includes(hero));
+      
+      if (botPriorityInPool.length > 0) {
+        let botHtml = '';
+        for (let i = 0; i < botPriorityInPool.length; i++) {
+          const heroName = botPriorityInPool[i];
+          const isDrafted = draftedHeroes.includes(heroName);
+          
+          if (isDrafted) {
+            // Greyed out style for drafted heroes - with not-allowed cursor
+            botHtml += `<div class="hero-card" style="border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; font-size: 0.85rem; cursor: not-allowed;">${heroName}</div>`;
+          } else {
+            // Normal purple styling for available heroes - now clickable
+            botHtml += `<div class="hero-card" data-hero="${heroName}" style="border: 2px solid #8A2BE2; background: linear-gradient(145deg, #f8f0ff, #e8d5ff); font-size: 0.85rem; cursor: pointer;" onclick="draftHero('${heroName.replace(/'/g, "\\'")}')">${heroName}</div>`;
+          }
+        }
+        botPriorityDisplay.innerHTML = botHtml;
+      } else {
+        botPriorityDisplay.innerHTML = '<p style="color: #666; text-align: center; font-style: italic;">No bot priority heroes in current pool</p>';
+      }
+    }
+    
+    // Update all teams picks display
+    function updateAllTeamsDisplay() {
+      const allTeamsDisplay = document.getElementById('allTeamsPicksDisplay');
+      if (!allTeamsDisplay) return;
+      
+      let teamsHtml = '';
+      for (let i = 0; i < draftOrderTeams.length; i++) {
+        const teamName = draftOrderTeams[i];
+        const isPlayer = (teamName === playerTeamName);
+        const isCurrentTurn = (i === currentTurnIndex);
+        const picks = teamPicks[teamName] || [];
+        
+        // Different styling for player vs AI teams and current turn
+        const bgColor = isPlayer ? 'rgba(255, 140, 0, 0.2)' : 'rgba(255,255,255,0.3)';
+        const borderColor = isPlayer ? '#ff8c00' : (isCurrentTurn ? '#8A2BE2' : '#ddd');
+        const borderWidth = isCurrentTurn ? '3px' : '2px';
+        
+        // Show round indicator for current turn
+        const roundText = isCurrentTurn ? ` (Round ${currentRound})` : '';
+        
+        teamsHtml += `<div style="margin-bottom: 15px; padding: 15px; background: ${bgColor}; border-radius: 8px; border: ${borderWidth} solid ${borderColor};">
+          <h5 style="margin-bottom: 10px; color: #2c2c54; font-weight: 600;">
+            ${i + 1}. ${teamName} ${isPlayer ? '(You)' : ''} ${isCurrentTurn ? '← Current Turn' + roundText : ''}
+          </h5>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">`;
+        
+        if (picks.length > 0) {
+          for (let j = 0; j < picks.length; j++) {
+            const heroCardStyle = isPlayer ? 
+              'border: 2px solid #ff8c00; background: linear-gradient(145deg, #fff8dc, #ffeaa7);' :
+              'border: 1px solid #808080; background: linear-gradient(145deg, #f8f8f8, #e8e8e8);';
+            teamsHtml += `<div class="hero-card" style="${heroCardStyle} font-size: 0.85rem;">${picks[j]}</div>`;
+          }
+        } else {
+          teamsHtml += '<p style="color: #666; font-style: italic; font-size: 0.9rem;">No picks yet</p>';
+        }
+        
+        teamsHtml += '</div></div>';
+      }
+      
+      allTeamsDisplay.innerHTML = teamsHtml;
+    }
+    
+    // Update draft status message
+    function updateDraftStatus() {
+      const statusMessage = document.getElementById('draftStatusMessage');
+      if (!statusMessage) return;
+      
+      const currentTeam = draftOrderTeams[currentTurnIndex];
+      
+      if (isPlayerTurn) {
+        statusMessage.textContent = `🎯 Your Turn (Round ${currentRound}) - Click a hero to draft!`;
+        statusMessage.style.color = '#2c2c54';
+      } else {
+        statusMessage.textContent = `⏳ ${currentTeam} is picking (Round ${currentRound})...`;
+        statusMessage.style.color = '#8A2BE2';
+      }
+      
+      // Update available heroes display to reflect clickability
+      // Note: Keeping simple approach to avoid code display issues
+    }
+
+    // Simple draft hero function
+    function draftHero(heroName) {
+      // Only allow drafting on player's turn and if hero not already drafted
+      if (!isPlayerTurn || draftedHeroes.includes(heroName)) return;
+      
+      const currentTeam = draftOrderTeams[currentTurnIndex];
+      
+      // Add hero to current team's picks and drafted list
+      teamPicks[currentTeam].push(heroName);
+      draftedHeroes.push(heroName);
+      
+      // Mark hero as drafted using simple style changes in both sections
+      const availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
+      if (availableHeroesDisplay) {
+        const heroCards = availableHeroesDisplay.children;
+        for (let i = 0; i < heroCards.length; i++) {
+          if (heroCards[i].getAttribute('data-hero') === heroName) {
+            heroCards[i].style.border = '2px solid #ccc';
+            heroCards[i].style.background = '#f0f0f0';
+            heroCards[i].style.color = '#888';
+            heroCards[i].style.cursor = 'not-allowed';
+            heroCards[i].style.opacity = '0.6';
+            heroCards[i].removeAttribute('onclick');
+            break;
+          }
+        }
+      }
+      
+      // Also update bot priority display to reflect the pick
+      updateBotPriorityDisplay();
+      
+      // Update displays
+      updateAllTeamsDisplay();
+      updateBotPriorityDisplay();
+      
+      // Advance to next turn
+      advanceTurn();
+    }
+    
+    // Advance to next turn (snake draft format)
+    function advanceTurn() {
+      if (currentRound === 1) {
+        // Round 1: normal order
+        currentTurnIndex++;
+        if (currentTurnIndex >= draftOrderTeams.length) {
+          // End of round 1, start round 2 in reverse
+          currentRound = 2;
+          currentTurnIndex = draftOrderTeams.length - 1;
+        }
+      } else if (currentRound === 2) {
+        // Round 2: reverse order
+        currentTurnIndex--;
+        if (currentTurnIndex < 0) {
+          // Draft complete
+          const statusMessage = document.getElementById('draftStatusMessage');
+          if (statusMessage) {
+            statusMessage.textContent = '🎉 Draft Complete!';
+            statusMessage.style.color = '#28a745';
+          }
+          return;
+        }
+      }
+      
+      isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
+      
+      updateDraftStatus();
+      updateAllTeamsDisplay();
+      
+      // If it's AI turn, process it
+      if (!isPlayerTurn) {
+        setTimeout(processNextTurn, 1500);
+      }
+    }
+    
+    // Process AI turn
+    function processNextTurn() {
+      if (isPlayerTurn) return;
+      
+      // Check if draft is complete (2 rounds max)
+      if (currentRound > maxRounds) return;
+      
+      const currentTeam = draftOrderTeams[currentTurnIndex];
+      
+      // Get available heroes (not yet drafted)
+      const availableHeroes = allHeroes.filter(hero => !draftedHeroes.includes(hero));
+      
+      if (availableHeroes.length === 0) {
+        // No heroes left
+        const statusMessage = document.getElementById('draftStatusMessage');
+        if (statusMessage) {
+          statusMessage.textContent = '🎉 Draft Complete!';
+          statusMessage.style.color = '#28a745';
+        }
+        return;
+      }
+      
+      let aiPick = null;
+      
+      // 15% chance for wildcard pick, 85% chance for strategic pick
+      if (Math.random() < 0.15) {
+        // Wildcard pick: completely random from available heroes
+        const randomIndex = Math.floor(Math.random() * availableHeroes.length);
+        aiPick = availableHeroes[randomIndex];
+      } else {
+        // Strategic pick: choose from top 5 priority heroes with weighted probability
+        const availablePriorityHeroes = draftOrder.filter(hero => availableHeroes.includes(hero));
+        
+        if (availablePriorityHeroes.length > 0) {
+          // Pick from top 5 available priority heroes (or fewer if not enough available)
+          const topChoices = availablePriorityHeroes.slice(0, Math.min(5, availablePriorityHeroes.length));
+          
+          // Create weighted selection - each rank is 1.5 times as likely as the next
+          // Rank 1 gets weight 1.5^4, Rank 2 gets 1.5^3, Rank 3 gets 1.5^2, Rank 4 gets 1.5^1, Rank 5 gets 1.5^0
+          const weights = [];
+          for (let i = 0; i < topChoices.length; i++) {
+            weights.push(Math.pow(1.5, topChoices.length - 1 - i));
+          }
+          
+          // Calculate total weight
+          const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+          
+          // Generate random number and select based on weighted probability
+          const random = Math.random() * totalWeight;
+          let cumulativeWeight = 0;
+          
+          for (let i = 0; i < topChoices.length; i++) {
+            cumulativeWeight += weights[i];
+            if (random <= cumulativeWeight) {
+              aiPick = topChoices[i];
+              break;
+            }
+          }
+        } else {
+          // Fallback: random pick if no priority heroes available
+          const randomIndex = Math.floor(Math.random() * availableHeroes.length);
+          aiPick = availableHeroes[randomIndex];
+        }
+      }
+      
+      if (aiPick) {
+        // Add to team's picks and drafted list
+        teamPicks[currentTeam].push(aiPick);
+        draftedHeroes.push(aiPick);
+        
+        // Mark hero as drafted using simple style changes in both sections
+        const availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
+        if (availableHeroesDisplay) {
+          const heroCards = availableHeroesDisplay.children;
+          for (let i = 0; i < heroCards.length; i++) {
+            if (heroCards[i].getAttribute('data-hero') === aiPick) {
+              heroCards[i].style.border = '2px solid #ccc';
+              heroCards[i].style.background = '#f0f0f0';
+              heroCards[i].style.color = '#888';
+              heroCards[i].style.cursor = 'not-allowed';
+              heroCards[i].style.opacity = '0.6';
+              heroCards[i].removeAttribute('onclick');
+              break;
+            }
+          }
+        }
+        
+        // Update displays and advance turn
+        updateAllTeamsDisplay();
+        updateBotPriorityDisplay();
+        advanceTurn();
+      }
+    }
   </script>
 </body>
 </html>
