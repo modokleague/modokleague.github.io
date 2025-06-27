@@ -241,7 +241,7 @@
     }
   </style>
 </head>
-<body class="theme-default">
+<body>
   <div class="container">
     <div class="header">
       <h1>MODOK League Draft Pool Builder</h1>
@@ -269,6 +269,12 @@
       <div class="control-group">
         <label for="seedInput">Seed (Optional)</label>
         <input type="text" id="seedInput" placeholder="Enter custom seed for reproducible results">
+      </div>
+      
+      <div class="control-group">
+        <label for="userTeamName">Your Team Name (Optional)</label>
+        <input type="text" id="userTeamName" placeholder="Enter your team name">
+        <small style="color: #666; font-size: 0.85em; margin-top: 4px;">Your team will be added to the draft order</small>
       </div>
       
       <div class="control-group">
@@ -355,6 +361,22 @@
     const filteredDraftOrder = draftOrder.filter(hero => !bannedHeroes.includes(hero));
     const marvelHeroes = [...filteredDraftOrder].sort();
 
+    // Team name pools for each position
+    const teamNamePools = {
+      0: ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'], // Team A
+      1: ['Betty Ross', 'Bullseye', 'Bruno Carrelli', 'Baron Mordo', 'Beetle', 'Black Tom Cassidy', 'Black Swan', 'Boomerang', 'Betty Brant'], // Team B
+      2: ['Calvin Zabo', 'Cassandra Nova', 'Curt Connors', 'Clea', 'Carl "Crusher" Creel', 'Cassie Lang', 'Colleen Wing'], // Team C
+      3: ['Doctor Doom', 'Donald Pierce', 'Dormammu', 'Daken', 'Danny Rand', 'Donald Blake'], // Team D
+      4: ['Edwin Jarvis', 'Elektra', 'Emil Blonsky', 'Everett Ross', 'Ebony Maw', 'Eddie Brock', 'Exodus', 'Ego the Living Planet'], // Team E
+      5: ['Felicia Hardy', 'Fin Fang Foom', 'Frank Castle', 'Franklin Richards', 'Frigga', 'Foggy Nelson'], // Team F
+      6: ['Gwen Stacy', 'George Stacy', 'Gorgon', 'Giganto', 'Gilgamesh', 'Grandmaster', 'Gorr'], // Team G
+      7: ['Harry Osborn', 'Howard Stark', 'Hope Pym', 'Hobgoblin', 'Helmut Zemo', 'Happy Hogan', 'Howard the Duck', 'Husk', 'High Evolutionary'], // Team H
+      8: ['Illyana Rasputin', 'Imperial Guard', 'Iron Fist'], // Team I
+      9: ['J. Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'], // Team J
+      10: ['Karnak', 'Kurt Wagner', 'Kitty Pryde', 'Kaluu', 'Kamala Khan', 'Kang the Conqueror', 'Kid Omega', 'Killmonger', 'Kingpin', 'Klaw'], // Team K
+      11: ['Laufey', 'Leo Fitz', 'Lucia von Bardas', 'Luke Cage', 'Loki', 'Lizard', 'Lorna Dane', 'Logan'] // Team L
+    };
+
     // Random number generator with improved seed support
     class Random {
       constructor(seed = Math.random()) {
@@ -404,18 +426,16 @@
     }
 
     // Initialize display
-    function initializeDisplay() {
-      document.getElementById('allHeroes').innerHTML = marvelHeroes.map(hero => 
-        `<div class="hero-card">${hero}</div>`
-      ).join('');
-      
-      document.getElementById('bannedHeroes').innerHTML = bannedHeroes.map(hero => 
-        `<div class="hero-card">${hero}</div>`
-      ).join('');
-      
-      // Update max pool size indicator
-      document.getElementById('maxPoolSize').textContent = marvelHeroes.length;
-    }
+    document.getElementById('allHeroes').innerHTML = marvelHeroes.map(hero => 
+      `<div class="hero-card">${hero}</div>`
+    ).join('');
+    
+    document.getElementById('bannedHeroes').innerHTML = bannedHeroes.map(hero => 
+      `<div class="hero-card">${hero}</div>`
+    ).join('');
+    
+    // Update max pool size indicator
+    document.getElementById('maxPoolSize').textContent = marvelHeroes.length;
 
     // Pool size change handler
     document.getElementById('poolSize').addEventListener('change', function() {
@@ -449,7 +469,6 @@
       }
 
       if (numberOfHeroes > marvelHeroes.length) {
-        alert('Not enough heroes available for the given pool size.');
         return;
       }
 
@@ -461,23 +480,11 @@
       
       const draftBot = draftOrder.filter(hero => selectedHeroes.includes(hero));
 
-      // Team name pools for each position
-      const teamNamePools = {
-        0: ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'], // Team A
-        1: ['Betty Ross', 'Bullseye', 'Bruno Carrelli', 'Baron Mordo', 'Beetle', 'Black Tom Cassidy', 'Black Swan', 'Boomerang', 'Betty Brant'], // Team B
-        2: ['Calvin Zabo', 'Cassandra Nova', 'Curt Connors', 'Clea', 'Carl "Crusher" Creel', 'Cassie Lang', 'Colleen Wing'], // Team C
-        3: ['Doctor Doom', 'Donald Pierce', 'Dormammu', 'Daken', 'Danny Rand', 'Donald Blake'], // Team D
-        4: ['Edwin Jarvis', 'Elektra', 'Emil Blonsky', 'Everett Ross', 'Ebony Maw', 'Eddie Brock', 'Exodus', 'Ego the Living Planet'], // Team E
-        5: ['Felicia Hardy', 'Fin Fang Foom', 'Frank Castle', 'Franklin Richards', 'Frigga', 'Foggy Nelson'], // Team F
-        6: ['Gwen Stacy', 'George Stacy', 'Gorgon', 'Giganto', 'Gilgamesh', 'Grandmaster', 'Gorr'], // Team G
-        7: ['Harry Osborn', 'Howard Stark', 'Hope Pym', 'Hobgoblin', 'Helmut Zemo', 'Happy Hogan', 'Howard the Duck', 'Husk', 'High Evolutionary'], // Team H
-        8: ['Illyana Rasputin', 'Imperial Guard', 'Iron Fist'], // Team I
-        9: ['J. Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'], // Team J
-        10: ['Karnak', 'Kurt Wagner', 'Kitty Pryde', 'Kaluu', 'Kamala Khan', 'Kang the Conqueror', 'Kid Omega', 'Killmonger', 'Kingpin', 'Klaw'], // Team K
-        11: ['Laufey', 'Leo Fitz', 'Lucia von Bardas', 'Luke Cage', 'Loki', 'Lizard', 'Lorna Dane', 'Logan'] // Team L
-      };
-
-      const teams = Array.from({ length: numberOfTeams }, (_, i) => {
+      const userTeamName = document.getElementById('userTeamName').value.trim();
+      const numberOfActualTeams = userTeamName ? numberOfTeams - 1 : numberOfTeams;
+      
+      const teams = Array.from({ length: numberOfActualTeams }, (_, i) => {
+        // Use the default pools
         if (teamNamePools[i]) {
           // Use random name from the pool for this team position
           const namePool = [...teamNamePools[i]];
@@ -488,6 +495,11 @@
           return `Team ${String.fromCharCode(65 + i)}`;
         }
       });
+      
+      // Add user's team name if provided (before randomization)
+      if (userTeamName) {
+        teams.push(userTeamName);
+      }
       
       // Shuffle the teams array to randomize draft order
       shuffleArray(teams, rng);
@@ -515,9 +527,6 @@
       // Smooth scroll to results
       document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     });
-
-    // Initialize the app
-    initializeDisplay();
   </script>
 </body>
 </html>
