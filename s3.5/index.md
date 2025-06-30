@@ -7,6 +7,8 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 # 👽🎉 KREE PRECON PARTY 🎉👽
 
+## MODOK LEAGUE SEASON 3.5
+
 <div align="center">
 
 # 👽🎉 KREE PRECON PARTY 🎉👽
@@ -27,7 +29,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 |--------------|-------------|-------------|
 | 🚫 **Registration Closes** | Thursday, July 3 | 11:59 PM PDT |
 | 📊 **Draft Pool Revealed** | Friday, July 4 | Morning |
-| 🎯 **Draft Begins** | Sunday, July 6 | 10:00 AM PDT |
+| 🚦 **Draft Begins** | Sunday, July 6 | 10:00 AM PDT |
 | 🏁 **Season Ends** | Sunday, Aug 3 | 11:59 PM PDT |
 
 > 📝 **REGISTER NOW**: Use the Season 3.5 registration channel on Discord!
