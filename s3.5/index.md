@@ -7,22 +7,13 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
  
 <div align="center"><header><h1>👽🎉 KREE PRECON PARTY 🎉👽</h1></header></div>
 
-  
-## MODOK LEAGUE SEASON 3.5
+<div align="center"><header><h2>MODOK LEAGUE SEASON 3.5</h2></header></div>  
 
-<div align="center">
-
-# 👽🎉 KREE PRECON PARTY 🎉👽
-
-## MODOK LEAGUE SEASON 3.5
-
-</div>
-
-### 🏆🏆🏆 One-Round of Off-Season Mayhem Between Seasons 3 & 4! 🏆🏆🏆🏆
+<div align="center"><header><h3>🏆🏆🏆 One-Round of Off-Season Mayhem Between Seasons 3 & 4! 🏆🏆🏆🏆</h3></header></div>  
 
 > Each kouple drafts **TWO HEROES** and uses modified precons to face the mighty **KLAW** with the deadly **Kree Fanatic** print-and-play modular set! You get **ONE SHOT** at each of six difficulty levels, but only your **HIGHEST-DIFFICULTY VICTORY** counts for points!
 
-### 🤖 **[Draft-o-matic Draft Pool Generator and Simulator (link)](https://modokleague.github.io/s3.5/pool/)**
+<div align="center"><header><h3>🤖 [Draft-o-matic Draft Pool Generator and Simulator (link)](https://modokleague.github.io/s3.5/pool/) 🤖</h3></header></div>  
 
 ## 📅 **CRITICAL DATES** 
 
