@@ -4,13 +4,9 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ![Ronan banner](ronan_banner.png)
 
-<div align="center">
-  
+ 
+<div align="center"><header><h1>👽🎉 KREE PRECON PARTY 🎉👽</h1></header></div>
 
-# 👽🎉 KREE PRECON PARTY 🎉👽
-
-
-</div>
   
 ## MODOK LEAGUE SEASON 3.5
 
