@@ -368,7 +368,7 @@
           
           <div style="background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ffc107;">
             <p style="color: #2c2c54; font-size: 0.9rem; margin: 0; text-align: center;">
-              <strong>Bot Team Strategy:</strong> Other teams pick strategically 85% of the time (from top 5 priority heroes with weighted probability: 1st choice 41%, 2nd choice 27%, 3rd choice 18%, 4th choice 12%, 5th choice 8%) and make wildcard picks 15% of the time (random from any available hero).
+              <strong>Bot Team Strategy:</strong> Other teams pick strategically 85% of the time (from top 5 priority heroes with weighted probability: 1st choice 41%, 2nd choice 27%, 3rd choice 18%, 4th choice 12%, 5th choice 8%) and make wildcard picks 15% of the time (random from any available hero). Bots prefer aspect diversity for their second pick.
             </p>
           </div>
         </div>
@@ -413,8 +413,23 @@
       'Hawkeye - Leadership', 'Groot - Protection', 'Valkyrie - Aggression', 'Hulk - Aggression'
     ];
 
+    // Helper function to check if a hero is banned (handles different name formats)
+    function isHeroBanned(heroName) {
+      // Check exact match first
+      if (bannedHeroes.includes(heroName)) return true;
+      
+      // Check if the hero name (without aspect) matches any banned hero base name
+      const heroBaseName = heroName.split(' - ')[0];
+      for (const bannedHero of bannedHeroes) {
+        const bannedBaseName = bannedHero.split(' - ')[0];
+        if (heroBaseName === bannedBaseName) return true;
+      }
+      
+      return false;
+    }
+
     // Filter out banned heroes from the draft order
-    const filteredDraftOrder = draftOrder.filter(hero => !bannedHeroes.includes(hero));
+    const filteredDraftOrder = draftOrder.filter(hero => !isHeroBanned(hero));
     const marvelHeroes = [...filteredDraftOrder].sort();
 
     // Team name pools for each position
@@ -534,7 +549,7 @@
       const selectedHeroes = heroesPool.slice(0, numberOfHeroes).sort();
       const excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
       
-      const draftBot = draftOrder.filter(hero => selectedHeroes.includes(hero));
+      const draftBot = filteredDraftOrder.filter(hero => selectedHeroes.includes(hero));
 
       const userTeamName = document.getElementById('userTeamName').value.trim();
       const numberOfActualTeams = userTeamName ? numberOfTeams - 1 : numberOfTeams;
@@ -594,6 +609,27 @@
     let isPlayerTurn = false;
     let draftedHeroes = [];
     let allHeroes = [];
+
+    // Helper function to extract aspect from hero name
+    function getHeroAspect(heroName) {
+      // Extract aspect from hero name (e.g., "Spider-Man - Justice" -> "Justice")
+      if (heroName.includes(' - ')) {
+        const aspect = heroName.split(' - ')[1].toLowerCase();
+        // Handle special cases
+        if (aspect.includes('/')) {
+          // For heroes like "Spider-Woman - Aggression / Justice", take the first aspect
+          return aspect.split(' / ')[0];
+        }
+        return aspect;
+      }
+      
+      // Handle heroes without explicit aspects (like "Deadpool - Pool", "Adam Warlock")
+      if (heroName.includes('Pool')) return 'pool';
+      if (heroName === 'Adam Warlock') return 'basic'; // or could be treated as no aspect
+      
+      // Default fallback - shouldn't happen with proper data
+      return 'unknown';
+    }
 
     // Simple draft simulator navigation functions
     function startDraftSimulator() {
@@ -711,8 +747,8 @@
       const botPriorityDisplay = document.getElementById('botPriorityDisplay');
       if (!botPriorityDisplay) return;
       
-      // Get all heroes from draft bot order that are in the current pool
-      const botPriorityInPool = draftOrder.filter(hero => allHeroes.includes(hero));
+      // Get all heroes from filtered draft bot order that are in the current pool (excluding banned heroes)
+      const botPriorityInPool = filteredDraftOrder.filter(hero => allHeroes.includes(hero));
       
       if (botPriorityInPool.length > 0) {
         let botHtml = '';
@@ -926,76 +962,134 @@
         return;
       }
       
+      // Get aspects of heroes already picked by this team
+      const teamHeroes = teamPicks[currentTeam] || [];
+      const teamAspects = teamHeroes.map(hero => getHeroAspect(hero));
+      
       let aiPick = null;
+      let isRetryPick = false;
+      let rejectedPick = null;
       
-      // 15% chance for wildcard pick, 85% chance for strategic pick
-      if (Math.random() < 0.15) {
-        // Wildcard pick: completely random from available heroes
-        const randomIndex = Math.floor(Math.random() * availableHeroes.length);
-        aiPick = availableHeroes[randomIndex];
-      } else {
-        // Strategic pick: choose from top 5 priority heroes with weighted probability
-        const availablePriorityHeroes = draftOrder.filter(hero => availableHeroes.includes(hero));
-        
-        if (availablePriorityHeroes.length > 0) {
-          // Pick from top 5 available priority heroes (or fewer if not enough available)
-          const topChoices = availablePriorityHeroes.slice(0, Math.min(5, availablePriorityHeroes.length));
-          
-          // Create weighted selection - each rank is 1.5 times as likely as the next
-          // Rank 1 gets weight 1.5^4, Rank 2 gets 1.5^3, Rank 3 gets 1.5^2, Rank 4 gets 1.5^1, Rank 5 gets 1.5^0
-          const weights = [];
-          for (let i = 0; i < topChoices.length; i++) {
-            weights.push(Math.pow(1.5, topChoices.length - 1 - i));
-          }
-          
-          // Calculate total weight
-          const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-          
-          // Generate random number and select based on weighted probability
-          const random = Math.random() * totalWeight;
-          let cumulativeWeight = 0;
-          
-          for (let i = 0; i < topChoices.length; i++) {
-            cumulativeWeight += weights[i];
-            if (random <= cumulativeWeight) {
-              aiPick = topChoices[i];
-              break;
-            }
-          }
-        } else {
-          // Fallback: random pick if no priority heroes available
+      // Function to make a pick using the existing logic
+      function makeAIPick() {
+        // 15% chance for wildcard pick, 85% chance for strategic pick
+        if (Math.random() < 0.15) {
+          // Wildcard pick: completely random from available heroes
           const randomIndex = Math.floor(Math.random() * availableHeroes.length);
-          aiPick = availableHeroes[randomIndex];
+          return availableHeroes[randomIndex];
+        } else {
+          // Strategic pick: choose from top 5 priority heroes with weighted probability
+          const availablePriorityHeroes = filteredDraftOrder.filter(hero => availableHeroes.includes(hero));
+          
+          if (availablePriorityHeroes.length > 0) {
+            // Pick from top 5 available priority heroes (or fewer if not enough available)
+            const topChoices = availablePriorityHeroes.slice(0, Math.min(5, availablePriorityHeroes.length));
+            
+            // Create weighted selection - each rank is 1.5 times as likely as the next
+            // Rank 1 gets weight 1.5^4, Rank 2 gets 1.5^3, Rank 3 gets 1.5^2, Rank 4 gets 1.5^1, Rank 5 gets 1.5^0
+            const weights = [];
+            for (let i = 0; i < topChoices.length; i++) {
+              weights.push(Math.pow(1.5, topChoices.length - 1 - i));
+            }
+            
+            // Calculate total weight
+            const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+            
+            // Generate random number and select based on weighted probability
+            const random = Math.random() * totalWeight;
+            let cumulativeWeight = 0;
+            
+            for (let i = 0; i < topChoices.length; i++) {
+              cumulativeWeight += weights[i];
+              if (random <= cumulativeWeight) {
+                return topChoices[i];
+              }
+            }
+          } else {
+            // Fallback: random pick if no priority heroes available
+            const randomIndex = Math.floor(Math.random() * availableHeroes.length);
+            return availableHeroes[randomIndex];
+          }
+        }
+        return null;
+      }
+      
+      // Make initial pick
+      aiPick = makeAIPick();
+      
+      // Check if this is the second hero and if it has the same aspect as the first
+      if (aiPick && teamHeroes.length === 1) {
+        const pickAspect = getHeroAspect(aiPick);
+        
+        // If the pick has the same aspect as the first hero, reject it and re-pick
+        if (teamAspects.includes(pickAspect)) {
+          isRetryPick = true;
+          rejectedPick = aiPick;
+          
+          // Show feedback about the re-pick
+          const statusMessage = document.getElementById('draftStatusMessage');
+          if (statusMessage) {
+            const firstHeroAspect = teamAspects[0].charAt(0).toUpperCase() + teamAspects[0].slice(1);
+            statusMessage.textContent = `🔄 ${currentTeam} rejected ${rejectedPick} (${firstHeroAspect} duplicate) - re-picking...`;
+            statusMessage.style.color = '#ff8c00';
+          }
+          
+          // Wait a moment before re-picking to show the feedback
+          setTimeout(() => {
+            aiPick = makeAIPick(); // Re-pick using the same randomization scheme
+            // Always accept the re-pick, even if it's the same aspect again
+            
+            // Show the final pick
+            if (statusMessage) {
+              const finalAspect = getHeroAspect(aiPick);
+              const finalAspectCapitalized = finalAspect.charAt(0).toUpperCase() + finalAspect.slice(1);
+              statusMessage.textContent = `✅ ${currentTeam} selected ${aiPick} (${finalAspectCapitalized}) after re-pick`;
+              statusMessage.style.color = '#28a745';
+            }
+            
+            // Complete the pick after showing feedback
+            setTimeout(() => {
+              completeBotPick(currentTeam, aiPick);
+            }, 800);
+          }, 1200);
+          
+          return; // Exit early to handle async re-pick
         }
       }
       
+      // Complete the pick normally (no re-pick needed)
       if (aiPick) {
-        // Add to team's picks and drafted list
-        teamPicks[currentTeam].push(aiPick);
-        draftedHeroes.push(aiPick);
-        
-        // Mark hero as drafted using simple style changes in both sections
-        const availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
-        if (availableHeroesDisplay) {
-          const heroCards = availableHeroesDisplay.children;
-          for (let i = 0; i < heroCards.length; i++) {
-            if (heroCards[i].getAttribute('data-hero') === aiPick) {
-              heroCards[i].style.border = '2px solid #ccc';
-              heroCards[i].style.background = '#f0f0f0';
-              heroCards[i].style.color = '#888';
-              heroCards[i].style.cursor = 'not-allowed';
-              heroCards[i].style.opacity = '0.6';
-              heroCards[i].removeAttribute('onclick');
-              break;
-            }
+        completeBotPick(currentTeam, aiPick);
+      }
+    }
+    
+    // Helper function to complete a bot's pick
+    function completeBotPick(teamName, heroName) {
+      // Add to team's picks and drafted list
+      teamPicks[teamName].push(heroName);
+      draftedHeroes.push(heroName);
+      
+      // Mark hero as drafted using simple style changes in both sections
+      const availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
+      if (availableHeroesDisplay) {
+        const heroCards = availableHeroesDisplay.children;
+        for (let i = 0; i < heroCards.length; i++) {
+          if (heroCards[i].getAttribute('data-hero') === heroName) {
+            heroCards[i].style.border = '2px solid #ccc';
+            heroCards[i].style.background = '#f0f0f0';
+            heroCards[i].style.color = '#888';
+            heroCards[i].style.cursor = 'not-allowed';
+            heroCards[i].style.opacity = '0.6';
+            heroCards[i].removeAttribute('onclick');
+            break;
           }
         }
-        
-        // Update displays and advance turn
-        updateAllTeamsDisplay();
-        updateBotPriorityDisplay();
-        advanceTurn();
       }
+      
+      // Update displays and advance turn
+      updateAllTeamsDisplay();
+      updateBotPriorityDisplay();
+      advanceTurn();
     }
   </script>
 </body>
