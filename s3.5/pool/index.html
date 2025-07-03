@@ -245,7 +245,7 @@
   <div class="container">
     <div class="header">
       <h1>Draft-o-matic</h1>
-      <p>MODOK League Season 3.5 (V3)</p>
+      <p>MODOK League Season 3.5 (V3.1)</p>
     </div>
 
     <div class="hero-lists">
@@ -294,6 +294,20 @@
 
     <div style="text-align: center;">
       <button class="btn" id="goButton">Generate Hero Pool</button>
+    </div>
+
+    <div class="result-section" style="margin-top: 30px;">
+      <h3 style="cursor: pointer; user-select: none; transition: color 0.3s ease;" onclick="toggleChangelog()" id="changelogHeader">
+        📋 Changelog (V3.1) <span id="changelogArrow" style="font-size: 0.8em; margin-left: 8px;">▼</span>
+      </h3>
+      <div id="changelogContent" style="display: none; padding: 15px; background: rgba(72, 219, 251, 0.1); border-radius: 8px; border: 2px solid #48dbfb; margin-top: 10px;">
+        <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem;">V3.1 Updates</h4>
+        <ul style="margin-left: 20px; color: #2c2c54;">
+          <li style="margin-bottom: 8px;"><strong>Bot Aspect Diversity:</strong> AI teams now prefer different aspects for their second pick, making drafts more strategic and realistic</li>
+          <li style="margin-bottom: 8px;"><strong>Re-pick Feedback:</strong> Visual notifications when bots reject and re-pick heroes due to aspect conflicts</li>
+          <li style="margin-bottom: 8px;"><strong>Banned Hero Fix:</strong> Improved filtering to properly exclude all banned heroes regardless of naming format</li>
+        </ul>
+      </div>
     </div>
 
     <div class="results" id="results" style="display: none;">
@@ -412,6 +426,23 @@
       // Sometimes Powerful
       'Hawkeye - Leadership', 'Groot - Protection', 'Valkyrie - Aggression', 'Hulk - Aggression'
     ];
+
+    // Toggle changelog visibility
+    function toggleChangelog() {
+      const content = document.getElementById('changelogContent');
+      const header = document.getElementById('changelogHeader');
+      const arrow = document.getElementById('changelogArrow');
+      
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        arrow.textContent = '▲';
+        header.style.color = '#48dbfb';
+      } else {
+        content.style.display = 'none';
+        arrow.textContent = '▼';
+        header.style.color = '#2c2c54';
+      }
+    }
 
     // Helper function to check if a hero is banned (handles different name formats)
     function isHeroBanned(heroName) {
