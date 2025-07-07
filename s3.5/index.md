@@ -82,15 +82,18 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ## ⚔️ **YOUR OPPONENT: EXPERT KLAW + KREE FANATIC**
 
+**Conditions:** The When Revealed effect on Underground Distribution (Main Scheme 1B) is changed to
+* Discard cards from the encounter deck until a **non-ELITE** minion is discarded. Put that minion into play engaged with the first player.
+
 > 📺 **Get the Kree Fanatic PnP**: [Hall of Heroes Guide](https://hallofheroeslcg.com/ronan-the-accuser/). Also availaible on Hitch's Mod / TTS , OCTGN and DragnCards.
 
 ### 🏅 **DIFFICULTY LEVELS**
 
-| ⭐ **Level** | 🂡 **Encounter Set** | 👹 **Setup: Formidable Foe Environment (Expert II)** | 👑 **Setup: Kree Supremacy¹** | 🎁 **Even More Setup Cards** |
+| ⭐ **Level** | 🂡 **Encounter Set** | 👹 **Setup: Formidable Foe Environment (Expert II)** | 👑 **Setup: Kree Supremacy¹** | 🎁 **Other Cards Added During Setup** |
 |-------------|---------------------|----------------------|----------------------|-------------------|
 | ☆☆☆☆☆★ | Standard II + Expert II | ✅ Expert Mode | ✅ Expert Mode | 🔊 Sonic Converter |
-| ☆☆☆☆☆ | Standard 1\* + Expert 1\* (see note 2) | ✅ Expert Mode | ✅ Standard Mode | 🔊 Sonic Converter |
-| ☆☆☆☆ | Standard I + Expert I | ✅ Expert Mode | ❌ None | 🔊 Sonic Converter |
+| ☆☆☆☆☆ | Standard 1\* + Expert 1\* (see note 2) | ✅ Expert Mode | ✅ Standard Mode | 🔊 Sonic Converter⁴ |
+| ☆☆☆☆ | Standard I + Expert I | ✅ Expert Mode | ❌ None | 🔊 Sonic Converter⁴ |
 | ☆☆☆ | Standard I + Expert I | ❌ None | ❌ None | ❌ None |
 | ☆☆ | Standard I + Expert I | ❌ None | ❌ None | 🚀 Milano³ |
 | ☆ | Standard I + Klaw I/II | ❌ None | ❌ None | 🚀 Milano³ |
