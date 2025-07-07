@@ -17,7 +17,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ## 🏆 **CHOOSE YOUR PLAY MODE**
 
-### 🎪 ** CHALLENGE MODE **
+### 🎪 CHALLENGE MODE 
 ```
 ⭐ Score as many points as you can against the challenge
 🔓 Only way to participate after league registration has closed (July 3)
@@ -25,14 +25,14 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 🎈 Similar benefits to league non-competitive mode
 ```
 
-### ⚔️ ** LEAGUE COMPETITIVE MODE (CLOSED)**
+### ⚔️ LEAGUE COMPETITIVE MODE (CLOSED)
 ```
 🥇 Official scoring and rankings
 🎯 Maximum one attempt per difficulty
 🏆 Glory and bragging rights await!t!
 ```
 
-### 🎈 **LEAGUE NON-COMPETITIVE MODE (CLOSED) ** 
+### 🎈 LEAGUE NON-COMPETITIVE MODE (CLOSED)
 ```
 🎉 Play for fun without pressure
 ♾️ Unlimited attempts at each difficulty
