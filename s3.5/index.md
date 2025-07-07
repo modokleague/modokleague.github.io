@@ -14,6 +14,36 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s3.5/pool/" target = "_blank">🤖 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>  
 
+## 📝 **SUBMIT YOUR RESULTS**
+
+[Submission form](https://forms.gle/VWJkNBpJg9FRDinA9) for all play modes
+
+## 🏆 **CHOOSE YOUR PLAY MODE**
+
+### 🎪 ** CHALLENGE MODE **
+```
+⭐ Score as many points as you can against the challenge
+🔓 Only way to participate after league registration has closed (July 3)
+🤖 Choose the heroes you like or draft your heroes against the Draft-o-matic Draft Simulator
+🎈 Similar benefits to league non-competitive mode
+```
+
+### ⚔️ ** LEAGUE COMPETITIVE MODE (CLOSED)**
+```
+🥇 Official scoring and rankings
+🎯 Maximum one attempt per difficulty
+🏆 Glory and bragging rights await!t!
+```
+
+### 🎈 **LEAGUE NON-COMPETITIVE MODE (CLOSED) ** 
+```
+🎉 Play for fun without pressure
+♾️ Unlimited attempts at each difficulty
+📊 Help us gather community stats!
+```
+
+> 💡 **Pro Tip**: You can switch from Competitive to Non-Competitive mid-season if the pressure gets too intense!
+
 ## 📅 **CRITICAL DATES** 
 
 |  | 🗓️ | ⏰|
@@ -24,27 +54,6 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 | 🏁 **Season Ends** | Sunday, Aug 3 | 11:59 PM PDT |
 
 > 📝 **REGISTER NOW**: Use the Season 3.5 registration channel on Discord!
-
-
-
-## 🏆 **CHOOSE YOUR PLAY MODE**
-
-### ⚔️ **COMPETITIVE MODE**
-```
-🥇 Official scoring and rankings
-🎯 Maximum one attempt per difficulty
-🏆 Glory and bragging rights await!t!
-```
-
-### 🎈 **NON-COMPETITIVE MODE** 
-```
-🎉 Play for fun without pressure
-♾️ Unlimited attempts at each difficulty
-📈 Help us gather community stats!
-```
-
-> 💡 **Pro Tip**: You can switch from Competitive to Non-Competitive mid-season if the pressure gets too intense!
-
 
 
 ## 📝 **THE DRAFT**
