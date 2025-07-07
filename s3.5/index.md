@@ -83,9 +83,9 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 ## ⚔️ **YOUR OPPONENT: EXPERT KLAW + KREE FANATIC**
 
 **Conditions:** The When Revealed effect on Underground Distribution (Main Scheme 1B) is changed to
-* Discard cards from the encounter deck until a **non-ELITE** minion is discarded. Put that minion into play engaged with the first player.
+> Discard cards from the encounter deck until a **non-ELITE** minion is discarded. Put that minion into play engaged with the first player.
 
-> 📺 **Get the Kree Fanatic PnP**: [Hall of Heroes Guide](https://hallofheroeslcg.com/ronan-the-accuser/). Also availaible on Hitch's Mod / TTS , OCTGN and DragnCards.
+📺 **Get the Kree Fanatic PnP**: [Hall of Heroes Guide](https://hallofheroeslcg.com/ronan-the-accuser/). Also availaible on Hitch's Mod / TTS , OCTGN and DragnCards.
 
 ### 🏅 **DIFFICULTY LEVELS**
 
