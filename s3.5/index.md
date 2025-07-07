@@ -52,9 +52,9 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 > 📝 **REGISTER NOW**: Use the Season 3.5 registration channel on Discord!
 
-## 📚 **DECK-BUILDING RULES**
+## 📚 **DECK-BUILDING**
 
-#### 📋 **Core Rules**
+#### 📋 **Deck-Building Rules**
 ```
 1️⃣ MUST keep at least 1 copy of each precon card
 🔄 MAY replace extra copies 
