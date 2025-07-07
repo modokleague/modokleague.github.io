@@ -113,7 +113,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 
 
-## 🎴 SPECIAL ENCOUNTER SET: Standard 1\* + Expert 1\*
+## 🎴 SPECIAL ENCOUNTER SET FOR ☆☆☆☆☆ DIFFICULTY ONLY (Standard 1\* + Expert 1\*)
 
 | 🃏 **Card** | 📦 **Original Set** |
 |-------------|-------------------|
