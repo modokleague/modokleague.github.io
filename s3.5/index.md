@@ -52,33 +52,6 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 > 📝 **REGISTER NOW**: Use the Season 3.5 registration channel on Discord!
 
-
-## 📝 **THE DRAFT**
-
-### ⚙️ **DRAFT DETAILS**
-
-| 🎮 **Feature** | 📋 **Details** |
-|----------------|----------------|
-| **🦸‍♂️ Hero Pool** | All heroes through Winter Soldier & Falcon (see bans below) |
-| **👥 Division Size** | Maximum 16 kouples per division |
-| **📦 Pool Size** | 2 heroes/kouple + 15 extras |
-| **⏱️ Pick Timer** | 24 hours per selection |
-| **🤖 Auto-Pick** | Draft-bot chooses if you miss your window |
-| **🐍 Draft Format** | 2 rounds, snake order (A→B→C then C→B→A) |
-
-
-
-## 🚫 **HALL OF SHAME**
-
-| 🦸‍♂️ **Hero** | 🎭 **Aspect** | 🚫 **Status** |
-|---------------|---------------|----------------|
-| 💎 **Adam Warlock** | Multi-aspect | ❌ **BANNED** |
-| ⚔️ **Cable** | Leadership | ❌ **BANNED** |
-| 👁️ **Cyclops** | Leadership | ❌ **BANNED** |
-| 🗡️ **Gamora** | Aggression | ❌ **BANNED** |
-| 🛡️ **Maria Hill** | Leadership | ❌ **BANNED** |
-
-
 ## 📚 **DECK-BUILDING RULES**
 
 #### 📋 **Core Rules**
@@ -157,7 +130,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 
 
-## 🎮 **GAME PLAY RULES**
+## 🎮 **RULES FOR LEAGUE COMPETITIVE MODE**
 
 ### 🔧 **Preparation Phase**
 ```diff
@@ -172,6 +145,28 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 + Score = highest difficulty conquered
 ```
 
+## 📝 **THE DRAFT**
+
+### ⚙️ **DRAFT DETAILS**
+
+| 🎮 **Feature** | 📋 **Details** |
+|----------------|----------------|
+| **🦸‍♂️ Hero Pool** | All heroes through Winter Soldier & Falcon (see bans below) |
+| **👥 Division Size** | Maximum 16 kouples per division |
+| **📦 Pool Size** | 2 heroes/kouple + 15 extras |
+| **⏱️ Pick Timer** | 24 hours per selection |
+| **🤖 Auto-Pick** | Draft-bot chooses if you miss your window |
+| **🐍 Draft Format** | 2 rounds, snake order (A→B→C then C→B→A) |
+
+### 🚫 **HALL OF SHAME**
+
+| 🦸‍♂️ **Hero** | 🎭 **Aspect** | 🚫 **Status** |
+|---------------|---------------|----------------|
+| 💎 **Adam Warlock** | Multi-aspect | ❌ **BANNED** |
+| ⚔️ **Cable** | Leadership | ❌ **BANNED** |
+| 👁️ **Cyclops** | Leadership | ❌ **BANNED** |
+| 🗡️ **Gamora** | Aggression | ❌ **BANNED** |
+| 🛡️ **Maria Hill** | Leadership | ❌ **BANNED** |
 
 
 ## 🖼️ **ALT ART AND CUSTOM CARDS**
