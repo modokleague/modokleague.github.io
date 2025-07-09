@@ -134,7 +134,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 
 
-## 🎮 **RULES FOR LEAGUE COMPETITIVE MODE**
+## 🎮 **RULES FOR COMPETITIVE MODE**
 
 ```diff
 + One shot per difficulty level
