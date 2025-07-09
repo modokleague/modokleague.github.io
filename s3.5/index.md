@@ -59,9 +59,10 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 1️⃣ MUST keep at least 1 copy of each precon card
 🔄 MAY replace extra copies 
 ➕ MAY add cards to reach 40-50 total
-🎮 Standard deck-building rules apply
+📜 Standard deck-building rules apply
 ✨ Regular uniqueness rules during play
 🚀 No collection restrictions (go wild!)
+🎮 (Competitive mode) Modify decks and practice as much as you want between official attempts
 ```
 
 #### 💪 **Hulk Example**
@@ -135,17 +136,12 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ## 🎮 **RULES FOR LEAGUE COMPETITIVE MODE**
 
-### 🔧 **Preparation Phase**
-```diff
-+ Modify decks and practice as much as you want between attempts
-! MUST declare official attempts at each difficulty before setup
-```
-
-### 🎯 **Official Attempts**
 ```diff
 + One shot per difficulty level
 + Choose your battles wisely
 + Score = highest difficulty conquered
++ Modify decks and practice as much as you want between official attempts
+! MUST declare official attempts at each difficulty before game setup
 ```
 
 ## 📝 **THE DRAFT**
