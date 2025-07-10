@@ -303,180 +303,6 @@
      <button class="btn" id="goButton">Generate Draft Pool</button>
    </div>
 
-   <div class="result-section" style="margin-top: 30px;">
-     <h3 style="cursor: pointer; user-select: none; transition: color 0.3s ease;" onclick="toggleChangelog()" id="changelogHeader">
-       📋 Changelog <span id="versionDisplay">(V1.0.5)</span> <span id="changelogArrow" style="font-size: 0.8em; margin-left: 8px;">▼</span>
-     </h3>
-     <div id="changelogContent" style="display: none; padding: 15px; background: rgba(72, 219, 251, 0.1); border-radius: 8px; border: 2px solid #48dbfb; margin-top: 10px;">
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem;">V1.4 - Bot Aspect Group Restrictions</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Enhanced Bot Compliance:</strong> Fixed bot aspect selection to properly respect aspect group restrictions in 4-group mode</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Accuracy:</strong> Bots now correctly pick only one aspect from each aspect group, matching player restrictions</li>
-         <li style="margin-bottom: 8px;"><strong>Maintained Intelligence:</strong> All existing bot priority logic preserved (Leadership first, weighted selection, surprise picks)</li>
-         <li style="margin-bottom: 8px;"><strong>Group Enforcement:</strong> Second aspect pick automatically filtered to opposite group when first aspect selected</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode bot behavior remains completely unchanged</li>
-         <li style="margin-bottom: 8px;"><strong>Fair Gameplay:</strong> Ensures bots follow the same strategic constraints as human players</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.3 - Enhanced Export Formatting</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Grouped Aspect Export:</strong> Aspect pool export now shows separate groups in 4-group mode with individual counts</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Information:</strong> Each aspect group displays detailed breakdown of aspect types and quantities</li>
-         <li style="margin-bottom: 8px;"><strong>Proper Formatting:</strong> Added group headers with aspect counts (e.g., "Aspect Group 1 (15 aspects)")</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Planning:</strong> Clear visibility of aspect distribution across groups in exported files</li>
-         <li style="margin-bottom: 8px;"><strong>Export Consistency:</strong> Aspect export format now matches hero export structure</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode export format remains unchanged</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.2 - Export Bug Fixes</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Accurate Hero Counts:</strong> Fixed hero pool export to show correct total count across all groups</li>
-         <li style="margin-bottom: 8px;"><strong>Proper Line Breaks:</strong> Added proper formatting with line breaks between group headers and hero lists</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Readability:</strong> Each hero now appears on its own line with proper spacing between groups</li>
-         <li style="margin-bottom: 8px;"><strong>Export Quality:</strong> Resolved formatting issues that caused exported text to run together</li>
-         <li style="margin-bottom: 8px;"><strong>Professional Output:</strong> Export files now have clean, readable structure for easy reference</li>
-         <li style="margin-bottom: 8px;"><strong>Group Separation:</strong> Clear visual distinction between Hero Group 1 and Hero Group 2 in exports</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.1 - Enhanced Aspect Pool Display</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Grouped Aspect Pool Display:</strong> Main aspect pool now shows aspects separated into groups (4-group mode)</li>
-         <li style="margin-bottom: 8px;"><strong>Type Summary Counts:</strong> Each aspect group displays count of each aspect type for strategic planning</li>
-         <li style="margin-bottom: 8px;"><strong>Visual Consistency:</strong> Aspect pool display now matches the structure used in draft simulator</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Information:</strong> Clear overview of aspect distribution across groups before drafting</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Planning:</strong> Teams can better strategize knowing the exact composition of each group</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode maintains single-list aspect display</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.9 - Fixed Aspect Group Selection</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Accurate Group Selection:</strong> Fixed bug where clicking an aspect in a specific group would draft from the wrong group</li>
-         <li style="margin-bottom: 8px;"><strong>Precise Aspect Drafting:</strong> Clicking a selectable aspect now drafts exactly that aspect from the correct group</li>
-         <li style="margin-bottom: 8px;"><strong>Maintained Group Restrictions:</strong> All existing group limitations and visual indicators remain intact</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Reliability:</strong> 4-group mode aspect selection now works as visually indicated</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode selection behavior remains unchanged</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Accuracy:</strong> Players can now confidently select aspects knowing exactly which will be drafted</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.8 - Highest-Numbered Aspect Selection</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Selective Aspect Drafting:</strong> In 4-group mode, only the highest numbered aspect of each type per group can be selected</li>
-         <li style="margin-bottom: 8px;"><strong>Visual Checkmark System:</strong> Selectable aspects display ✅ before their name for clear identification</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Clarity:</strong> Non-selectable aspects remain visible but unclickable, maintaining draft visibility</li>
-         <li style="margin-bottom: 8px;"><strong>Conflict Prevention:</strong> Eliminates aspect selection conflicts while preserving strategic information</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced User Experience:</strong> Clear visual distinction between selectable and reference-only aspects</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains unchanged with full aspect selection freedom</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.7 - Aspect Group Draft Restrictions</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Aspect Group Limitations:</strong> In 4-group mode, each team can now only draft one aspect from each aspect group</li>
-         <li style="margin-bottom: 8px;"><strong>Complete Group System:</strong> 4-group mode now features 2 hero groups + 2 aspect groups for maximum strategic depth</li>
-         <li style="margin-bottom: 8px;"><strong>Smart Bot Aspect Strategy:</strong> Bots make first aspect pick using normal priority, second pick restricted to opposite aspect group</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Strategic Depth:</strong> Teams must balance both hero and aspect group selections in tactical drafting</li>
-         <li style="margin-bottom: 8px;"><strong>Unified Group Display:</strong> Aspect groups shown with clear visual separation in draft simulator interface</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains completely unchanged with no new restrictions</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.6 - Hero Group Draft Restrictions</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Group-Based Draft Limits:</strong> In 4-group mode, each team can now only draft one hero from each group</li>
-         <li style="margin-bottom: 8px;"><strong>Smart Bot Strategy:</strong> Bots make first hero pick using normal tier list, second pick restricted to opposite group</li>
-         <li style="margin-bottom: 8px;"><strong>Player Restrictions:</strong> Hero selection automatically filtered based on group availability for current team</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Depth:</strong> Adds tactical decision-making to hero selection in 4-group drafts</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains completely unchanged with no new restrictions</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Draft Rules:</strong> Clear group restrictions display in draft simulator interface</li>
-       </ul>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Centralized Version Control:</strong> Added global TOOL_VERSION variable for consistent version management</li>
-         <li style="margin-bottom: 8px;"><strong>Dynamic Version Display:</strong> All version references now automatically update from central variable</li>
-         <li style="margin-bottom: 8px;"><strong>Improved Maintainability:</strong> Single location for version updates reduces inconsistencies</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Footer Generation:</strong> Export function now dynamically includes current version</li>
-         <li style="margin-bottom: 8px;"><strong>Future-Proof Structure:</strong> Simplified version update process for future releases</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.2 - String Concatenation Update</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Template Literal Removal:</strong> Replaced all template literals with string concatenation for broader compatibility</li>
-         <li style="margin-bottom: 8px;"><strong>ES5 Compatibility:</strong> Improved support for older browsers and environments</li>
-         <li style="margin-bottom: 8px;"><strong>Code Modernization:</strong> Updated syntax while maintaining full functionality</li>
-         <li style="margin-bottom: 8px;"><strong>Performance Optimization:</strong> String concatenation optimizations for better execution</li>
-         <li style="margin-bottom: 8px;"><strong>Stability Enhancement:</strong> Reduced potential compatibility issues across different JavaScript engines</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.1 - Draft Pool Groups Foundation</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Draft Pool Groups Selector:</strong> Added dropdown to choose between "4 (2 hero, 2 aspect)" and "2 (1 hero, 1 aspect)" group configurations</li>
-         <li style="margin-bottom: 8px;"><strong>Hero Pool Splitting:</strong> Heroes automatically split into two equal groups when using 4-group mode</li>
-         <li style="margin-bottom: 8px;"><strong>Extra Heroes per Group:</strong> Renamed and updated "Extras in the Draft Pool" with different defaults: 3 for 4-group mode, 6 for 2-group mode</li>
-         <li style="margin-bottom: 8px;"><strong>Dynamic Defaults:</strong> Extra heroes field automatically adjusts default value when switching between group modes</li>
-         <li style="margin-bottom: 8px;"><strong>Foundation for Multi-Group System:</strong> Prepares the tool for advanced drafting with separate hero and aspect group pools</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Display:</strong> Hero groups shown with proper section formatting matching other result displays</li>
-         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> Existing functionality unchanged while new features are developed</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.11 - Enhanced Bot Leadership Priority</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Leadership First Strategy:</strong> When bots pick aspects (non-surprise), they now prioritize any available Leadership before other aspects</li>
-         <li style="margin-bottom: 8px;"><strong>Two-Stage Aspect Logic:</strong> 1) Check for surprise pick, 2) If Leadership available, take highest Leadership, 3) Otherwise use weighted selection</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Realism:</strong> Reflects the high value of Leadership aspects in competitive play</li>
-         <li style="margin-bottom: 8px;"><strong>Highest Number Priority:</strong> When taking Leadership, bots always select the highest-numbered available instance</li>
-         <li style="margin-bottom: 8px;"><strong>Fallback Logic:</strong> When no Leadership remains, bots use standard weighted selection from top 5 aspects in priority list</li>
-         <li style="margin-bottom: 8px;"><strong>Surprise Pick Immunity:</strong> Leadership priority only applies to non-surprise picks, maintaining randomness when surprise triggered</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.10 - Aspect Priority Renumbering</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Descending Order Display:</strong> Aspect priority list now renumbers aspects within each type to show in descending order</li>
-         <li style="margin-bottom: 8px;"><strong>Improved Readability:</strong> Higher-numbered aspects of the same type appear first in bot priority (e.g., Justice #2 before Justice #1)</li>
-         <li style="margin-bottom: 8px;"><strong>Consistent Logic:</strong> Maintains the same selection priority while improving visual organization</li>
-         <li style="margin-bottom: 8px;"><strong>Example Ordering:</strong> Protection #2, Justice #2, Aggression #3, Justice #1, Aggression #2, Aggression #1, Protection #1</li>
-         <li style="margin-bottom: 8px;"><strong>Bot Strategy Unchanged:</strong> Selection weights and priority logic remain identical, only display order is modified</li>
-         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Renumbered priority order included in exported draft pool files</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.9 - Spider-Woman Aspect Assignment</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Spider-Woman Enhancement:</strong> When Spider-Woman is included in the hero pool, she's automatically assigned a random aspect</li>
-         <li style="margin-bottom: 8px;"><strong>Weighted Randomization:</strong> Aspects assigned with weights: Aggression (2), Justice (2), Leadership (2), Protection (2), Pool (1)</li>
-         <li style="margin-bottom: 8px;"><strong>Draft Bot Integration:</strong> Spider-Woman's assigned aspect name appears in bot priority order (e.g., "Spider-Woman - Aggression")</li>
-         <li style="margin-bottom: 8px;"><strong>Consistent Naming:</strong> The same aspect-assigned name appears in both hero pool and bot priority displays</li>
-         <li style="margin-bottom: 8px;"><strong>Seeded Randomization:</strong> Aspect assignment uses the same random seed as other pool generation for reproducible results</li>
-         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Aspect-assigned Spider-Woman name included in all exported sections</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.8 - Bot Surprise Pick System</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Surprise Pick Slider:</strong> Added second slider for bot's chance to make completely random picks (0-100%)</li>
-         <li style="margin-bottom: 8px;"><strong>Two-Stage Selection:</strong> Bots first check for surprise pick, then use weighted selection if not surprising</li>
-         <li style="margin-bottom: 8px;"><strong>Complete Randomness:</strong> Surprise picks ignore tier lists entirely and choose randomly from all available options</li>
-         <li style="margin-bottom: 8px;"><strong>Default 10%:</strong> Conservative default ensures occasional shocking picks without breaking strategy</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Strategy Control:</strong> Users now control both round adherence AND tier list adherence independently</li>
-         <li style="margin-bottom: 8px;"><strong>Dynamic Descriptions:</strong> Both sliders update strategy descriptions in real-time</li>
-         <li style="margin-bottom: 8px;"><strong>Improved Naming:</strong> Renamed first slider to "Bot Ignore Round Preferences" for clarity</li>
-         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Both bot settings included in exported draft pool files</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Depth:</strong> Players can now experience everything from predictable bots to complete chaos</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.7 - Customizable Bot Strategy</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Bot Randomness Control:</strong> Added slider to adjust bot's chance to draft opposite type (0-100%)</li>
-         <li style="margin-bottom: 8px;"><strong>Improved Default:</strong> Increased default bot randomness from 10% to 15% for more varied drafts</li>
-         <li style="margin-bottom: 8px;"><strong>Strategy Customization:</strong> Users can now fine-tune bot behavior from predictable (0%) to chaotic (100%)</li>
-         <li style="margin-bottom: 8px;"><strong>Real-time Preview:</strong> Bot strategy description updates dynamically as you adjust the slider</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Control:</strong> Full control over draft simulator difficulty and unpredictability</li>
-         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Bot randomness setting included in exported draft pool files</li>
-         <li style="margin-bottom: 8px;"><strong>User Interface:</strong> Intuitive slider with visual indicators (Predictable → Balanced → Chaotic)</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.6 - Aspect Priority Early Display</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Early Aspect Priority:</strong> Bot aspect priority is now displayed immediately when the draft pool is generated</li>
-         <li style="margin-bottom: 8px;"><strong>Better User Experience:</strong> Users can see both hero and aspect bot priorities before starting the draft simulator</li>
-         <li style="margin-bottom: 8px;"><strong>Consistent Priority Order:</strong> The same aspect priority order is used throughout the entire draft process</li>
-         <li style="margin-bottom: 8px;"><strong>Enhanced Export:</strong> Export function now includes the bot aspect priority section</li>
-         <li style="margin-bottom: 8px;"><strong>Seeded Aspect Shuffling:</strong> Aspect priority uses the same random seed as pool generation for reproducible results</li>
-         <li style="margin-bottom: 8px;"><strong>Strategic Planning:</strong> Players can now plan their draft strategy by seeing bot priorities for both heroes and aspects upfront</li>
-       </ul>
-       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.5 - Enhanced Bot Draft Strategy</h4>
-       <ul style="margin-left: 20px; color: #2c2c54;">
-         <li style="margin-bottom: 8px;"><strong>Flexible Bot Drafting:</strong> Bots now have a 10% chance to draft the opposite type (hero vs aspect) in any round</li>
-         <li style="margin-bottom: 8px;"><strong>Smart Constraints:</strong> Bots still respect the 2 heroes + 2 aspects maximum rule</li>
-         <li style="margin-bottom: 8px;"><strong>Advanced Aspect Priority:</strong> Added "Bot Priority (Aspects)" display with Leadership first, Pool last, and shuffled middle aspects</li>
-         <li style="margin-bottom: 8px;"><strong>Weighted Aspect Selection:</strong> Bots now use the same exponential weighting system for aspects as heroes (~42% for top priority, ~28% for 2nd, etc.)</li>
-         <li style="margin-bottom: 8px;"><strong>Fixed Priority Order:</strong> Aspect priority is set once per draft - no reshuffling during gameplay</li>
-         <li style="margin-bottom: 8px;"><strong>Individual Instance Shuffling:</strong> Middle aspects (Aggression, Justice, Protection) are shuffled by individual numbered instances, not by type groups</li>
-         <li style="margin-bottom: 8px;"><strong>Highest Number Drafting:</strong> All aspect picks (player and bot) always draft the highest numbered available instance for easy counting</li>
-         <li style="margin-bottom: 8px;"><strong>Additional Status Display:</strong> Added fourth draft status box for better visibility throughout the interface</li>
-       </ul>
-     </div>
-   </div>
-
    <div class="results" id="results" style="display: none;">
      <div class="result-section">
        <h3>Hero Pool</h3>
@@ -686,8 +512,7 @@
        var checks = [
          { name: 'HTML Structure', test: validateStructure },
          { name: 'Global Variables', test: function() { return typeof marvelHeroes !== 'undefined'; } },
-         { name: 'Main Functions', test: function() { return typeof updateBotSettings === 'function'; } },
-         { name: 'Event Handlers', test: function() { return typeof toggleChangelog === 'function'; } }
+         { name: 'Main Functions', test: function() { return typeof updateBotSettings === 'function'; } }
        ];
        
        var passed = 0;
@@ -736,16 +561,6 @@
    var heroGroup2 = [];
    var aspectGroup1 = [];
    var aspectGroup2 = [];
-
-   // V1.0.7 Debug: Make aspect groups accessible from console
-   window.aspectGroup1 = aspectGroup1;
-   window.aspectGroup2 = aspectGroup2;
-   window.checkAspectGroups = function() {
-     console.log('aspectGroup1 length:', window.aspectGroup1.length);
-     console.log('aspectGroup2 length:', window.aspectGroup2.length);
-     console.log('aspectGroup1 contents:', window.aspectGroup1);
-     console.log('aspectGroup2 contents:', window.aspectGroup2);
-   };
 
    // Update bot settings (both sliders)
    function updateBotSettings() {
@@ -988,33 +803,6 @@
      'Ms Marvel', 'Nebula', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
      'Hawkeye', 'Groot', 'Valkyrie', 'Hulk'
    ];
-
-   // Toggle changelog
-   function toggleChangelog() {
-     return safeExecute(function() {
-       var content = document.getElementById('changelogContent');
-       var header = document.getElementById('changelogHeader');
-       var arrow = document.getElementById('changelogArrow');
-       
-       if (content.style.display === 'none') {
-         content.style.display = 'block';
-         arrow.textContent = '▲';
-         header.style.color = '#48dbfb';
-       } else {
-         content.style.display = 'none';
-         arrow.textContent = '▼';
-         header.style.color = '#2c2c54';
-       }
-     }, null, [], 'toggleChangelog');
-   }
-
-   // V1.0.7 Debug: Function to check aspect groups (for console debugging)
-   function checkAspectGroups() {
-     console.log('aspectGroup1 length:', aspectGroup1.length);
-     console.log('aspectGroup2 length:', aspectGroup2.length);
-     console.log('aspectGroup1 contents:', aspectGroup1);
-     console.log('aspectGroup2 contents:', aspectGroup2);
-   }
 
    // Check if hero is banned
    function isHeroBanned(heroName) {
