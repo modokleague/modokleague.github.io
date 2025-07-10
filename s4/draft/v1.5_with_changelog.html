@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>MODOK League S4 Hero Pool Builder - Enhanced</title>
+ <style>
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+
+   body {
+     background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+     background-size: 400% 400%;
+     animation: comicBg 15s ease infinite;
+     color: #2c2c54;
+     font-family: 'Comic Sans MS', cursive, sans-serif;
+     transition: all 0.3s ease;
+     min-height: 100vh;
+   }
+
+   @keyframes comicBg {
+     0% { background-position: 0% 50%; }
+     50% { background-position: 100% 50%; }
+     100% { background-position: 0% 50%; }
+   }
+
+   .container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 20px;
+     background: rgba(255, 255, 255, 0.95);
+     border: 4px solid #2c2c54;
+     border-radius: 20px;
+     position: relative;
+     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+     margin-top: 20px;
+     margin-bottom: 20px;
+   }
+
+   .container::before {
+     content: '';
+     position: absolute;
+     top: -10px;
+     left: -10px;
+     right: -10px;
+     bottom: -10px;
+     background: repeating-linear-gradient(
+       45deg,
+       #ff6b6b,
+       #ff6b6b 10px,
+       #feca57 10px,
+       #feca57 20px
+     );
+     border-radius: 25px;
+     z-index: -1;
+   }
+
+   .header {
+     text-align: center;
+     margin-bottom: 30px;
+   }
+
+   .header h1 {
+     font-size: 2.5rem;
+     margin-bottom: 10px;
+     font-weight: 700;
+   }
+
+   .controls {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+     gap: 20px;
+     margin-bottom: 30px;
+   }
+
+   .control-group {
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+   }
+
+   .control-group label {
+     font-weight: 600;
+     font-size: 1rem;
+   }
+
+   .control-group input, .control-group select, .control-group textarea {
+     padding: 12px;
+     border: 2px solid #ddd;
+     border-radius: 8px;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+   }
+
+   .control-group input:focus, .control-group select:focus, .control-group textarea:focus {
+     outline: none;
+     border-color: #4a90e2;
+     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+   }
+
+   .btn {
+     padding: 15px 30px;
+     background: linear-gradient(145deg, #ff6b6b, #ee5a52);
+     color: white;
+     border: 3px solid #2c2c54;
+     border-radius: 8px;
+     font-size: 1.1rem;
+     font-weight: bold;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+   }
+
+   .btn:hover {
+     background: linear-gradient(145deg, #ee5a52, #e54646);
+     transform: translateY(-2px);
+     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+   }
+
+   .hero-lists {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 20px;
+     margin-bottom: 30px;
+   }
+
+   .hero-section {
+     padding: 20px;
+     border-radius: 10px;
+     background: rgba(255,255,255,0.1);
+     backdrop-filter: blur(5px);
+   }
+
+   .hero-section h3 {
+     margin-bottom: 15px;
+     font-size: 1.3rem;
+     font-weight: 600;
+   }
+
+   .hero-grid {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 8px;
+   }
+
+   .hero-card {
+     padding: 8px 12px;
+     background: linear-gradient(145deg, #fff, #f0f0f0);
+     border: 3px solid #2c2c54;
+     border-radius: 6px;
+     font-size: 0.9rem;
+     transition: all 0.3s ease;
+     cursor: default;
+     transform: rotate(-1deg);
+   }
+
+   .hero-card:nth-child(even) {
+     transform: rotate(1deg);
+   }
+
+   .hero-card:hover {
+     transform: rotate(0deg) scale(1.05);
+     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+   }
+
+   .results {
+     margin-top: 30px;
+   }
+
+   .result-section {
+     margin-bottom: 25px;
+     padding: 20px;
+     border-radius: 10px;
+     background: rgba(255,255,255,0.1);
+     backdrop-filter: blur(5px);
+   }
+
+   .result-section h3 {
+     margin-bottom: 15px;
+     font-size: 1.3rem;
+     font-weight: 600;
+     color: #2c2c54;
+   }
+
+   .draft-order {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+     gap: 10px;
+   }
+
+   .team-card {
+     padding: 12px;
+     text-align: center;
+     background: rgba(74, 144, 226, 0.1);
+     border-radius: 8px;
+     font-weight: 600;
+     border: 2px solid rgba(74, 144, 226, 0.3);
+   }
+
+   .footer-note {
+     margin-top: 30px;
+     padding: 15px;
+     background: rgba(0,0,0,0.1);
+     border-radius: 8px;
+     font-size: 0.9rem;
+     text-align: center;
+     display: none;
+   }
+
+   .footer-note a {
+     color: #2c2c54;
+     text-decoration: none;
+     font-weight: 600;
+   }
+
+   .footer-note a:hover {
+     text-decoration: underline;
+   }
+
+   @media (max-width: 768px) {
+     .container {
+       padding: 15px;
+       margin: 10px;
+     }
+     
+     .header h1 {
+       font-size: 2rem;
+     }
+     
+     .controls {
+       grid-template-columns: 1fr;
+     }
+     
+     .hero-lists {
+       grid-template-columns: 1fr;
+     }
+   }
+ </style>
+</head>
+<body>
+ <div class="container">
+   <div class="header">
+     <h1>Draft-o-matic</h1>
+     <p id="toolVersionDisplay">MODOK League Season 4 (V1.0.5)</p>
+   </div>
+
+   <div class="hero-lists">
+     <div class="hero-section">
+       <h3>Available Heroes</h3>
+       <div class="hero-grid" id="allHeroes"></div>
+     </div>
+     
+     <div class="hero-section">
+       <h3>Available Aspects</h3>
+       <div class="hero-grid" id="allAspects"></div>
+     </div>
+     
+     <div class="hero-section">
+       <h3>Banned Heroes</h3>
+       <div class="hero-grid" id="bannedHeroes"></div>
+     </div>
+   </div>
+
+   <div class="controls">
+     <div class="control-group">
+       <label for="draftPoolGroups">Draft Pool Groups</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Number of separate pools for heroes and aspects</small>
+       <select id="draftPoolGroups">
+         <option value="4">4 (2 hero, 2 aspect)</option>
+         <option value="2">2 (1 hero, 1 aspect)</option>
+       </select>
+     </div>
+     
+     <div class="control-group">
+       <label for="teamsInput">Number of Teams</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Range: 6-14 teams</small>
+       <input type="number" id="teamsInput" min="6" max="14" value="10">
+     </div>
+     
+     <div class="control-group">
+       <label for="seedInput">Seed for randomization (optional)</label>
+       <input type="text" id="seedInput" placeholder="For reproducible results">
+     </div>
+     
+     <div class="control-group">
+       <label for="teamListInput">Team Names (Optional)</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One team per line. <strong>First will be your team</strong> in the draft simulator. Remaining names replace default team names.</small>
+       <textarea id="teamListInput" placeholder="My Team Name&#10;Team Beta&#10;Team Gamma&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
+     </div>
+     
+     <div class="control-group">
+       <label for="extrasInput">Extra Heroes per Draft Pool Group</label>
+       <small id="extrasSubLabel" style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Beyond the mininum number needed for drafting (Maximum: <span id="maxExtras">45</span>)</small>
+       <input type="number" id="extrasInput" min="0" max="45" value="3">
+     </div>
+   </div>
+
+   <div style="text-align: center;">
+     <button class="btn" id="goButton">Generate Draft Pool</button>
+   </div>
+
+   <div class="result-section" style="margin-top: 30px;">
+     <h3 style="cursor: pointer; user-select: none; transition: color 0.3s ease;" onclick="toggleChangelog()" id="changelogHeader">
+       📋 Changelog <span id="versionDisplay">(V1.0.5)</span> <span id="changelogArrow" style="font-size: 0.8em; margin-left: 8px;">▼</span>
+     </h3>
+     <div id="changelogContent" style="display: none; padding: 15px; background: rgba(72, 219, 251, 0.1); border-radius: 8px; border: 2px solid #48dbfb; margin-top: 10px;">
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem;">V1.4 - Bot Aspect Group Restrictions</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Enhanced Bot Compliance:</strong> Fixed bot aspect selection to properly respect aspect group restrictions in 4-group mode</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Accuracy:</strong> Bots now correctly pick only one aspect from each aspect group, matching player restrictions</li>
+         <li style="margin-bottom: 8px;"><strong>Maintained Intelligence:</strong> All existing bot priority logic preserved (Leadership first, weighted selection, surprise picks)</li>
+         <li style="margin-bottom: 8px;"><strong>Group Enforcement:</strong> Second aspect pick automatically filtered to opposite group when first aspect selected</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode bot behavior remains completely unchanged</li>
+         <li style="margin-bottom: 8px;"><strong>Fair Gameplay:</strong> Ensures bots follow the same strategic constraints as human players</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.3 - Enhanced Export Formatting</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Grouped Aspect Export:</strong> Aspect pool export now shows separate groups in 4-group mode with individual counts</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Information:</strong> Each aspect group displays detailed breakdown of aspect types and quantities</li>
+         <li style="margin-bottom: 8px;"><strong>Proper Formatting:</strong> Added group headers with aspect counts (e.g., "Aspect Group 1 (15 aspects)")</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Planning:</strong> Clear visibility of aspect distribution across groups in exported files</li>
+         <li style="margin-bottom: 8px;"><strong>Export Consistency:</strong> Aspect export format now matches hero export structure</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode export format remains unchanged</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.2 - Export Bug Fixes</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Accurate Hero Counts:</strong> Fixed hero pool export to show correct total count across all groups</li>
+         <li style="margin-bottom: 8px;"><strong>Proper Line Breaks:</strong> Added proper formatting with line breaks between group headers and hero lists</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Readability:</strong> Each hero now appears on its own line with proper spacing between groups</li>
+         <li style="margin-bottom: 8px;"><strong>Export Quality:</strong> Resolved formatting issues that caused exported text to run together</li>
+         <li style="margin-bottom: 8px;"><strong>Professional Output:</strong> Export files now have clean, readable structure for easy reference</li>
+         <li style="margin-bottom: 8px;"><strong>Group Separation:</strong> Clear visual distinction between Hero Group 1 and Hero Group 2 in exports</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.1 - Enhanced Aspect Pool Display</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Grouped Aspect Pool Display:</strong> Main aspect pool now shows aspects separated into groups (4-group mode)</li>
+         <li style="margin-bottom: 8px;"><strong>Type Summary Counts:</strong> Each aspect group displays count of each aspect type for strategic planning</li>
+         <li style="margin-bottom: 8px;"><strong>Visual Consistency:</strong> Aspect pool display now matches the structure used in draft simulator</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Information:</strong> Clear overview of aspect distribution across groups before drafting</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Planning:</strong> Teams can better strategize knowing the exact composition of each group</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode maintains single-list aspect display</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.9 - Fixed Aspect Group Selection</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Accurate Group Selection:</strong> Fixed bug where clicking an aspect in a specific group would draft from the wrong group</li>
+         <li style="margin-bottom: 8px;"><strong>Precise Aspect Drafting:</strong> Clicking a selectable aspect now drafts exactly that aspect from the correct group</li>
+         <li style="margin-bottom: 8px;"><strong>Maintained Group Restrictions:</strong> All existing group limitations and visual indicators remain intact</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Reliability:</strong> 4-group mode aspect selection now works as visually indicated</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode selection behavior remains unchanged</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Accuracy:</strong> Players can now confidently select aspects knowing exactly which will be drafted</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.8 - Highest-Numbered Aspect Selection</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Selective Aspect Drafting:</strong> In 4-group mode, only the highest numbered aspect of each type per group can be selected</li>
+         <li style="margin-bottom: 8px;"><strong>Visual Checkmark System:</strong> Selectable aspects display ✅ before their name for clear identification</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Clarity:</strong> Non-selectable aspects remain visible but unclickable, maintaining draft visibility</li>
+         <li style="margin-bottom: 8px;"><strong>Conflict Prevention:</strong> Eliminates aspect selection conflicts while preserving strategic information</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced User Experience:</strong> Clear visual distinction between selectable and reference-only aspects</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains unchanged with full aspect selection freedom</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.7 - Aspect Group Draft Restrictions</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Aspect Group Limitations:</strong> In 4-group mode, each team can now only draft one aspect from each aspect group</li>
+         <li style="margin-bottom: 8px;"><strong>Complete Group System:</strong> 4-group mode now features 2 hero groups + 2 aspect groups for maximum strategic depth</li>
+         <li style="margin-bottom: 8px;"><strong>Smart Bot Aspect Strategy:</strong> Bots make first aspect pick using normal priority, second pick restricted to opposite aspect group</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Strategic Depth:</strong> Teams must balance both hero and aspect group selections in tactical drafting</li>
+         <li style="margin-bottom: 8px;"><strong>Unified Group Display:</strong> Aspect groups shown with clear visual separation in draft simulator interface</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains completely unchanged with no new restrictions</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.6 - Hero Group Draft Restrictions</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Group-Based Draft Limits:</strong> In 4-group mode, each team can now only draft one hero from each group</li>
+         <li style="margin-bottom: 8px;"><strong>Smart Bot Strategy:</strong> Bots make first hero pick using normal tier list, second pick restricted to opposite group</li>
+         <li style="margin-bottom: 8px;"><strong>Player Restrictions:</strong> Hero selection automatically filtered based on group availability for current team</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Depth:</strong> Adds tactical decision-making to hero selection in 4-group drafts</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> 2-group mode remains completely unchanged with no new restrictions</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Draft Rules:</strong> Clear group restrictions display in draft simulator interface</li>
+       </ul>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Centralized Version Control:</strong> Added global TOOL_VERSION variable for consistent version management</li>
+         <li style="margin-bottom: 8px;"><strong>Dynamic Version Display:</strong> All version references now automatically update from central variable</li>
+         <li style="margin-bottom: 8px;"><strong>Improved Maintainability:</strong> Single location for version updates reduces inconsistencies</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Footer Generation:</strong> Export function now dynamically includes current version</li>
+         <li style="margin-bottom: 8px;"><strong>Future-Proof Structure:</strong> Simplified version update process for future releases</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.2 - String Concatenation Update</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Template Literal Removal:</strong> Replaced all template literals with string concatenation for broader compatibility</li>
+         <li style="margin-bottom: 8px;"><strong>ES5 Compatibility:</strong> Improved support for older browsers and environments</li>
+         <li style="margin-bottom: 8px;"><strong>Code Modernization:</strong> Updated syntax while maintaining full functionality</li>
+         <li style="margin-bottom: 8px;"><strong>Performance Optimization:</strong> String concatenation optimizations for better execution</li>
+         <li style="margin-bottom: 8px;"><strong>Stability Enhancement:</strong> Reduced potential compatibility issues across different JavaScript engines</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V1.0.1 - Draft Pool Groups Foundation</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Draft Pool Groups Selector:</strong> Added dropdown to choose between "4 (2 hero, 2 aspect)" and "2 (1 hero, 1 aspect)" group configurations</li>
+         <li style="margin-bottom: 8px;"><strong>Hero Pool Splitting:</strong> Heroes automatically split into two equal groups when using 4-group mode</li>
+         <li style="margin-bottom: 8px;"><strong>Extra Heroes per Group:</strong> Renamed and updated "Extras in the Draft Pool" with different defaults: 3 for 4-group mode, 6 for 2-group mode</li>
+         <li style="margin-bottom: 8px;"><strong>Dynamic Defaults:</strong> Extra heroes field automatically adjusts default value when switching between group modes</li>
+         <li style="margin-bottom: 8px;"><strong>Foundation for Multi-Group System:</strong> Prepares the tool for advanced drafting with separate hero and aspect group pools</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Display:</strong> Hero groups shown with proper section formatting matching other result displays</li>
+         <li style="margin-bottom: 8px;"><strong>Backward Compatibility:</strong> Existing functionality unchanged while new features are developed</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.11 - Enhanced Bot Leadership Priority</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Leadership First Strategy:</strong> When bots pick aspects (non-surprise), they now prioritize any available Leadership before other aspects</li>
+         <li style="margin-bottom: 8px;"><strong>Two-Stage Aspect Logic:</strong> 1) Check for surprise pick, 2) If Leadership available, take highest Leadership, 3) Otherwise use weighted selection</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Realism:</strong> Reflects the high value of Leadership aspects in competitive play</li>
+         <li style="margin-bottom: 8px;"><strong>Highest Number Priority:</strong> When taking Leadership, bots always select the highest-numbered available instance</li>
+         <li style="margin-bottom: 8px;"><strong>Fallback Logic:</strong> When no Leadership remains, bots use standard weighted selection from top 5 aspects in priority list</li>
+         <li style="margin-bottom: 8px;"><strong>Surprise Pick Immunity:</strong> Leadership priority only applies to non-surprise picks, maintaining randomness when surprise triggered</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.10 - Aspect Priority Renumbering</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Descending Order Display:</strong> Aspect priority list now renumbers aspects within each type to show in descending order</li>
+         <li style="margin-bottom: 8px;"><strong>Improved Readability:</strong> Higher-numbered aspects of the same type appear first in bot priority (e.g., Justice #2 before Justice #1)</li>
+         <li style="margin-bottom: 8px;"><strong>Consistent Logic:</strong> Maintains the same selection priority while improving visual organization</li>
+         <li style="margin-bottom: 8px;"><strong>Example Ordering:</strong> Protection #2, Justice #2, Aggression #3, Justice #1, Aggression #2, Aggression #1, Protection #1</li>
+         <li style="margin-bottom: 8px;"><strong>Bot Strategy Unchanged:</strong> Selection weights and priority logic remain identical, only display order is modified</li>
+         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Renumbered priority order included in exported draft pool files</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.9 - Spider-Woman Aspect Assignment</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Spider-Woman Enhancement:</strong> When Spider-Woman is included in the hero pool, she's automatically assigned a random aspect</li>
+         <li style="margin-bottom: 8px;"><strong>Weighted Randomization:</strong> Aspects assigned with weights: Aggression (2), Justice (2), Leadership (2), Protection (2), Pool (1)</li>
+         <li style="margin-bottom: 8px;"><strong>Draft Bot Integration:</strong> Spider-Woman's assigned aspect name appears in bot priority order (e.g., "Spider-Woman - Aggression")</li>
+         <li style="margin-bottom: 8px;"><strong>Consistent Naming:</strong> The same aspect-assigned name appears in both hero pool and bot priority displays</li>
+         <li style="margin-bottom: 8px;"><strong>Seeded Randomization:</strong> Aspect assignment uses the same random seed as other pool generation for reproducible results</li>
+         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Aspect-assigned Spider-Woman name included in all exported sections</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.8 - Bot Surprise Pick System</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Surprise Pick Slider:</strong> Added second slider for bot's chance to make completely random picks (0-100%)</li>
+         <li style="margin-bottom: 8px;"><strong>Two-Stage Selection:</strong> Bots first check for surprise pick, then use weighted selection if not surprising</li>
+         <li style="margin-bottom: 8px;"><strong>Complete Randomness:</strong> Surprise picks ignore tier lists entirely and choose randomly from all available options</li>
+         <li style="margin-bottom: 8px;"><strong>Default 10%:</strong> Conservative default ensures occasional shocking picks without breaking strategy</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Strategy Control:</strong> Users now control both round adherence AND tier list adherence independently</li>
+         <li style="margin-bottom: 8px;"><strong>Dynamic Descriptions:</strong> Both sliders update strategy descriptions in real-time</li>
+         <li style="margin-bottom: 8px;"><strong>Improved Naming:</strong> Renamed first slider to "Bot Ignore Round Preferences" for clarity</li>
+         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Both bot settings included in exported draft pool files</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Depth:</strong> Players can now experience everything from predictable bots to complete chaos</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.7 - Customizable Bot Strategy</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Bot Randomness Control:</strong> Added slider to adjust bot's chance to draft opposite type (0-100%)</li>
+         <li style="margin-bottom: 8px;"><strong>Improved Default:</strong> Increased default bot randomness from 10% to 15% for more varied drafts</li>
+         <li style="margin-bottom: 8px;"><strong>Strategy Customization:</strong> Users can now fine-tune bot behavior from predictable (0%) to chaotic (100%)</li>
+         <li style="margin-bottom: 8px;"><strong>Real-time Preview:</strong> Bot strategy description updates dynamically as you adjust the slider</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Control:</strong> Full control over draft simulator difficulty and unpredictability</li>
+         <li style="margin-bottom: 8px;"><strong>Export Integration:</strong> Bot randomness setting included in exported draft pool files</li>
+         <li style="margin-bottom: 8px;"><strong>User Interface:</strong> Intuitive slider with visual indicators (Predictable → Balanced → Chaotic)</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.6 - Aspect Priority Early Display</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Early Aspect Priority:</strong> Bot aspect priority is now displayed immediately when the draft pool is generated</li>
+         <li style="margin-bottom: 8px;"><strong>Better User Experience:</strong> Users can see both hero and aspect bot priorities before starting the draft simulator</li>
+         <li style="margin-bottom: 8px;"><strong>Consistent Priority Order:</strong> The same aspect priority order is used throughout the entire draft process</li>
+         <li style="margin-bottom: 8px;"><strong>Enhanced Export:</strong> Export function now includes the bot aspect priority section</li>
+         <li style="margin-bottom: 8px;"><strong>Seeded Aspect Shuffling:</strong> Aspect priority uses the same random seed as pool generation for reproducible results</li>
+         <li style="margin-bottom: 8px;"><strong>Strategic Planning:</strong> Players can now plan their draft strategy by seeing bot priorities for both heroes and aspects upfront</li>
+       </ul>
+       <h4 style="margin-bottom: 10px; color: #48dbfb; font-size: 1.1rem; margin-top: 15px;">V0.5 - Enhanced Bot Draft Strategy</h4>
+       <ul style="margin-left: 20px; color: #2c2c54;">
+         <li style="margin-bottom: 8px;"><strong>Flexible Bot Drafting:</strong> Bots now have a 10% chance to draft the opposite type (hero vs aspect) in any round</li>
+         <li style="margin-bottom: 8px;"><strong>Smart Constraints:</strong> Bots still respect the 2 heroes + 2 aspects maximum rule</li>
+         <li style="margin-bottom: 8px;"><strong>Advanced Aspect Priority:</strong> Added "Bot Priority (Aspects)" display with Leadership first, Pool last, and shuffled middle aspects</li>
+         <li style="margin-bottom: 8px;"><strong>Weighted Aspect Selection:</strong> Bots now use the same exponential weighting system for aspects as heroes (~42% for top priority, ~28% for 2nd, etc.)</li>
+         <li style="margin-bottom: 8px;"><strong>Fixed Priority Order:</strong> Aspect priority is set once per draft - no reshuffling during gameplay</li>
+         <li style="margin-bottom: 8px;"><strong>Individual Instance Shuffling:</strong> Middle aspects (Aggression, Justice, Protection) are shuffled by individual numbered instances, not by type groups</li>
+         <li style="margin-bottom: 8px;"><strong>Highest Number Drafting:</strong> All aspect picks (player and bot) always draft the highest numbered available instance for easy counting</li>
+         <li style="margin-bottom: 8px;"><strong>Additional Status Display:</strong> Added fourth draft status box for better visibility throughout the interface</li>
+       </ul>
+     </div>
+   </div>
+
+   <div class="results" id="results" style="display: none;">
+     <div class="result-section">
+       <h3>Hero Pool</h3>
+       <div class="hero-grid" id="resultPool"></div>
+     </div>
+     
+     <div class="result-section">
+       <h3>Aspect Pool</h3>
+       <div class="hero-grid" id="resultAspectPool"></div>
+     </div>
+     
+     <div class="result-section">
+       <h3>Draft Bot Priority (Heroes)</h3>
+       <div class="hero-grid" id="resultDraftBot"></div>
+     </div>
+     
+     <div class="result-section">
+       <h3>Draft Bot Priority (Aspects)</h3>
+       <div class="hero-grid" id="resultDraftBotAspects"></div>
+     </div>
+     
+     <div class="result-section">
+       <h3>Team Draft Order</h3>
+       <div class="draft-order" id="resultDraftOrder"></div>
+     </div>
+     
+     <div class="result-section">
+       <h3>Excluded Heroes</h3>
+       <div class="hero-grid" id="resultExcluded"></div>
+     </div>
+     
+     <div style="text-align: center; margin-top: 30px; padding: 20px;">
+       <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2;">
+         <h4 style="margin-bottom: 15px; color: #8A2BE2;">Bot Strategy Settings</h4>
+         
+         <div style="margin-bottom: 20px;">
+           <label for="botRandomnessSlider" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c2c54;">
+             Bot Ignore Round Preferences: <span id="botRandomnessValue" style="color: #8A2BE2;">15%</span>
+           </label>
+           <input type="range" id="botRandomnessSlider" min="0" max="100" value="15" style="width: 300px; max-width: 100%;" oninput="updateBotSettings()">
+           <div style="display: flex; justify-content: space-between; max-width: 300px; margin: 5px auto 0; font-size: 0.8em; color: #666;">
+             <span>0% (Predictable)</span>
+             <span>50% (Balanced)</span>
+             <span>100% (Chaotic)</span>
+           </div>
+           <p style="font-size: 0.85em; color: #666; margin: 8px 0 0; text-align: center;">Chance to ignore round preferences (Hero R1&3, Aspect R2&4)</p>
+         </div>
+         
+         <div style="margin-bottom: 15px;">
+           <label for="botSurpriseSlider" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c2c54;">
+             Bot Surprise Pick: <span id="botSurpriseValue" style="color: #ff6b6b;">10%</span>
+           </label>
+           <input type="range" id="botSurpriseSlider" min="0" max="100" value="10" style="width: 300px; max-width: 100%;" oninput="updateBotSettings()">
+           <div style="display: flex; justify-content: space-between; max-width: 300px; margin: 5px auto 0; font-size: 0.8em; color: #666;">
+             <span>0% (Tier List Only)</span>
+             <span>50% (Mixed)</span>
+             <span>100% (Pure Random)</span>
+           </div>
+           <p style="font-size: 0.85em; color: #666; margin: 8px 0 0; text-align: center;">Chance to ignore tier lists and pick completely randomly</p>
+         </div>
+         
+         <p id="botStrategyDescription" style="color: #2c2c54; font-size: 0.9rem; margin: 0; text-align: center; font-style: italic; background: rgba(255,255,255,0.3); padding: 10px; border-radius: 6px;">
+           Bots prefer Hero in R1&3, Aspect in R2&4, with 15% chance to draft opposite type. 5% chance for surprise picks.
+         </p>
+       </div>
+       
+       <button class="btn" id="exportButton" onclick="exportDraftPool()" style="font-size: 1rem; padding: 12px 25px; margin-right: 15px;">
+         📋 Export Draft Pool
+       </button>
+       <button class="btn" id="startDraftButton" onclick="startDraftSimulator()" style="font-size: 1rem; padding: 12px 25px;">
+         🎯 Start Draft Simulator
+       </button>
+     </div>
+   </div>
+
+   <div class="draft-setup" id="draftSetup" style="display: none;">
+     <div class="result-section">
+       <h3>🎯 Draft Simulator - Setup</h3>
+       <div style="padding: 20px;">
+         <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #ff6b6b;">
+           <h4 style="margin-bottom: 10px; color: #ff6b6b;">Your Team</h4>
+<p style="font-size: 1.2rem; font-weight: bold;" id="playerTeamDisplay"></p>
+         </div>
+         
+         <div style="background: rgba(72, 219, 251, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #48dbfb;">
+           <h4 style="margin-bottom: 15px; color: #48dbfb;">Draft Information</h4>
+           <p style="margin-bottom: 10px;">Heroes available for draft: <strong id="heroCountDisplay"></strong></p>
+           <p style="margin-bottom: 10px;">Aspects available for draft: <strong id="aspectCountDisplay"></strong></p>
+           <p>Teams participating: <strong id="teamCountDisplay"></strong></p>
+           <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Each team drafts 2 heroes and 2 aspects over 4 rounds</p>
+         </div>
+         
+         <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2; text-align: center;">
+           <h4 style="margin-bottom: 10px; color: #8A2BE2; font-size: 1.2rem;">Current Draft Status</h4>
+           <p id="draftStatusMessage2" style="font-size: 1.1rem; font-weight: bold; color: #2c2c54;">🎯 Your Turn - Click a hero or aspect to draft!</p>
+           <p id="draftConstraintMessage2" style="font-size: 0.9rem; color: #666; margin-top: 8px;"></p>
+         </div>
+         
+         <div style="background: rgba(160, 160, 160, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #a0a0a0;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">All Teams' Picks (Draft Order)</h4>
+           <div id="allTeamsPicksDisplay">
+             <p style="color: #666; font-style: italic;">Draft not started</p>
+           </div>
+         </div>
+         
+         <div style="background: rgba(254, 202, 87, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px; border: 2px solid #feca57;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">Team Draft Order</h4>
+           <div id="draftOrderDisplay" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;"></div>
+         </div>
+         
+         <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2; text-align: center;">
+           <h4 style="margin-bottom: 10px; color: #8A2BE2; font-size: 1.2rem;">Draft Status</h4>
+           <p id="draftStatusMessage" style="font-size: 1.1rem; font-weight: bold; color: #2c2c54;">🎯 Your Turn - Click a hero or aspect to draft!</p>
+           <p id="draftConstraintMessage" style="font-size: 0.9rem; color: #666; margin-top: 8px;"></p>
+         </div>
+         
+         <div style="background: rgba(144, 238, 144, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #90EE90;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">Available Heroes for Draft</h4>
+           <div id="availableHeroesDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+         </div>
+         
+         <div style="background: rgba(255, 193, 7, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #ffc107;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">Available Aspects for Draft</h4>
+           <div id="availableAspectsDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+         </div>
+         
+         <div style="background: rgba(138, 43, 226, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #8A2BE2;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">Bot Priority (Heroes)</h4>
+           <div id="botPriorityDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+         </div>
+         
+         <div style="background: rgba(255, 20, 147, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #ff1493;">
+           <h4 style="margin-bottom: 15px; color: #2c2c54;">Bot Priority (Aspects)</h4>
+           <div id="botAspectPriorityDisplay" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+         </div>
+         
+         <div style="background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ffc107;">
+           <p style="color: #2c2c54; font-size: 0.9rem; margin: 0; text-align: center;">
+             <strong>Draft Rules:</strong> 4 rounds total. Each team picks 2 heroes and 2 aspects. You can choose heroes or aspects freely within constraints.<br>
+             <strong>Group Restrictions (4-group mode):</strong> Each team can only draft one hero from each hero group AND one aspect from each aspect group. Second picks must be from opposite groups.<br>
+             <strong>Bot Strategy:</strong> Three-stage system - 1) Check round preferences, 2) Check for surprise picks (random), 3) Use strategic selection.<br>
+             <strong>Round Preferences:</strong> Bots prefer Hero in R1&R3, Aspect in R2&R4. "Bot Ignore Round Preferences" slider controls chance to draft opposite type.<br>
+             <strong>Hero Priority:</strong> Bots use weighted selection from tier list (~38% top choice, ~26% 2nd choice, etc.). Surprise picks ignore tier lists.<br>
+             <strong>Aspect Priority:</strong> Leadership always prioritized first (if available), then weighted selection from priority list. Pool aspects ranked last.<br>
+             <strong>Surprise Picks:</strong> Completely random selection that ignores both tier lists and Leadership priority. Controlled by separate slider.
+           </p>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   <div class="footer-note" id="footerNote">
+     Draft-bot order is based on <a href="https://www.youtube.com/watch?v=2bRm-ZxtNjM" target="_blank">Villain Theory's May 2025 tierlist</a>
+   </div>
+ </div>
+
+ <script>
+   /* ===== MODOK DRAFT TOOL - MAIN SCRIPT START ===== */
+   // CRITICAL: All JavaScript code must remain within this script block
+   
+   // V1.5 Enhancement: Bot aspect variety discouragement
+   var TOOL_VERSION = 'V1.5';
+   
+   // Initialize version displays
+   document.addEventListener('DOMContentLoaded', function() {
+     document.getElementById('toolVersionDisplay').textContent = 'MODOK League Season 4 (' + TOOL_VERSION + ')';
+     document.getElementById('versionDisplay').textContent = '(' + TOOL_VERSION + ')';
+   });
+   
+   // Error boundary wrapper for critical functions - Available globally
+   function safeExecute(fn, context, args, functionName) {
+     try {
+       return fn.apply(context, args || []);
+     } catch (error) {
+       return null;
+     }
+   }
+   
+   // Runtime validation and error protection
+   (function() {
+     'use strict';
+     
+     // Validate HTML structure integrity
+     function validateStructure() {
+       try {
+         var requiredElements = ['allHeroes', 'allAspects', 'bannedHeroes', 'goButton', 'results'];
+         var missing = [];
+         
+         for (var i = 0; i < requiredElements.length; i++) {
+           if (!document.getElementById(requiredElements[i])) {
+             missing.push(requiredElements[i]);
+           }
+         }
+         
+         if (missing.length > 0) {
+           return false;
+         }
+         
+         return true;
+       } catch (error) {
+         return false;
+       }
+     }
+     
+     // Validate script execution at end
+     window.validateScriptExecution = function() {
+       var checks = [
+         { name: 'HTML Structure', test: validateStructure },
+         { name: 'Global Variables', test: function() { return typeof marvelHeroes !== 'undefined'; } },
+         { name: 'Main Functions', test: function() { return typeof updateBotSettings === 'function'; } },
+         { name: 'Event Handlers', test: function() { return typeof toggleChangelog === 'function'; } }
+       ];
+       
+       var passed = 0;
+       var total = checks.length;
+       
+       for (var i = 0; i < checks.length; i++) {
+         var check = checks[i];
+         var result = check.test();
+         if (result) passed++;
+       }
+       
+       if (passed === total) {
+         return true;
+       } else {
+         return false;
+       }
+     };
+     
+     // Auto-validate on DOM ready
+     if (document.readyState === 'loading') {
+       document.addEventListener('DOMContentLoaded', function() {
+         setTimeout(window.validateScriptExecution, 100);
+       });
+     } else {
+       setTimeout(window.validateScriptExecution, 100);
+     }
+     
+   })();
+   
+   // Global variables
+   var aspectPriorityList = [];
+   var currentTurnIndex = 0;
+   var currentRound = 1;
+   var maxRounds = 4;
+   var draftOrderTeams = [];
+   var playerTeamName = '';
+   var teamPicks = {};
+   var isPlayerTurn = false;
+   var draftedHeroes = [];
+   var draftedAspects = [];
+   var allHeroes = [];
+   var allAspects = [];
+   var botRandomnessPercentage = 15; // Default 15% randomness
+   var botSurprisePercentage = 10; // Default 10% surprise picks
+   var heroGroup1 = [];
+   var heroGroup2 = [];
+   var aspectGroup1 = [];
+   var aspectGroup2 = [];
+
+   // V1.0.7 Debug: Make aspect groups accessible from console
+   window.aspectGroup1 = aspectGroup1;
+   window.aspectGroup2 = aspectGroup2;
+   window.checkAspectGroups = function() {
+     console.log('aspectGroup1 length:', window.aspectGroup1.length);
+     console.log('aspectGroup2 length:', window.aspectGroup2.length);
+     console.log('aspectGroup1 contents:', window.aspectGroup1);
+     console.log('aspectGroup2 contents:', window.aspectGroup2);
+   };
+
+   // Update bot settings (both sliders)
+   function updateBotSettings() {
+     return safeExecute(function() {
+       var randomnessSlider = document.getElementById('botRandomnessSlider');
+       var surpriseSlider = document.getElementById('botSurpriseSlider');
+       var randomnessValue = document.getElementById('botRandomnessValue');
+       var surpriseValue = document.getElementById('botSurpriseValue');
+       var description = document.getElementById('botStrategyDescription');
+       
+       botRandomnessPercentage = parseInt(randomnessSlider.value);
+       botSurprisePercentage = parseInt(surpriseSlider.value);
+       
+       randomnessValue.textContent = botRandomnessPercentage + '%';
+       surpriseValue.textContent = botSurprisePercentage + '%';
+       
+       // Generate combined strategy description
+       var roundText = '';
+       if (botRandomnessPercentage === 0) {
+         roundText = 'Bots always follow strict pattern: Hero in R1&3, Aspect in R2&4';
+       } else if (botRandomnessPercentage <= 25) {
+         roundText = 'Bots prefer Hero in R1&3, Aspect in R2&4, with ' + botRandomnessPercentage + '% chance to draft opposite type';
+       } else if (botRandomnessPercentage <= 75) {
+         roundText = 'Bots have ' + botRandomnessPercentage + '% chance to ignore round preferences';
+       } else {
+         roundText = 'Bots mostly ignore round preferences (' + botRandomnessPercentage + '% chaos)';
+       }
+       
+       var surpriseText = '';
+       if (botSurprisePercentage === 0) {
+         surpriseText = 'Always use tier list priorities';
+       } else if (botSurprisePercentage <= 10) {
+         surpriseText = botSurprisePercentage + '% chance for shocking surprise picks';
+       } else if (botSurprisePercentage <= 25) {
+         surpriseText = botSurprisePercentage + '% chance to ignore tier lists completely';
+       } else if (botSurprisePercentage <= 50) {
+         surpriseText = botSurprisePercentage + '% chance for random picks (mixed strategy)';
+       } else {
+         surpriseText = botSurprisePercentage + '% chance for random picks (mostly chaos)';
+       }
+       
+       description.textContent = roundText + '. ' + surpriseText + '.';
+     }, null, [], 'updateBotSettings');
+   }
+
+   // V1.0.6 Enhancement: Helper function to get hero group
+   function getHeroGroup(heroName) {
+     if (heroGroup1.includes(heroName)) {
+       return 1;
+     } else if (heroGroup2.includes(heroName)) {
+       return 2;
+     }
+     return 0; // Not in any group (fallback for 2-group mode)
+   }
+
+   // V1.0.7 Enhancement: Helper function to get aspect group
+   function getAspectGroup(aspectName) {
+     if (aspectGroup1.includes(aspectName)) {
+       return 1;
+     } else if (aspectGroup2.includes(aspectName)) {
+       return 2;
+     }
+     return 0; // Not in any group (fallback for 2-group mode)
+   }
+
+   // V1.1 Enhancement: Helper function to get aspect type summary
+   function getAspectTypeSummary(aspectArray) {
+     var typeCounts = {};
+     aspectArray.forEach(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       typeCounts[aspectType] = (typeCounts[aspectType] || 0) + 1;
+     });
+     
+     var summaryParts = [];
+     ['Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'].forEach(function(type) {
+       if (typeCounts[type]) {
+         summaryParts.push(type + ': ' + typeCounts[type]);
+       }
+     });
+     
+     return summaryParts.join(', ');
+   }
+
+   // Helper function to get aspect type from numbered aspect
+   function getAspectType(numberedAspect) {
+     return numberedAspect.split(' #')[0];
+   }
+
+   // Initialize aspect priority order
+   function initializeAspectPriorityOrder(useRandomSeed, rng) {
+     useRandomSeed = useRandomSeed || true;
+     var aspectsByType = {};
+     allAspects.forEach(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       if (!aspectsByType[aspectType]) {
+         aspectsByType[aspectType] = [];
+       }
+       aspectsByType[aspectType].push(aspect);
+     });
+     
+     Object.keys(aspectsByType).forEach(function(type) {
+       aspectsByType[type].sort(function(a, b) {
+         var numA = parseInt(a.split('#')[1]);
+         var numB = parseInt(b.split('#')[1]);
+         return numB - numA;
+       });
+     });
+     
+     aspectPriorityList = [];
+     
+     if (aspectsByType['Leadership']) {
+       aspectPriorityList.push.apply(aspectPriorityList, aspectsByType['Leadership']);
+     }
+     
+     var middleInstances = [];
+     ['Aggression', 'Justice', 'Protection'].forEach(function(aspectType) {
+       if (aspectsByType[aspectType]) {
+         middleInstances.push.apply(middleInstances, aspectsByType[aspectType]);
+       }
+     });
+     
+     if (useRandomSeed && rng) {
+       shuffleArray(middleInstances, rng);
+     } else {
+       for (var i = middleInstances.length - 1; i > 0; i--) {
+         var j = Math.floor(Math.random() * (i + 1));
+         var temp = middleInstances[i];
+         middleInstances[i] = middleInstances[j];
+         middleInstances[j] = temp;
+       }
+     }
+     
+     aspectPriorityList.push.apply(aspectPriorityList, middleInstances);
+     
+     if (aspectsByType['Pool']) {
+       aspectPriorityList.push.apply(aspectPriorityList, aspectsByType['Pool']);
+     }
+     
+     // V0.10 Enhancement: Renumber aspects for display in descending order
+     aspectPriorityList = renumberAspectPriorityForDisplay(aspectPriorityList);
+   }
+
+   // Function to split hero pool into two groups for 4-group mode
+   function splitHeroPoolIntoGroups(heroPool, rng) {
+     var shuffledPool = heroPool.slice();
+     shuffleArray(shuffledPool, rng);
+     
+     var midPoint = Math.floor(shuffledPool.length / 2);
+     var group1 = shuffledPool.slice(0, midPoint).sort();
+     var group2 = shuffledPool.slice(midPoint).sort();
+     
+     return { group1: group1, group2: group2 };
+   }
+
+   // V1.0.7 Enhancement: Function to split aspect pool into two groups for 4-group mode
+   function splitAspectPoolIntoGroups(aspectPool, rng) {
+     var shuffledPool = aspectPool.slice();
+     shuffleArray(shuffledPool, rng);
+     
+     var midPoint = Math.floor(shuffledPool.length / 2);
+     var group1 = shuffledPool.slice(0, midPoint).sort();
+     var group2 = shuffledPool.slice(midPoint).sort();
+     
+     return { group1: group1, group2: group2 };
+   }
+
+   // Function to renumber aspects in descending order within each type
+   function renumberAspectPriorityForDisplay(aspectList) {
+     var renumberedList = [];
+     var typeGroups = {};
+     
+     // Group aspects by type and collect their original numbers
+     aspectList.forEach(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       if (!typeGroups[aspectType]) {
+         typeGroups[aspectType] = [];
+       }
+       typeGroups[aspectType].push(aspect);
+     });
+     
+     // Process each aspect in the original list order
+     aspectList.forEach(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       var typeGroup = typeGroups[aspectType];
+       
+       // Find position of this aspect within its type group
+       var aspectsOfThisTypeSoFar = renumberedList.filter(function(a) {
+         return getAspectType(a) === aspectType;
+       });
+       var newNumber = typeGroup.length - aspectsOfThisTypeSoFar.length;
+       
+       renumberedList.push(aspectType + ' #' + newNumber);
+     });
+     
+     return renumberedList;
+   }
+
+   // Function to assign aspect to Spider-Woman
+   function assignSpiderWomanAspect(rng) {
+     var aspects = ['Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'];
+     var weights = [2, 2, 2, 2, 1]; // Aggression=2, Justice=2, Leadership=2, Protection=2, Pool=1
+     
+     var totalWeight = weights.reduce(function(sum, weight) {
+       return sum + weight;
+     }, 0);
+     var random = rng.next() * totalWeight;
+     var cumulativeWeight = 0;
+     
+     for (var i = 0; i < aspects.length; i++) {
+       cumulativeWeight += weights[i];
+       if (random <= cumulativeWeight) {
+         return aspects[i];
+       }
+     }
+     
+     return aspects[0]; // Fallback
+   }
+
+   // Banned heroes
+   var bannedHeroes = [];
+
+   // Available aspects
+   var availableAspects = [
+     'Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'
+   ];
+
+   // Bot draft order
+   var draftOrder = [
+     'Spider-Ham', 'Cable', 'Cyclops', 'Storm', 'Magik', 'Psylocke', 'Maria Hill',
+     'Bishop', 'Spider-Man (Peter Parker)', 'Doctor Strange', 'Spider-Man (Miles Morales)',
+     'Captain Marvel', 'Scarlet Witch', 'X-23', 'Deadpool',
+     'Black Panther (Shuri)', 'Magneto', 'Ironheart', 'Vision', 'Captain America', 
+     'Domino', 'Angel', 'Shadowcat', 'Nova',
+     'Nick Fury', 'Iron Man', 'Silk', 'Spider-Woman', 'SP//dr',
+     'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
+     'Ant-Man', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee', 
+     'Gambit', 'Iceman', 'Rocket',
+     'Falcon', 'Winter Soldier',
+     'Adam Warlock', 'Gamora', 'Ghost-Spider', 'Drax', 'Black Widow', 'Nightcrawler', 'Wasp',
+     'Ms Marvel', 'Nebula', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
+     'Hawkeye', 'Groot', 'Valkyrie', 'Hulk'
+   ];
+
+   // Toggle changelog
+   function toggleChangelog() {
+     return safeExecute(function() {
+       var content = document.getElementById('changelogContent');
+       var header = document.getElementById('changelogHeader');
+       var arrow = document.getElementById('changelogArrow');
+       
+       if (content.style.display === 'none') {
+         content.style.display = 'block';
+         arrow.textContent = '▲';
+         header.style.color = '#48dbfb';
+       } else {
+         content.style.display = 'none';
+         arrow.textContent = '▼';
+         header.style.color = '#2c2c54';
+       }
+     }, null, [], 'toggleChangelog');
+   }
+
+   // V1.0.7 Debug: Function to check aspect groups (for console debugging)
+   function checkAspectGroups() {
+     console.log('aspectGroup1 length:', aspectGroup1.length);
+     console.log('aspectGroup2 length:', aspectGroup2.length);
+     console.log('aspectGroup1 contents:', aspectGroup1);
+     console.log('aspectGroup2 contents:', aspectGroup2);
+   }
+
+   // Check if hero is banned
+   function isHeroBanned(heroName) {
+     if (bannedHeroes.includes(heroName)) return true;
+     var heroBaseName = heroName.split(' - ')[0];
+     for (var i = 0; i < bannedHeroes.length; i++) {
+       var bannedHero = bannedHeroes[i];
+       var bannedBaseName = bannedHero.split(' - ')[0];
+       if (heroBaseName === bannedBaseName) return true;
+     }
+     return false;
+   }
+
+   var filteredDraftOrder = draftOrder.filter(function(hero) {
+     return !isHeroBanned(hero);
+   });
+   var marvelHeroes = filteredDraftOrder.slice().sort();
+
+   // Team name pools
+   var teamNamePools = {
+     0: ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'],
+     1: ['Betty Ross', 'Bullseye', 'Bruno Carrelli', 'Baron Mordo', 'Beetle', 'Black Tom Cassidy', 'Black Swan', 'Boomerang', 'Betty Brant'],
+     2: ['Calvin Zabo', 'Cassandra Nova', 'Curt Connors', 'Clea', 'Carl "Crusher" Creel', 'Cassie Lang', 'Colleen Wing'],
+     3: ['Doctor Doom', 'Donald Pierce', 'Dormammu', 'Daken', 'Danny Rand', 'Donald Blake'],
+     4: ['Edwin Jarvis', 'Elektra', 'Emil Blonsky', 'Everett Ross', 'Ebony Maw', 'Eddie Brock', 'Exodus', 'Ego the Living Planet'],
+     5: ['Felicia Hardy', 'Fin Fang Foom', 'Frank Castle', 'Franklin Richards', 'Frigga', 'Foggy Nelson'],
+     6: ['Gwen Stacy', 'George Stacy', 'Gorgon', 'Giganto', 'Gilgamesh', 'Grandmaster', 'Gorr'],
+     7: ['Harry Osborn', 'Howard Stark', 'Hope Pym', 'Hobgoblin', 'Helmut Zemo', 'Happy Hogan', 'Howard the Duck', 'Husk', 'High Evolutionary'],
+     8: ['Illyana Rasputin', 'Imperial Guard', 'Iron Fist'],
+     9: ['J Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'],
+     10: ['Karnak', 'Kurt Wagner', 'Kitty Pryde', 'Kaluu', 'Kamala Khan', 'Kang the Conqueror', 'Kid Omega', 'Killmonger', 'Kingpin', 'Klaw'],
+     11: ['Laufey', 'Leo Fitz', 'Lucia von Bardas', 'Luke Cage', 'Loki', 'Lizard', 'Lorna Dane', 'Logan']
+   };
+
+   // Random number generator
+   function Random(seed) {
+     if (typeof seed === 'undefined') {
+       seed = Math.random();
+     }
+     if (typeof seed === 'string') {
+       this.seed = this.stringToHash(seed);
+     } else {
+       this.seed = this.hash(seed.toString());
+     }
+   }
+
+   Random.prototype.stringToHash = function(str) {
+     if (str === '') return 0;
+     var hash = 0;
+     for (var i = 0; i < str.length; i++) {
+       var char = str.charCodeAt(i);
+       hash = ((hash << 5) - hash) + char;
+       hash = hash & hash;
+     }
+     return Math.abs(hash);
+   };
+
+   Random.prototype.hash = function(str) {
+     var hash = 0;
+     for (var i = 0; i < str.length; i++) {
+       var char = str.charCodeAt(i);
+       hash = ((hash << 5) - hash) + char;
+       hash = hash & hash;
+     }
+     return Math.abs(hash);
+   };
+
+   Random.prototype.next = function() {
+     this.seed = (1664525 * this.seed + 1013904223) >>> 0;
+     return this.seed / 0xFFFFFFFF;
+   };
+
+   function shuffleArray(array, rng) {
+     for (var i = array.length - 1; i > 0; i--) {
+       var j = Math.floor(rng.next() * (i + 1));
+       var temp = array[i];
+       array[i] = array[j];
+       array[j] = temp;
+     }
+   }
+
+   // Initialize display
+   document.getElementById('allHeroes').innerHTML = marvelHeroes.map(function(hero) {
+     return '<div class="hero-card">' + hero + '</div>';
+   }).join('');
+   
+   document.getElementById('allAspects').innerHTML = availableAspects.map(function(aspect) {
+     var aspectStyle = '';
+     switch(aspect.toLowerCase()) {
+       case 'aggression':
+         aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+         break;
+       case 'justice':
+         aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+         break;
+       case 'leadership':
+         aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+         break;
+       case 'protection':
+         aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+         break;
+       case 'pool':
+         aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+         break;
+       default:
+         aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+     }
+     return '<div class="hero-card" style="' + aspectStyle + '">' + aspect + '</div>';
+   }).join('');
+   
+   document.getElementById('bannedHeroes').innerHTML = bannedHeroes.map(function(hero) {
+     return '<div class="hero-card">' + hero + '</div>';
+   }).join('');
+
+   // Update max extras and default value based on draft pool groups
+   function updateMaxExtras() {
+     return safeExecute(function() {
+       var numberOfTeams = parseInt(document.getElementById('teamsInput').value) || 10;
+       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
+       var extrasInput = document.getElementById('extrasInput');
+       
+       var maxExtras, defaultExtras;
+       if (draftPoolGroups === '4') {
+         // For 4-group mode: total heroes needed = 2 * (teams + extras per group)
+         maxExtras = Math.floor((marvelHeroes.length / 2) - numberOfTeams);
+         defaultExtras = 3;
+       } else {
+         // For 2-group mode: maintain current logic
+         maxExtras = marvelHeroes.length - (2 * numberOfTeams);
+         defaultExtras = 6;
+       }
+       
+       document.getElementById('maxExtras').textContent = maxExtras;
+       
+       // Update default value if current value is the old default or if switching modes
+       var currentValue = parseInt(extrasInput.value) || 0;
+       
+       if (currentValue === 6 || currentValue === 3 || currentValue === 0) {
+         extrasInput.value = defaultExtras;
+       }
+       
+       // Ensure current value doesn't exceed new maximum
+       if (currentValue > maxExtras) {
+         extrasInput.value = maxExtras;
+       }
+       
+       extrasInput.setAttribute('max', maxExtras);
+       
+       var currentValue = parseInt(extrasInput.value) || 6;
+       if (currentValue > maxExtras) {
+         extrasInput.value = maxExtras;
+}
+     }, null, [], 'updateMaxExtras');
+   }
+   
+   updateMaxExtras();
+   document.getElementById('teamsInput').addEventListener('input', updateMaxExtras);
+   document.getElementById('draftPoolGroups').addEventListener('change', updateMaxExtras);
+
+   // Generate pool button event listener
+   document.getElementById('goButton').addEventListener('click', function() {
+     var seedInput = document.getElementById('seedInput').value;
+     var rng = new Random(seedInput || Math.random());
+     
+     var numberOfTeams = parseInt(document.getElementById('teamsInput').value);
+     var numberOfExtras = parseInt(document.getElementById('extrasInput').value) || 6;
+     var draftPoolGroups = document.getElementById('draftPoolGroups').value;
+     
+     var numberOfHeroes;
+     if (draftPoolGroups === '4') {
+       // For 4-group mode: each group has (teams + extras), total = 2 * (teams + extras)
+       numberOfHeroes = 2 * (numberOfTeams + numberOfExtras);
+     } else {
+       // For 2-group mode: maintain current logic
+       numberOfHeroes = (2 * numberOfTeams) + numberOfExtras;
+     }
+
+     if (numberOfHeroes > marvelHeroes.length) {
+       alert('Pool size too large! Maximum extras possible: ' + (marvelHeroes.length - (2 * numberOfTeams)));
+       return;
+     }
+
+     // Generate hero pool
+     var heroesPool = marvelHeroes.slice();
+     shuffleArray(heroesPool, rng);
+
+     var selectedHeroes = heroesPool.slice(0, numberOfHeroes);
+     var excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
+     
+     // V0.9 Enhancement: Handle Spider-Woman aspect assignment
+     var spiderWomanIndex = selectedHeroes.findIndex(function(hero) {
+       return hero === 'Spider-Woman';
+     });
+     if (spiderWomanIndex !== -1) {
+       var assignedAspect = assignSpiderWomanAspect(rng);
+       selectedHeroes[spiderWomanIndex] = 'Spider-Woman - ' + assignedAspect;
+     }
+     
+     selectedHeroes.sort();
+     
+     // V1.0.1 Enhancement: Check for 4-group mode and split heroes
+     if (draftPoolGroups === '4') {
+       var heroGroups = splitHeroPoolIntoGroups(selectedHeroes, rng);
+       heroGroup1 = heroGroups.group1;
+       heroGroup2 = heroGroups.group2;
+     } else {
+       // For 2-group mode, keep all heroes in one pool
+       heroGroup1 = selectedHeroes.slice();
+       heroGroup2 = [];
+     }
+     
+     // Generate aspect pool
+     var aspectPool = [];
+     var mainAspects = ['Aggression', 'Justice', 'Leadership', 'Protection'];
+     
+     for (var i = 0; i < numberOfHeroes; i++) {
+       var randomAspect = mainAspects[Math.floor(rng.next() * mainAspects.length)];
+       aspectPool.push(randomAspect);
+     }
+     
+     aspectPool.push('Pool', 'Pool', 'Pool', 'Pool');
+     
+     // Number aspects
+     var numberedAspectPool = [];
+     
+     ['Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'].forEach(function(aspectType) {
+       var instances = aspectPool.filter(function(aspect) {
+         return aspect === aspectType;
+       });
+       for (var i = 0; i < instances.length; i++) {
+         numberedAspectPool.push(aspectType + ' #' + (instances.length - i));
+       }
+     });
+
+     allAspects = numberedAspectPool.slice();
+     
+     // V1.0.7 Enhancement: Check for 4-group mode and split aspects
+     if (draftPoolGroups === '4') {
+       var aspectGroups = splitAspectPoolIntoGroups(numberedAspectPool, rng);
+       aspectGroup1 = aspectGroups.group1;
+       aspectGroup2 = aspectGroups.group2;
+       window.aspectGroup1 = aspectGroup1;
+       window.aspectGroup2 = aspectGroup2;
+     } else {
+       // For 2-group mode, keep all aspects in one pool
+       aspectGroup1 = numberedAspectPool.slice();
+       aspectGroup2 = [];
+       window.aspectGroup1 = aspectGroup1;
+       window.aspectGroup2 = aspectGroup2;
+     }
+     
+     initializeAspectPriorityOrder(true, rng);
+
+     // Update draft bot order to use the aspect-assigned Spider-Woman name
+     var draftBot = filteredDraftOrder.slice();
+     var spiderWomanBotIndex = draftBot.findIndex(function(hero) {
+       return hero === 'Spider-Woman';
+     });
+     if (spiderWomanBotIndex !== -1 && spiderWomanIndex !== -1) {
+       draftBot[spiderWomanBotIndex] = selectedHeroes[spiderWomanIndex];
+     }
+     draftBot = draftBot.filter(function(hero) {
+       return selectedHeroes.includes(hero) || hero.startsWith('Spider-Woman - ');
+     });
+
+     // Get custom teams
+     var customTeamList = document.getElementById('teamListInput').value.trim();
+     var customTeams = customTeamList ? customTeamList.split('\n').map(function(name) {
+       return name.trim();
+     }).filter(function(name) {
+       return name.length > 0;
+     }) : [];
+     
+     var userTeamName = customTeams.length > 0 ? customTeams[0] : '';
+     var numberOfActualTeams = userTeamName ? numberOfTeams - 1 : numberOfTeams;
+     
+     var teams = Array.from({ length: numberOfActualTeams }, function(_, i) {
+       var customIndex = i + 1;
+       if (customIndex < customTeams.length) {
+         return customTeams[customIndex];
+       }
+       
+       if (teamNamePools[i]) {
+         var namePool = teamNamePools[i].slice();
+         var randomIndex = Math.floor(rng.next() * namePool.length);
+         return namePool[randomIndex];
+       } else {
+         return 'Team ' + String.fromCharCode(65 + i);
+       }
+     });
+     
+     if (userTeamName) {
+       teams.push(userTeamName);
+     }
+     
+     shuffleArray(teams, rng);
+
+     // Display results based on group mode
+     if (draftPoolGroups === '4') {
+       // Display separate hero groups with proper section formatting
+       document.getElementById('resultPool').innerHTML = 
+         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
+           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Group 1</h3>' +
+           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
+             heroGroup1.map(function(hero) {
+               return '<div class="hero-card">' + hero + '</div>';
+             }).join('') +
+           '</div>' +
+         '</div>' +
+         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
+           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Group 2</h3>' +
+           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
+             heroGroup2.map(function(hero) {
+               return '<div class="hero-card">' + hero + '</div>';
+             }).join('') +
+           '</div>' +
+         '</div>';
+     } else {
+       // Display single hero pool
+       document.getElementById('resultPool').innerHTML = selectedHeroes.map(function(hero) {
+         return '<div class="hero-card">' + hero + '</div>';
+       }).join('');
+     }
+     
+     // V1.1 Enhancement: Display aspects based on group mode
+     if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+       // Display separate aspect groups with type summaries
+       document.getElementById('resultAspectPool').innerHTML = 
+         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
+           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Aspect Group 1</h3>' +
+           '<p style="margin-bottom: 15px; font-size: 0.9rem; color: #666; font-style: italic;">' + getAspectTypeSummary(aspectGroup1) + '</p>' +
+           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
+             aspectGroup1.map(function(aspect) {
+               var aspectType = getAspectType(aspect);
+               var aspectStyle = '';
+               switch(aspectType.toLowerCase()) {
+                 case 'aggression':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                   break;
+                 case 'justice':
+                   aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                   break;
+                 case 'leadership':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                   break;
+                 case 'protection':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                   break;
+                 case 'pool':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                   break;
+                 default:
+                   aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+               }
+               return '<div class="hero-card" style="' + aspectStyle + '">' + aspect + '</div>';
+             }).join('') +
+           '</div>' +
+         '</div>' +
+         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
+           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Aspect Group 2</h3>' +
+           '<p style="margin-bottom: 15px; font-size: 0.9rem; color: #666; font-style: italic;">' + getAspectTypeSummary(aspectGroup2) + '</p>' +
+           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
+             aspectGroup2.map(function(aspect) {
+               var aspectType = getAspectType(aspect);
+               var aspectStyle = '';
+               switch(aspectType.toLowerCase()) {
+                 case 'aggression':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                   break;
+                 case 'justice':
+                   aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                   break;
+                 case 'leadership':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                   break;
+                 case 'protection':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                   break;
+                 case 'pool':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                   break;
+                 default:
+                   aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+               }
+               return '<div class="hero-card" style="' + aspectStyle + '">' + aspect + '</div>';
+             }).join('') +
+           '</div>' +
+         '</div>';
+     } else {
+       // Display single aspect pool for 2-group mode
+       document.getElementById('resultAspectPool').innerHTML = numberedAspectPool.map(function(aspect) {
+         var aspectType = getAspectType(aspect);
+         var aspectStyle = '';
+         switch(aspectType.toLowerCase()) {
+           case 'aggression':
+             aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+             break;
+           case 'justice':
+             aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+             break;
+           case 'leadership':
+             aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+             break;
+           case 'protection':
+             aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+             break;
+           case 'pool':
+             aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+             break;
+           default:
+             aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+         }
+         return '<div class="hero-card" style="' + aspectStyle + '">' + aspect + '</div>';
+       }).join('');
+     }
+     
+     document.getElementById('resultDraftBot').innerHTML = draftBot.map(function(hero) {
+       return '<div class="hero-card">' + hero + '</div>';
+     }).join('');
+     
+     // Display bot aspect priority
+     document.getElementById('resultDraftBotAspects').innerHTML = aspectPriorityList.map(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       var aspectStyle = '';
+       switch(aspectType.toLowerCase()) {
+         case 'aggression':
+           aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+           break;
+         case 'justice':
+           aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+           break;
+         case 'leadership':
+           aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+           break;
+         case 'protection':
+           aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+           break;
+         case 'pool':
+           aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+           break;
+         default:
+           aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+       }
+       return '<div class="hero-card" style="' + aspectStyle + '">' + aspect + '</div>';
+     }).join('');
+     
+     document.getElementById('resultDraftOrder').innerHTML = teams.map(function(team, index) {
+       return '<div class="team-card">' + (index + 1) + '. ' + team + '</div>';
+     }).join('');
+     
+     document.getElementById('resultExcluded').innerHTML = excludedHeroes.map(function(hero) {
+       return '<div class="hero-card">' + hero + '</div>';
+     }).join('');
+
+     document.getElementById('results').style.display = 'block';
+     document.getElementById('footerNote').style.display = 'block';
+     
+     document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+   });
+
+   // Helper function to get highest available Leadership aspect
+   function getHighestAvailableLeadership() {
+     var availableLeadership = allAspects.filter(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       return aspectType === 'Leadership' && !draftedAspects.includes(aspect);
+     });
+     
+     if (availableLeadership.length === 0) return null;
+     
+     // Sort by number in descending order and return the highest
+     availableLeadership.sort(function(a, b) {
+       var numA = parseInt(a.split('#')[1]);
+       var numB = parseInt(b.split('#')[1]);
+       return numB - numA;
+     });
+     
+     return availableLeadership[0];
+   }
+
+   // Helper function to get highest available aspect of specified type
+   function getHighestAvailableAspect(aspectType) {
+     var availableInstances = allAspects.filter(function(aspect) {
+       var currentType = getAspectType(aspect);
+       return currentType === aspectType && !draftedAspects.includes(aspect);
+     });
+     
+     if (availableInstances.length === 0) return null;
+     
+     availableInstances.sort(function(a, b) {
+       var numA = parseInt(a.split('#')[1]);
+       var numB = parseInt(b.split('#')[1]);
+       return numB - numA;
+     });
+     
+     return availableInstances[0];
+   }
+
+   // V1.0.7 Enhancement: Get highest available aspect of specified type within specific group
+   function getHighestAvailableAspectInGroup(aspectType, groupNumber) {
+     // Get the appropriate group array
+     var groupAspects = groupNumber === 1 ? aspectGroup1 : aspectGroup2;
+     
+     // Filter to only aspects of the specified type within this group that aren't drafted
+     var availableInstances = groupAspects.filter(function(aspect) {
+       var currentType = getAspectType(aspect);
+       return currentType === aspectType && !draftedAspects.includes(aspect);
+     });
+     
+     if (availableInstances.length === 0) {
+       return null;
+     }
+     
+     // Sort by number in descending order and return the highest
+     availableInstances.sort(function(a, b) {
+       var numA = parseInt(a.split('#')[1]);
+       var numB = parseInt(b.split('#')[1]);
+       return numB - numA;
+     });
+     
+     return availableInstances[0];
+   }
+
+   // V1.0.8 Enhancement: Get selectable aspects in group (highest numbered of each type only)
+   function getSelectableAspectsInGroup(groupNumber) {
+     // Get the appropriate group array
+     var groupAspects = groupNumber === 1 ? aspectGroup1 : aspectGroup2;
+     
+     // Group aspects by type
+     var aspectsByType = {};
+     groupAspects.forEach(function(aspect) {
+       var aspectType = getAspectType(aspect);
+       if (!aspectsByType[aspectType]) {
+         aspectsByType[aspectType] = [];
+       }
+       aspectsByType[aspectType].push(aspect);
+     });
+     
+     // Get highest numbered (non-drafted) aspect of each type
+     var selectableAspects = [];
+     Object.keys(aspectsByType).forEach(function(aspectType) {
+       var typeAspects = aspectsByType[aspectType];
+       
+       // Filter out drafted aspects
+       var availableTypeAspects = typeAspects.filter(function(aspect) {
+         return !draftedAspects.includes(aspect);
+       });
+       
+       if (availableTypeAspects.length > 0) {
+         // Sort by number in descending order and take the highest
+         availableTypeAspects.sort(function(a, b) {
+           var numA = parseInt(a.split('#')[1]);
+           var numB = parseInt(b.split('#')[1]);
+           return numB - numA;
+         });
+         
+         selectableAspects.push(availableTypeAspects[0]);
+       }
+     });
+     
+     return selectableAspects;
+   }
+
+   function canTeamDraft(teamName, draftType) {
+     var picks = teamPicks[teamName] || [];
+     var heroes = picks.filter(function(pick) {
+       return allHeroes.includes(pick);
+     });
+     var aspects = picks.filter(function(pick) {
+       return allAspects.includes(pick);
+     });
+     
+     if (draftType === 'hero') {
+       if (heroes.length >= 2) {
+         return false; // Already have 2 heroes
+       }
+       
+       // V1.0.6 Enhancement: Check hero group restrictions in 4-group mode
+       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+       if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
+         var group1Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 1; });
+         var group2Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 2; });
+         
+         // If team already has a hero from both groups, they can't draft more heroes
+         if (group1Heroes.length >= 1 && group2Heroes.length >= 1) {
+           return false;
+         }
+       }
+       
+       return true;
+     } else if (draftType === 'aspect') {
+       if (aspects.length >= 2) {
+         return false; // Already have 2 aspects
+       }
+       
+       // V1.0.7 Enhancement: Check aspect group restrictions in 4-group mode
+       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+       if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+         var group1Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 1; });
+         var group2Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 2; });
+         
+         // If team already has an aspect from both groups, they can't draft more aspects
+         if (group1Aspects.length >= 1 && group2Aspects.length >= 1) {
+           return false;
+         }
+       }
+       
+       return true;
+     }
+     return false;
+   }
+   
+   // V1.0.6 Enhancement: Check if team can draft from specific hero group
+   function canTeamDraftFromGroup(teamName, groupNumber) {
+     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+     if (draftPoolGroups !== '4' || heroGroup1.length === 0 || heroGroup2.length === 0) {
+       return true; // No restrictions in 2-group mode
+     }
+     
+     var picks = teamPicks[teamName] || [];
+     var heroes = picks.filter(function(pick) {
+       return allHeroes.includes(pick);
+     });
+     
+     var groupHeroes = heroes.filter(function(hero) { 
+       return getHeroGroup(hero) === groupNumber; 
+     });
+     
+     return groupHeroes.length === 0; // Can draft if no heroes from this group yet
+   }
+
+   // V1.0.7 Enhancement: Check if team can draft from specific aspect group
+   function canTeamDraftFromAspectGroup(teamName, groupNumber) {
+     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+     if (draftPoolGroups !== '4' || aspectGroup1.length === 0 || aspectGroup2.length === 0) {
+       return true; // No restrictions in 2-group mode
+     }
+     
+     var picks = teamPicks[teamName] || [];
+     var aspects = picks.filter(function(pick) {
+       return allAspects.includes(pick);
+     });
+     
+     var groupAspects = aspects.filter(function(aspect) { 
+       return getAspectGroup(aspect) === groupNumber; 
+     });
+     
+     return groupAspects.length === 0; // Can draft if no aspects from this group yet
+   }
+   
+   function getConstraintMessage(teamName) {
+     var picks = teamPicks[teamName] || [];
+     var heroes = picks.filter(function(pick) {
+       return allHeroes.includes(pick);
+     });
+     var aspects = picks.filter(function(pick) {
+       return allAspects.includes(pick);
+     });
+     
+     var heroesLeft = 2 - heroes.length;
+     var aspectsLeft = 2 - aspects.length;
+     
+     // V1.0.6 Enhancement: Add group restriction info
+     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+     var heroGroupInfo = '';
+     var aspectGroupInfo = '';
+     
+     if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroesLeft > 0) {
+       var heroGroup1Available = canTeamDraftFromGroup(teamName, 1);
+       var heroGroup2Available = canTeamDraftFromGroup(teamName, 2);
+       
+       if (!heroGroup1Available && !heroGroup2Available) {
+         heroGroupInfo = ' (no hero groups available)';
+       } else if (!heroGroup1Available) {
+         heroGroupInfo = ' (only Hero Group 2 available)';
+       } else if (!heroGroup2Available) {
+         heroGroupInfo = ' (only Hero Group 1 available)';
+       }
+     }
+     
+     // V1.0.7 Enhancement: Add aspect group restriction info
+     if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0 && aspectsLeft > 0) {
+       var aspectGroup1Available = canTeamDraftFromAspectGroup(teamName, 1);
+       var aspectGroup2Available = canTeamDraftFromAspectGroup(teamName, 2);
+       
+       if (!aspectGroup1Available && !aspectGroup2Available) {
+         aspectGroupInfo = ' (no aspect groups available)';
+       } else if (!aspectGroup1Available) {
+         aspectGroupInfo = ' (only Aspect Group 2 available)';
+       } else if (!aspectGroup2Available) {
+         aspectGroupInfo = ' (only Aspect Group 1 available)';
+       }
+     }
+     
+     if (heroesLeft === 0) {
+       return "You must pick an aspect (no heroes remaining)" + aspectGroupInfo;
+     } else if (aspectsLeft === 0) {
+       return "You must pick a hero (no aspects remaining)" + heroGroupInfo;
+     } else {
+       return "You can pick either a hero (" + heroesLeft + " left" + heroGroupInfo + ") or aspect (" + aspectsLeft + " left" + aspectGroupInfo + ")";
+     }
+   }
+
+   // Export function
+   function exportDraftPool() {
+     return safeExecute(function() {
+       var heroCards = document.getElementById('resultPool').children;
+       var aspectCards = document.getElementById('resultAspectPool').querySelectorAll('.hero-card');
+       var teamCards = document.getElementById('resultDraftOrder').children;
+       var excludedCards = document.getElementById('resultExcluded').children;
+       var draftBotCards = document.getElementById('resultDraftBot').children;
+       var draftBotAspectCards = document.getElementById('resultDraftBotAspects').children;
+       
+       if (heroCards.length === 0) {
+         alert('Please generate a draft pool first!');
+         return;
+       }
+       
+       var numberOfTeams = document.getElementById('teamsInput').value;
+       var numberOfExtras = document.getElementById('extrasInput').value;
+       var seedUsed = document.getElementById('seedInput').value || 'Random';
+       var customTeamList = document.getElementById('teamListInput').value.trim();
+       var customTeams = customTeamList ? customTeamList.split('\n').map(function(name) {
+         return name.trim();
+       }).filter(function(name) {
+         return name.length > 0;
+       }) : [];
+       var userTeam = customTeams.length > 0 ? customTeams[0] : 'None';
+       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
+       
+       var exportText = '';
+       exportText += '='.repeat(50) + '\n';
+       exportText += '    MODOK LEAGUE SEASON 4 - DRAFT POOL\n';
+       exportText += '='.repeat(50) + '\n';
+       exportText += 'Generated: ' + new Date().toLocaleString() + '\n';
+       exportText += 'Version: ' + TOOL_VERSION + '\n';
+       exportText += 'Teams: ' + numberOfTeams + '\n';
+       exportText += 'Extras: ' + numberOfExtras + '\n';
+       exportText += 'Seed: ' + seedUsed + '\n';
+       exportText += 'Bot Ignore Round Preferences: ' + botRandomnessPercentage + '%\n';
+       exportText += 'Bot Surprise Pick: ' + botSurprisePercentage + '%\n';
+       exportText += 'User Team: ' + userTeam + '\n';
+       if (customTeamList) {
+         exportText += 'Custom Teams Used: Yes\n';
+       }
+       exportText += '\n';
+       
+       // V1.2 Enhancement: Fix hero pool export for 4-group mode
+       if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
+         var totalHeroes = heroGroup1.length + heroGroup2.length;
+         exportText += 'HERO POOL (' + totalHeroes + ' heroes)\n';
+         exportText += '-'.repeat(30) + '\n';
+         exportText += 'Hero Group 1\n';
+         for (var i = 0; i < heroGroup1.length; i++) {
+           exportText += heroGroup1[i] + '\n';
+         }
+         exportText += '\n';
+         exportText += 'Hero Group 2\n';
+         for (var i = 0; i < heroGroup2.length; i++) {
+           exportText += heroGroup2[i] + '\n';
+         }
+       } else {
+         // 2-group mode - use original logic
+         exportText += 'HERO POOL (' + heroCards.length + ' heroes)\n';
+         exportText += '-'.repeat(30) + '\n';
+         for (var i = 0; i < heroCards.length; i++) {
+           exportText += heroCards[i].textContent + '\n';
+         }
+       }
+       exportText += '\n';
+       
+       // V1.3 Enhancement: Fix aspect pool export for 4-group mode
+       if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+         var totalAspects = aspectGroup1.length + aspectGroup2.length;
+         exportText += 'ASPECT POOL (' + totalAspects + ' aspects)\n';
+         exportText += '-'.repeat(30) + '\n';
+         
+         // Aspect Group 1
+         exportText += 'Aspect Group 1 (' + aspectGroup1.length + ' aspects)\n';
+         var aspectCounts1 = {};
+         for (var i = 0; i < aspectGroup1.length; i++) {
+           var aspectType = getAspectType(aspectGroup1[i]);
+           aspectCounts1[aspectType] = (aspectCounts1[aspectType] || 0) + 1;
+         }
+         Object.keys(aspectCounts1).forEach(function(aspectType) {
+           exportText += aspectType + ': ' + aspectCounts1[aspectType] + '\n';
+         });
+         exportText += '\n';
+         
+         // Aspect Group 2
+         exportText += 'Aspect Group 2 (' + aspectGroup2.length + ' aspects)\n';
+         var aspectCounts2 = {};
+         for (var i = 0; i < aspectGroup2.length; i++) {
+           var aspectType = getAspectType(aspectGroup2[i]);
+           aspectCounts2[aspectType] = (aspectCounts2[aspectType] || 0) + 1;
+         }
+         Object.keys(aspectCounts2).forEach(function(aspectType) {
+           exportText += aspectType + ': ' + aspectCounts2[aspectType] + '\n';
+         });
+       } else {
+         // 2-group mode - use original logic
+         exportText += 'ASPECT POOL (' + aspectCards.length + ' aspects)\n';
+         exportText += '-'.repeat(30) + '\n';
+         
+         var aspectCounts = {};
+         for (var i = 0; i < aspectCards.length; i++) {
+           var aspectText = aspectCards[i].textContent;
+           if (aspectText.includes('#')) {
+             var aspectType = aspectText.split(' #')[0];
+             aspectCounts[aspectType] = (aspectCounts[aspectType] || 0) + 1;
+           }
+         }
+         
+         Object.keys(aspectCounts).forEach(function(aspectType) {
+           exportText += aspectType + ': ' + aspectCounts[aspectType] + '\n';
+         });
+       }
+       exportText += '\n';
+       
+       exportText += 'TEAM DRAFT ORDER\n';
+       exportText += '-'.repeat(30) + '\n';
+       for (var i = 0; i < teamCards.length; i++) {
+         var teamText = teamCards[i].textContent;
+         var teamName = teamText.split('. ')[1];
+         exportText += teamName + '\n';
+       }
+       exportText += '\n';
+       
+       exportText += 'DRAFT BOT PRIORITY (Heroes in Pool)\n';
+       exportText += '-'.repeat(30) + '\n';
+       for (var i = 0; i < draftBotCards.length; i++) {
+         exportText += draftBotCards[i].textContent + '\n';
+       }
+       exportText += '\n';
+       
+       exportText += 'DRAFT BOT PRIORITY (Aspects)\n';
+       exportText += '-'.repeat(30) + '\n';
+       for (var i = 0; i < draftBotAspectCards.length; i++) {
+         exportText += draftBotAspectCards[i].textContent + '\n';
+       }
+       exportText += '\n';
+       
+       if (excludedCards.length > 0) {
+         exportText += 'EXCLUDED HEROES (' + excludedCards.length + ' heroes)\n';
+         exportText += '-'.repeat(30) + '\n';
+         for (var i = 0; i < excludedCards.length; i++) {
+           exportText += excludedCards[i].textContent + '\n';
+         }
+         exportText += '\n';
+       }
+       
+       exportText += '='.repeat(50) + '\n';
+       exportText += 'Generated with Draft-o-matic ' + TOOL_VERSION + '\n';
+       exportText += 'MODOK League Season 4\n';
+       exportText += '='.repeat(50);
+       
+       var blob = new Blob([exportText], { type: 'text/plain' });
+       var url = window.URL.createObjectURL(blob);
+       var a = document.createElement('a');
+       a.style.display = 'none';
+       a.href = url;
+       a.download = 'MODOK_S4_Draft_Pool_' + new Date().toISOString().split('T')[0] + '.txt';
+       document.body.appendChild(a);
+       a.click();
+       window.URL.revokeObjectURL(url);
+       document.body.removeChild(a);
+     }, null, [], 'exportDraftPool');
+   }
+
+   // Draft simulator functions
+   function startDraftSimulator() {
+     return safeExecute(function() {
+       // Get custom team names to determine user team
+       var customTeamList = document.getElementById('teamListInput').value.trim();
+       var customTeams = customTeamList ? customTeamList.split('\n').map(function(name) {
+         return name.trim();
+       }).filter(function(name) {
+         return name.length > 0;
+       }) : [];
+       var userTeamName = customTeams.length > 0 ? customTeams[0] : '';
+       
+       var heroCards = document.getElementById('resultPool').children;
+       var aspectCards = document.getElementById('resultAspectPool').querySelectorAll('.hero-card');
+       var teamCards = document.getElementById('resultDraftOrder').children;
+       
+       var playerTeam = userTeamName;
+       if (!playerTeam) {
+         var aTeamPool = ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'];
+         
+         for (var i = 0; i < teamCards.length; i++) {
+           var teamText = teamCards[i].textContent;
+           var teamName = teamText.split('. ')[1];
+           
+           if (aTeamPool.includes(teamName)) {
+             playerTeam = teamName;
+             break;
+           }
+         }
+         
+         if (!playerTeam && teamCards.length > 0) {
+           var firstTeamText = teamCards[0].textContent;
+           playerTeam = firstTeamText.split('. ')[1];
+         }
+       }
+       
+       allHeroes = [];
+       draftedHeroes = [];
+       draftedAspects = [];
+       
+       // V1.0.3 Enhancement: Properly handle hero data based on group mode
+       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
+       if (draftPoolGroups === '4') {
+         // For 4-group mode, combine both hero groups
+         allHeroes = heroGroup1.concat(heroGroup2);
+       } else {
+         // For 2-group mode, read from heroCards as before
+         for (var i = 0; i < heroCards.length; i++) {
+           allHeroes.push(heroCards[i].textContent);
+         }
+       }
+       
+       playerTeamName = playerTeam;
+       draftOrderTeams = [];
+       teamPicks = {};
+       for (var i = 0; i < teamCards.length; i++) {
+         var teamText = teamCards[i].textContent;
+         var teamName = teamText.split('. ')[1];
+         draftOrderTeams.push(teamName);
+         teamPicks[teamName] = [];
+       }
+       
+       currentTurnIndex = 0;
+       currentRound = 1;
+       isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
+       
+       // Initialize displays
+       updateAllTeamsDisplay();
+       updateAvailableItemsDisplay();
+       updateBotPriorityDisplay();
+       updateBotAspectPriorityDisplay();
+       
+       // Update the display elements
+       var playerDisplay = document.getElementById('playerTeamDisplay');
+       var heroDisplay = document.getElementById('heroCountDisplay');
+       var aspectDisplay = document.getElementById('aspectCountDisplay');
+       var teamDisplay = document.getElementById('teamCountDisplay');
+       
+       if (playerDisplay) playerDisplay.textContent = playerTeam || 'Unknown Team';
+       if (heroDisplay) heroDisplay.textContent = allHeroes.length;
+       if (aspectDisplay) aspectDisplay.textContent = allAspects.length;
+       if (teamDisplay) teamDisplay.textContent = teamCards.length;
+       
+       // Show team draft order
+       var draftDisplay = document.getElementById('draftOrderDisplay');
+       if (draftDisplay) {
+         var draftOrderHtml = '';
+         for (var i = 0; i < teamCards.length; i++) {
+           var teamText = teamCards[i].textContent;
+           var teamName = teamText.split('. ')[1];
+           var isPlayerTeam = (teamName === playerTeam);
+           
+           draftOrderHtml += '<div style="padding: 8px; background: ' + (isPlayerTeam ? 'rgba(255, 107, 107, 0.2)' : 'rgba(255,255,255,0.3)') + '; border-radius: 6px; text-align: center; font-weight: ' + (isPlayerTeam ? 'bold' : 'normal') + '; border: ' + (isPlayerTeam ? '2px solid #ff6b6b' : '1px solid #ddd') + ';">' + teamText + '</div>';
+         }
+         draftDisplay.innerHTML = draftOrderHtml;
+       }
+       
+       // Show draft setup
+       var draftSetupElement = document.getElementById('draftSetup');
+       if (draftSetupElement) {
+         draftSetupElement.style.display = 'block';
+         draftSetupElement.scrollIntoView({ behavior: 'smooth' });
+       }
+       
+       // Start the draft
+       updateDraftStatus();
+       updateAvailableItemsDisplay();
+       updateBotPriorityDisplay();
+       updateBotAspectPriorityDisplay();
+       
+       // If the first turn is a bot turn, start the bot picking process
+       if (!isPlayerTurn) {
+         setTimeout(processNextTurn, 1250);
+       }
+     }, null, [], 'startDraftSimulator');
+   }
+
+   // Update draft status message
+   function updateDraftStatus() {
+     var statusMessage = document.getElementById('draftStatusMessage');
+     var constraintMessage = document.getElementById('draftConstraintMessage');
+     var statusMessage2 = document.getElementById('draftStatusMessage2');
+     var constraintMessage2 = document.getElementById('draftConstraintMessage2');
+     
+     // Check if draft is complete
+     if (currentRound > maxRounds || currentTurnIndex < 0) {
+       var completeText = '🎉 Draft Complete!';
+       var completeColor = '#28a745';
+       
+       if (statusMessage) {
+         statusMessage.textContent = completeText;
+         statusMessage.style.color = completeColor;
+       }
+       if (statusMessage2) {
+         statusMessage2.textContent = completeText;
+         statusMessage2.style.color = completeColor;
+       }
+       
+       if (constraintMessage) constraintMessage.textContent = '';
+       if (constraintMessage2) constraintMessage2.textContent = '';
+       return;
+     }
+     
+     var currentTeam = draftOrderTeams[currentTurnIndex];
+     
+     if (isPlayerTurn) {
+       var playerText = '🎯 Your Turn (Round ' + currentRound + ') - Choose wisely!';
+       var playerColor = '#2c2c54';
+       var constraintText = getConstraintMessage(playerTeamName);
+       
+       if (statusMessage) {
+         statusMessage.textContent = playerText;
+         statusMessage.style.color = playerColor;
+       }
+       if (statusMessage2) {
+         statusMessage2.textContent = playerText;
+         statusMessage2.style.color = playerColor;
+       }
+       
+       if (constraintMessage) constraintMessage.textContent = constraintText;
+       if (constraintMessage2) constraintMessage2.textContent = constraintText;
+     } else {
+       var botText = '⏳ ' + currentTeam + ' is picking (Round ' + currentRound + ')...';
+       var botColor = '#8A2BE2';
+       
+       // V1.5 Enhancement: Add re-pick feedback to bot status
+       if (window.lastRePickData && window.lastRePickData.triggered && window.lastRePickData.team === currentTeam) {
+         if (window.lastRePickData.originalType === window.lastRePickData.finalType) {
+           botText += ' Re-picked: ' + window.lastRePickData.originalType + ' → ' + window.lastRePickData.finalType + ' (same)';
+         } else {
+           botText += ' Re-picked: ' + window.lastRePickData.originalType + ' → ' + window.lastRePickData.finalType;
+         }
+         // Don't clear the re-pick data immediately - let it persist for visibility
+         setTimeout(function() {
+           window.lastRePickData = null;
+         }, 1500);
+       }
+       
+       if (statusMessage) {
+         statusMessage.textContent = botText;
+         statusMessage.style.color = botColor;
+       }
+       if (statusMessage2) {
+         statusMessage2.textContent = botText;
+         statusMessage2.style.color = botColor;
+       }
+       
+       if (constraintMessage) constraintMessage.textContent = '';
+       if (constraintMessage2) constraintMessage2.textContent = '';
+     }
+   }
+
+   // Update all teams picks display
+   function updateAllTeamsDisplay() {
+     var allTeamsDisplay = document.getElementById('allTeamsPicksDisplay');
+     if (!allTeamsDisplay) return;
+     
+     var teamsHtml = '';
+     for (var i = 0; i < draftOrderTeams.length; i++) {
+       var teamName = draftOrderTeams[i];
+       var isPlayer = (teamName === playerTeamName);
+       var isDraftComplete = (currentRound > maxRounds || currentTurnIndex < 0);
+       var isCurrentTurn = !isDraftComplete && (i === currentTurnIndex);
+       var picks = teamPicks[teamName] || [];
+       
+       var bgColor = isPlayer ? 'rgba(255, 140, 0, 0.2)' : 'rgba(255,255,255,0.3)';
+       var borderColor = isPlayer ? '#ff8c00' : (isCurrentTurn ? '#8A2BE2' : '#ddd');
+       var borderWidth = isCurrentTurn ? '3px' : '2px';
+       
+       var roundText = isCurrentTurn ? ' (Round ' + currentRound + ')' : '';
+       var currentTurnText = isCurrentTurn ? '← Current Turn' + roundText : '';
+       
+       teamsHtml += '<div style="margin-bottom: 15px; padding: 15px; background: ' + bgColor + '; border-radius: 8px; border: ' + borderWidth + ' solid ' + borderColor + ';">';
+       teamsHtml += '<h5 style="margin-bottom: 10px; color: #2c2c54; font-weight: 600;">';
+       teamsHtml += (i + 1) + '. ' + teamName + ' ' + (isPlayer ? '(You)' : '') + ' ' + currentTurnText;
+       teamsHtml += '</h5>';
+       teamsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 6px;">';
+       
+       if (picks.length > 0) {
+         for (var j = 0; j < picks.length; j++) {
+           var pickName = picks[j];
+           var isHero = allHeroes.includes(pickName);
+           
+           if (isHero) {
+             var heroCardStyle = isPlayer ? 
+               'border: 2px solid #ff8c00; background: linear-gradient(145deg, #fff8dc, #ffeaa7);' :
+               'border: 1px solid #808080; background: linear-gradient(145deg, #f8f8f8, #e8e8e8);';
+             teamsHtml += '<div class="hero-card" style="' + heroCardStyle + ' font-size: 0.85rem;">' + pickName + '</div>';
+           } else {
+             var aspectType = getAspectType(pickName);
+             var aspectStyle = '';
+             switch(aspectType.toLowerCase()) {
+               case 'aggression':
+                 aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                 break;
+               case 'justice':
+                 aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                 break;
+               case 'leadership':
+                 aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                 break;
+               case 'protection':
+                 aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                 break;
+               case 'pool':
+                 aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                 break;
+               default:
+                 aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+             }
+             
+             var borderStyle = isPlayer ? '2px solid #ff8c00' : '1px solid #808080';
+             teamsHtml += '<div class="hero-card" style="' + aspectStyle + ' border: ' + borderStyle + '; font-size: 0.85rem;">' + pickName + '</div>';
+           }
+         }
+       } else {
+         teamsHtml += '<p style="color: #666; font-style: italic; font-size: 0.9rem;">No picks yet</p>';
+       }
+       
+       teamsHtml += '</div></div>';
+     }
+     
+     allTeamsDisplay.innerHTML = teamsHtml;
+   }
+
+   // Update available items display
+   function updateAvailableItemsDisplay() {
+     return safeExecute(function() {
+       var availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
+       var availableAspectsDisplay = document.getElementById('availableAspectsDisplay');
+       
+       if (availableHeroesDisplay) {
+         var canDraftHero = isPlayerTurn ? canTeamDraft(playerTeamName, 'hero') : true;
+         var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+         
+         if (allHeroes.length > 0) {
+           var heroesHtml = '';
+           
+           // V1.0.3 Enhancement: Show heroes in groups when in 4-group mode
+           if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
+             // Hero Group 1
+             heroesHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
+             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 1</h4>';
+             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+             
+             for (var i = 0; i < heroGroup1.length; i++) {
+               var heroName = heroGroup1[i];
+               var isDrafted = draftedHeroes.includes(heroName);
+               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 1);
+               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
+               
+               var style;
+               if (isDrafted) {
+                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
+               } else {
+                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
+               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
+             }
+             
+             heroesHtml += '</div></div>';
+             
+             // Hero Group 2
+             heroesHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
+             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 2</h4>';
+             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+             
+             for (var i = 0; i < heroGroup2.length; i++) {
+               var heroName = heroGroup2[i];
+               var isDrafted = draftedHeroes.includes(heroName);
+               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 2);
+               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
+               
+               var style;
+               if (isDrafted) {
+                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
+               } else {
+                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
+               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
+             }
+             
+             heroesHtml += '</div></div>';
+             
+           } else {
+             // Original single list format for 2-group mode
+             for (var i = 0; i < allHeroes.length; i++) {
+               var heroName = allHeroes[i];
+               var isDrafted = draftedHeroes.includes(heroName);
+               var isClickable = canDraftHero && isPlayerTurn && !isDrafted;
+               
+               var style;
+               if (isDrafted) {
+                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
+               } else {
+                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
+               
+               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
+             }
+           }
+           
+           availableHeroesDisplay.innerHTML = heroesHtml;
+         } else {
+           availableHeroesDisplay.innerHTML = '<p style="color: #666; text-align: center;">No heroes available</p>';
+         }
+       }
+       
+       if (availableAspectsDisplay) {
+         var canDraftAspect = isPlayerTurn ? canTeamDraft(playerTeamName, 'aspect') : true;
+         var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+         
+         if (allAspects.length > 0) {
+           var aspectsHtml = '';
+           
+           // V1.0.7 Enhancement: Show aspects in groups when in 4-group mode
+           if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+             // Get selectable aspects for each group
+             var selectableGroup1 = getSelectableAspectsInGroup(1);
+             var selectableGroup2 = getSelectableAspectsInGroup(2);
+             
+             // Aspect Group 1
+             aspectsHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
+             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Aspect Group 1</h4>';
+             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+             
+             for (var i = 0; i < aspectGroup1.length; i++) {
+               var aspectName = aspectGroup1[i];
+               var isDrafted = draftedAspects.includes(aspectName);
+               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 1);
+               var isSelectable = selectableGroup1.includes(aspectName);
+               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
+               
+               var aspectType = getAspectType(aspectName);
+               var aspectStyle = '';
+               switch(aspectType.toLowerCase()) {
+                 case 'aggression':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                   break;
+                 case 'justice':
+                   aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                   break;
+                 case 'leadership':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                   break;
+                 case 'protection':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                   break;
+                 case 'pool':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                   break;
+                 default:
+                   aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+               }
+               
+               if (isDrafted) {
+                 aspectStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 aspectStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
+               } else {
+                 aspectStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
+               var checkmark = isSelectable && !isDrafted ? '🎯 ' : '';
+               
+               aspectsHtml += '<div class="hero-card" data-item="' + aspectName + '" style="' + aspectStyle + '" ' + onclick + '>' + checkmark + aspectName + (checkmark ? ' 🎯' : '') + '</div>';
+             }
+             
+             aspectsHtml += '</div></div>';
+             
+             // Aspect Group 2
+             aspectsHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
+             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Aspect Group 2</h4>';
+             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+             
+             for (var i = 0; i < aspectGroup2.length; i++) {
+               var aspectName = aspectGroup2[i];
+               var isDrafted = draftedAspects.includes(aspectName);
+               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 2);
+               var isSelectable = selectableGroup2.includes(aspectName);
+               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
+               
+               var aspectType = getAspectType(aspectName);
+               var aspectStyle = '';
+               switch(aspectType.toLowerCase()) {
+                 case 'aggression':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                   break;
+                 case 'justice':
+                   aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                   break;
+                 case 'leadership':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                   break;
+                 case 'protection':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                   break;
+                 case 'pool':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                   break;
+                 default:
+                   aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+               }
+               
+               if (isDrafted) {
+                 aspectStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 aspectStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
+               } else {
+                 aspectStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
+               var checkmark = isSelectable && !isDrafted ? '🎯 ' : '';
+               
+               aspectsHtml += '<div class="hero-card" data-item="' + aspectName + '" style="' + aspectStyle + '" ' + onclick + '>' + checkmark + aspectName + (checkmark ? ' 🎯' : '') + '</div>';
+             }
+             
+             aspectsHtml += '</div></div>';
+             
+           } else {
+             // Original single list format for 2-group mode
+             for (var i = 0; i < allAspects.length; i++) {
+               var aspectName = allAspects[i];
+               var isDrafted = draftedAspects.includes(aspectName);
+               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted;
+               
+               var aspectType = getAspectType(aspectName);
+               var aspectStyle = '';
+               switch(aspectType.toLowerCase()) {
+                 case 'aggression':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+                   break;
+                 case 'justice':
+                   aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+                   break;
+                 case 'leadership':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+                   break;
+                 case 'protection':
+                   aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+                   break;
+                 case 'pool':
+                   aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+                   break;
+                 default:
+                   aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+               }
+               
+               if (isDrafted) {
+                 aspectStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
+               } else if (isClickable) {
+                 aspectStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
+               } else {
+                 aspectStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
+               }
+               
+               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
+               
+               aspectsHtml += '<div class="hero-card" data-item="' + aspectName + '" style="' + aspectStyle + '" ' + onclick + '>' + aspectName + '</div>';
+             }
+           }
+           
+           availableAspectsDisplay.innerHTML = aspectsHtml;
+         } else {
+           availableAspectsDisplay.innerHTML = '<p style="color: #666; text-align: center;">No aspects available</p>';
+         }
+       }
+     }, null, [], 'updateAvailableItemsDisplay');
+   }
+
+   // Update bot priority display
+   function updateBotPriorityDisplay() {
+     var botPriorityDisplay = document.getElementById('botPriorityDisplay');
+     if (!botPriorityDisplay) return;
+     
+     var botPriorityInPool = filteredDraftOrder.filter(function(hero) {
+       // Check for exact match or Spider-Woman variant match
+       return allHeroes.includes(hero) || (hero === 'Spider-Woman' && allHeroes.some(function(h) {
+         return h.startsWith('Spider-Woman - ');
+       }));
+     }).map(function(hero) {
+       // Replace Spider-Woman with the aspect-assigned version if present
+       if (hero === 'Spider-Woman') {
+         var spiderWomanVariant = allHeroes.find(function(h) {
+           return h.startsWith('Spider-Woman - ');
+         });
+         return spiderWomanVariant || hero;
+       }
+       return hero;
+     });
+     
+     if (botPriorityInPool.length > 0) {
+       var botHtml = '';
+       for (var i = 0; i < botPriorityInPool.length; i++) {
+         var heroName = botPriorityInPool[i];
+         var isDrafted = draftedHeroes.includes(heroName);
+         var canDraftHero = isPlayerTurn ? canTeamDraft(playerTeamName, 'hero') : true;
+         var isClickable = canDraftHero && isPlayerTurn && !isDrafted;
+         
+         var style;
+         if (isDrafted) {
+           style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; font-size: 0.85rem; cursor: not-allowed;';
+         } else if (isClickable) {
+           style = 'border: 2px solid #8A2BE2; background: linear-gradient(145deg, #f8f0ff, #e8d5ff); font-size: 0.85rem; cursor: pointer;';
+         } else {
+           style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; font-size: 0.85rem; cursor: not-allowed; opacity: 0.7;';
+         }
+         
+         var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
+         
+         botHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
+       }
+       botPriorityDisplay.innerHTML = botHtml;
+     } else {
+       botPriorityDisplay.innerHTML = '<p style="color: #666; text-align: center; font-style: italic;">No bot priority heroes in current pool</p>';
+     }
+   }
+
+   // Update bot aspect priority display
+   function updateBotAspectPriorityDisplay() {
+     var botAspectPriorityDisplay = document.getElementById('botAspectPriorityDisplay');
+     if (!botAspectPriorityDisplay) return;
+     
+     if (aspectPriorityList.length > 0) {
+       var aspectsHtml = '';
+       
+       aspectPriorityList.forEach(function(aspectName) {
+         var isDrafted = draftedAspects.includes(aspectName);
+         var canDraftAspect = isPlayerTurn ? canTeamDraft(playerTeamName, 'aspect') : true;
+         var isClickable = false; // V1.0.7: Disabled clicking in Bot Priority panel - read-only for reference
+         
+         var aspectType = getAspectType(aspectName);
+         var aspectStyle = '';
+         switch(aspectType.toLowerCase()) {
+           case 'aggression':
+             aspectStyle = 'background: linear-gradient(145deg, #ffe8e8, #ffcaca); border-color: #ff6b6b; color: #d63447;';
+             break;
+           case 'justice':
+             aspectStyle = 'background: linear-gradient(145deg, #fff8dc, #ffeaa7); border-color: #feca57; color: #f39800;';
+             break;
+           case 'leadership':
+             aspectStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
+             break;
+           case 'protection':
+             aspectStyle = 'background: linear-gradient(145deg, #e8f5e8, #c8e6c8); border-color: #55a55a; color: #2d8f2f;';
+             break;
+           case 'pool':
+             aspectStyle = 'background: linear-gradient(145deg, #ffe8ff, #ffcaff); border-color: #ff9ff3; color: #e84393;';
+             break;
+           default:
+             aspectStyle = 'background: linear-gradient(145deg, #f0f0f0, #e0e0e0); border-color: #888; color: #555;';
+         }
+         
+         if (isDrafted) {
+           aspectStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed; font-size: 0.85rem;';
+         } else {
+           // V1.0.7: Always show as read-only (no clicking allowed in Bot Priority panel)
+           aspectStyle += ' opacity: 0.8; cursor: default; border-width: 2px; border-style: solid; font-size: 0.85rem;';
+         }
+         
+         // V1.0.7: No onclick functionality - panel is read-only for strategic reference
+         var onclick = '';
+         
+         aspectsHtml += '<div class="hero-card" data-item="' + aspectName + '" style="' + aspectStyle + '" ' + onclick + '>' + aspectName + '</div>';
+       });
+       
+       botAspectPriorityDisplay.innerHTML = aspectsHtml;
+     } else {
+       botAspectPriorityDisplay.innerHTML = '<p style="color: #666; text-align: center; font-style: italic;">No aspects in current pool</p>';
+     }
+   }
+
+   // Draft item function
+   function draftItem(itemName) {
+     if (!isPlayerTurn) return;
+     
+     var isHero = allHeroes.includes(itemName);
+     var isAspect = allAspects.includes(itemName);
+     
+     var actualItemToDraft = itemName;
+     
+     if (isAspect) {
+       var aspectType = getAspectType(itemName);
+       
+       // V1.0.9 Enhancement: Fix aspect selection to respect clicked group
+       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+       if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+         // In 4-group mode, use the exact clicked aspect (it's already been validated as selectable)
+         actualItemToDraft = itemName;
+       } else {
+         // In 2-group mode, use the original logic (highest available of that type)
+         var highestAvailable = getHighestAvailableAspect(aspectType);
+         if (!highestAvailable) return;
+         actualItemToDraft = highestAvailable;
+       }
+     }
+     
+     var alreadyDrafted = draftedHeroes.includes(actualItemToDraft) || draftedAspects.includes(actualItemToDraft);
+     if (alreadyDrafted) return;
+     
+     var draftType = isHero ? 'hero' : 'aspect';
+     if (!canTeamDraft(playerTeamName, draftType)) return;
+     
+     var currentTeam = draftOrderTeams[currentTurnIndex];
+     
+     teamPicks[currentTeam].push(actualItemToDraft);
+     if (isHero) {
+       draftedHeroes.push(actualItemToDraft);
+     } else {
+       draftedAspects.push(actualItemToDraft);
+     }
+     
+     updateAllTeamsDisplay();
+     updateAvailableItemsDisplay();
+     updateBotPriorityDisplay();
+     updateBotAspectPriorityDisplay();
+     
+     advanceTurn();
+   }
+   
+   // Advance to next turn (snake draft format for 4 rounds)
+   function advanceTurn() {
+     if (currentRound === 1 || currentRound === 3) {
+       currentTurnIndex++;
+       if (currentTurnIndex >= draftOrderTeams.length) {
+         currentRound++;
+         currentTurnIndex = draftOrderTeams.length - 1;
+       }
+     } else if (currentRound === 2 || currentRound === 4) {
+       currentTurnIndex--;
+       if (currentTurnIndex < 0) {
+         if (currentRound < maxRounds) {
+           currentRound++;
+           currentTurnIndex = 0;
+         } else {
+           currentRound = 5;
+           updateDraftStatus();
+           updateAllTeamsDisplay();
+           return;
+         }
+       }
+     }
+     
+     isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
+     
+     updateDraftStatus();
+     updateAllTeamsDisplay();
+     updateAvailableItemsDisplay();
+     updateBotPriorityDisplay();
+     updateBotAspectPriorityDisplay();
+     
+     // V1.5 Enhancement: Extend delay for re-pick visibility
+     if (!isPlayerTurn) {
+       var delay = (window.lastRePickData && window.lastRePickData.triggered) ? 2500 : 1250;
+       setTimeout(processNextTurn, delay);
+     }
+   }
+   
+   // Process AI turn with enhanced bot strategy
+   function processNextTurn() {
+     if (isPlayerTurn) return;
+     if (currentRound > maxRounds) return;
+     
+     var currentTeam = draftOrderTeams[currentTurnIndex];
+     var aiPick = null;
+     
+     // V1.5 Enhancement: Track re-pick behavior for user feedback
+     var rePickTriggered = false;
+     var originalPickType = '';
+     var finalPickType = '';
+     
+     var currentTeamPicks = teamPicks[currentTeam] || [];
+     var currentHeroes = currentTeamPicks.filter(function(pick) {
+       return allHeroes.includes(pick);
+     });
+     var currentAspects = currentTeamPicks.filter(function(pick) {
+       return allAspects.includes(pick);
+     });
+     
+     var preferredType = (currentRound === 1 || currentRound === 3) ? 'hero' : 'aspect';
+     
+     // V0.7 Enhancement: Use customizable bot randomness percentage
+     var randomChance = Math.random();
+     if (randomChance < (botRandomnessPercentage / 100)) {
+       preferredType = (preferredType === 'hero') ? 'aspect' : 'hero';
+     }
+     
+     var canPickHero = currentHeroes.length < 2;
+     var canPickAspect = currentAspects.length < 2;
+     
+     if (preferredType === 'hero' && !canPickHero) {
+       preferredType = 'aspect';
+     } else if (preferredType === 'aspect' && !canPickAspect) {
+       preferredType = 'hero';
+     }
+     
+     if ((preferredType === 'hero' && !canPickHero) || (preferredType === 'aspect' && !canPickAspect)) {
+       advanceTurn();
+       return;
+     }
+     
+     if (preferredType === 'hero') {
+       var availableHeroes = allHeroes.filter(function(hero) {
+         return !draftedHeroes.includes(hero);
+       });
+       
+       // V1.0.6 Enhancement: Apply group restrictions for bots in 4-group mode
+       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+       if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
+         var currentTeamHeroes = currentHeroes;
+         if (currentTeamHeroes.length === 1) {
+           // Second hero pick - must be from opposite group
+           var firstHeroGroup = getHeroGroup(currentTeamHeroes[0]);
+           var allowedGroup = firstHeroGroup === 1 ? 2 : 1;
+           availableHeroes = availableHeroes.filter(function(hero) {
+             return getHeroGroup(hero) === allowedGroup;
+           });
+         }
+         // First hero pick can be from any group (no additional filtering needed)
+       }
+       
+       if (availableHeroes.length === 0) {
+         advanceTurn();
+         return;
+       }
+       
+       // V0.8 Enhancement: Check for surprise pick first
+       var surpriseChance = Math.random();
+       if (surpriseChance < (botSurprisePercentage / 100)) {
+         // Surprise pick: completely random from all available heroes
+         var randomIndex = Math.floor(Math.random() * availableHeroes.length);
+         aiPick = availableHeroes[randomIndex];
+       } else {
+         // Normal pick: weighted selection from top 5 tier list heroes
+         var availablePriorityHeroes = filteredDraftOrder.filter(function(hero) {
+           // Handle Spider-Woman variant matching
+           if (hero === 'Spider-Woman') {
+             return availableHeroes.some(function(h) {
+               return h === 'Spider-Woman' || h.startsWith('Spider-Woman - ');
+             });
+           }
+           return availableHeroes.includes(hero);
+         }).map(function(hero) {
+           // Replace Spider-Woman with the actual variant in the pool
+           if (hero === 'Spider-Woman') {
+             var spiderWomanVariant = availableHeroes.find(function(h) {
+               return h.startsWith('Spider-Woman - ');
+             });
+             return spiderWomanVariant || hero;
+           }
+           return hero;
+         });
+         
+         if (availablePriorityHeroes.length > 0) {
+           var topChoices = availablePriorityHeroes.slice(0, Math.min(5, availablePriorityHeroes.length));
+           
+           var weights = [];
+           for (var i = 0; i < topChoices.length; i++) {
+             weights.push(Math.pow(1.5, topChoices.length - 1 - i));
+           }
+           
+           var totalWeight = weights.reduce(function(sum, weight) {
+             return sum + weight;
+           }, 0);
+           var random = Math.random() * totalWeight;
+           var cumulativeWeight = 0;
+           
+           for (var i = 0; i < topChoices.length; i++) {
+             cumulativeWeight += weights[i];
+             if (random <= cumulativeWeight) {
+               aiPick = topChoices[i];
+               break;
+             }
+           }
+         } else {
+           // No tier list heroes available, pick randomly
+           var randomIndex = Math.floor(Math.random() * availableHeroes.length);
+           aiPick = availableHeroes[randomIndex];
+         }
+       }
+       
+       if (aiPick) {
+         draftedHeroes.push(aiPick);
+       }
+       
+     } else {
+       var availableAspects = allAspects.filter(function(aspect) {
+         return !draftedAspects.includes(aspect);
+       });
+       
+       // V1.4 Enhancement: Apply aspect group restrictions for bots in 4-group mode
+       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : '2';
+       if (draftPoolGroups === '4' && aspectGroup1.length > 0 && aspectGroup2.length > 0) {
+         var currentTeamAspects = currentAspects;
+         if (currentTeamAspects.length === 1) {
+           // Second aspect pick - must be from opposite group
+           var firstAspectGroup = getAspectGroup(currentTeamAspects[0]);
+           var allowedGroup = firstAspectGroup === 1 ? 2 : 1;
+           availableAspects = availableAspects.filter(function(aspect) {
+             return getAspectGroup(aspect) === allowedGroup;
+           });
+         }
+         // First aspect pick can be from any group (no additional filtering needed)
+       }
+       
+       if (availableAspects.length === 0) {
+         advanceTurn();
+         return;
+       }
+       
+       // V0.8 Enhancement: Check for surprise pick first
+       var surpriseChance = Math.random();
+       if (surpriseChance < (botSurprisePercentage / 100)) {
+         // Surprise pick: completely random from all available aspects
+         var randomIndex = Math.floor(Math.random() * availableAspects.length);
+         var randomAspect = availableAspects[randomIndex];
+         var aspectType = getAspectType(randomAspect);
+         aiPick = getHighestAvailableAspect(aspectType);
+       } else {
+         // V0.11 Enhancement: Leadership priority logic
+         var availableLeadership = getHighestAvailableLeadership();
+         if (availableLeadership) {
+           // Take highest available Leadership
+           aiPick = availableLeadership;
+         } else {
+           // Normal pick: weighted selection from top 5 priority aspects
+           var availablePriorityAspects = aspectPriorityList.filter(function(aspect) {
+             return availableAspects.includes(aspect);
+           });
+           
+           if (availablePriorityAspects.length > 0) {
+             var topChoices = availablePriorityAspects.slice(0, Math.min(5, availablePriorityAspects.length));
+             
+             var weights = [];
+             for (var i = 0; i < topChoices.length; i++) {
+               weights.push(Math.pow(1.5, topChoices.length - 1 - i));
+             }
+             
+             var totalWeight = weights.reduce(function(sum, weight) {
+               return sum + weight;
+             }, 0);
+             var random = Math.random() * totalWeight;
+             var cumulativeWeight = 0;
+             
+             for (var i = 0; i < topChoices.length; i++) {
+               cumulativeWeight += weights[i];
+               if (random <= cumulativeWeight) {
+                 var selectedAspect = topChoices[i];
+                 var aspectType = getAspectType(selectedAspect);
+                 aiPick = getHighestAvailableAspect(aspectType);
+                 break;
+               }
+             }
+           } else {
+             // No priority aspects available, pick randomly
+             var randomIndex = Math.floor(Math.random() * availableAspects.length);
+             var randomAspect = availableAspects[randomIndex];
+             var aspectType = getAspectType(randomAspect);
+             aiPick = getHighestAvailableAspect(aspectType);
+           }
+         }
+       }
+       
+       // V1.5 Enhancement: Mild discouragement for duplicate aspect types on second pick
+       if (currentAspects.length === 1 && aiPick && getAspectType(aiPick) === getAspectType(currentAspects[0])) {
+         // Track re-pick data for user feedback
+         rePickTriggered = true;
+         originalPickType = getAspectType(aiPick);
+         
+         // Re-run aspect selection logic once to encourage variety
+         var rePickChance = Math.random();
+         if (rePickChance < (botSurprisePercentage / 100)) {
+           // Re-pick: Surprise pick - completely random from all available aspects
+           var randomIndex = Math.floor(Math.random() * availableAspects.length);
+           var randomAspect = availableAspects[randomIndex];
+           var aspectType = getAspectType(randomAspect);
+           aiPick = getHighestAvailableAspect(aspectType);
+         } else {
+           // Re-pick: Leadership priority logic
+           var availableLeadership = getHighestAvailableLeadership();
+           if (availableLeadership && availableAspects.includes(availableLeadership)) {
+             // Take highest available Leadership if still available
+             aiPick = availableLeadership;
+           } else {
+             // Re-pick: Normal weighted selection from top 5 priority aspects
+             var availablePriorityAspects = aspectPriorityList.filter(function(aspect) {
+               return availableAspects.includes(aspect);
+             });
+             
+             if (availablePriorityAspects.length > 0) {
+               var topChoices = availablePriorityAspects.slice(0, Math.min(5, availablePriorityAspects.length));
+               
+               var weights = [];
+               for (var i = 0; i < topChoices.length; i++) {
+                 weights.push(Math.pow(1.5, topChoices.length - 1 - i));
+               }
+               
+               var totalWeight = weights.reduce(function(sum, weight) {
+                 return sum + weight;
+               }, 0);
+               var random = Math.random() * totalWeight;
+               var cumulativeWeight = 0;
+               
+               for (var i = 0; i < topChoices.length; i++) {
+                 cumulativeWeight += weights[i];
+                 if (random <= cumulativeWeight) {
+                   var selectedAspect = topChoices[i];
+                   var aspectType = getAspectType(selectedAspect);
+                   aiPick = getHighestAvailableAspect(aspectType);
+                   break;
+                 }
+               }
+             } else {
+               // Re-pick: No priority aspects available, pick randomly
+               var randomIndex = Math.floor(Math.random() * availableAspects.length);
+               var randomAspect = availableAspects[randomIndex];
+               var aspectType = getAspectType(randomAspect);
+               aiPick = getHighestAvailableAspect(aspectType);
+             }
+           }
+         }
+         // Store final pick type for feedback
+         finalPickType = getAspectType(aiPick);
+         // Accept whatever the re-pick produces, even if still same type
+       }
+       
+       if (aiPick) {
+         draftedAspects.push(aiPick);
+       }
+     }
+     
+     if (aiPick) {
+       teamPicks[currentTeam].push(aiPick);
+       
+       // Store re-pick data globally for status display
+       window.lastRePickData = {
+         triggered: rePickTriggered,
+         originalType: originalPickType,
+         finalType: finalPickType,
+         team: currentTeam
+       };
+       
+       // V1.5 Enhancement: Force status update after storing re-pick data
+       if (rePickTriggered) {
+         updateDraftStatus(); // Force immediate status update
+       }
+       
+       updateAllTeamsDisplay();
+       updateAvailableItemsDisplay();
+       updateBotPriorityDisplay();
+       updateBotAspectPriorityDisplay();
+       
+       advanceTurn();
+     }
+   }
+   
+   /* ===== MODOK DRAFT TOOL - MAIN SCRIPT END ===== */
+   /* CRITICAL: No JavaScript code should appear after this point */
+ </script>
+</body>
+</html>
