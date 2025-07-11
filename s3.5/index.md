@@ -54,7 +54,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ## 📚 **DECK-BUILDING**
 
-#### 📋 **Deck-Building Rules**
+#### 📋 **Deck-Building Restrictions**
 ```
 1️⃣ MUST keep at least 1 copy of each precon card
 🔄 MAY replace extra copies 
