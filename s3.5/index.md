@@ -50,7 +50,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 | 🚦 **Draft Begins** | Sunday, July 6 | 10:00 AM PDT |
 | 🏁 **Season Ends** | Sunday, Aug 3 | 11:59 PM PDT |
 
-> 📝 **REGISTER NOW**: Use the Season 3.5 registration channel on Discord!
+> 📝 Registration closed ~~**REGISTER NOW**: Use the Season 3.5 registration channel on Discord!~~
 
 ## 📚 **DECK-BUILDING**
 
