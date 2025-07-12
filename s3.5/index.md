@@ -19,7 +19,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ### 🎪 CHALLENGE MODE 
 ```
-⭐ Score as many points as you can against the challenge
+⭐ What's the highest difficulty you can defeat? Unlimited attempts at each difficulty
 🔓 Only way to participate after league registration has closed (July 3)
 🤖 Choose the heroes you like or draft your heroes against the Draft-o-matic Draft Simulator
 🎈 Similar benefits to league non-competitive mode
@@ -27,16 +27,16 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 ### ⚔️ LEAGUE COMPETITIVE MODE (CLOSED)
 ```
-🥇 Official scoring and rankings
-🎯 Maximum one attempt per difficulty
-🏆 Glory and bragging rights await!t!
+🥇 Detailed scoring and rankings
+🎯 What's the highest difficulty you can defeat? Maximum one attempt per difficulty
+🏆 Glory and bragging rights await
 ```
 
 ### 🎈 LEAGUE NON-COMPETITIVE MODE (CLOSED)
 ```
 🎉 Play for fun without pressure
-♾️ Unlimited attempts at each difficulty
-📊 Help us gather community stats!
+♾️ What's the highest difficulty you can defeat? Unlimited attempts at each difficulty
+📊 Compete on the leaderboard to defeat the highest difficulty
 ```
 
 > 💡 **Pro Tip**: You can switch from Competitive to Non-Competitive mid-season if the pressure gets too intense!
