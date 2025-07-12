@@ -463,13 +463,12 @@
    /* ===== MODOK DRAFT TOOL - MAIN SCRIPT START ===== */
    // CRITICAL: All JavaScript code must remain within this script block
    
-   // V1.5 Enhancement: Bot aspect variety discouragement
-   var TOOL_VERSION = 'V1.5';
+   // V1.6 Enhancement: Dynamic pool aspect count with equal hero/aspect totals
+   var TOOL_VERSION = 'V1.6';
    
    // Initialize version displays
    document.addEventListener('DOMContentLoaded', function() {
      document.getElementById('toolVersionDisplay').textContent = 'MODOK League Season 4 (' + TOOL_VERSION + ')';
-     document.getElementById('versionDisplay').textContent = '(' + TOOL_VERSION + ')';
    });
    
    // Error boundary wrapper for critical functions - Available globally
@@ -1018,12 +1017,23 @@
      var aspectPool = [];
      var mainAspects = ['Aggression', 'Justice', 'Leadership', 'Protection'];
      
-     for (var i = 0; i < numberOfHeroes; i++) {
+     // Calculate dynamic pool aspects count
+     var extrasValue = numberOfExtras;
+     var X = Math.max(1, Math.min(3, extrasValue - 1));
+     var numberOfAspectGroups = draftPoolGroups === '4' ? 2 : 1;
+     var poolAspectsToAdd = X * numberOfAspectGroups;
+     
+     // Generate main aspects (reduced by the number of pool aspects we'll add)
+     var mainAspectsToGenerate = numberOfHeroes - poolAspectsToAdd;
+     for (var i = 0; i < mainAspectsToGenerate; i++) {
        var randomAspect = mainAspects[Math.floor(rng.next() * mainAspects.length)];
        aspectPool.push(randomAspect);
      }
      
-     aspectPool.push('Pool', 'Pool', 'Pool', 'Pool');
+     // Add pool aspects
+     for (var i = 0; i < poolAspectsToAdd; i++) {
+       aspectPool.push('Pool');
+     }
      
      // Number aspects
      var numberedAspectPool = [];
