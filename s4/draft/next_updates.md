@@ -1,10 +1,10 @@
 - (V1.0.5) ~~A single instance of declaring version~~ 
 - (V1.1) ~~Aspect drafting~~
 - (V1.0.6) ~~Restricting to drafting once per group~~
-- Update how Pool is added (Max: (Extras per group - 1)*(Number of aspect groups), Min: 1)
 - (V1.0.6) ~~Update: You can pick either a hero (2 left) or aspect (2 left)~~
 - (V1.1) ~~Aspect groups are not separated in initial pool~~
 - (V1.0.9) ~~It is still picking highest numbered aspect (cross-group)~~
 - (V1.0.9) ~~Change to 🎯 on each side~~
 - (V1.1) ~~Add breakdown of number of aspect available of each type~~
 - (V1.12) ~~Check that text output works for both group types~~
+- (V1.6) ~~Update how Pool is added (Max: (Extras per group - 1)*(Number of aspect groups), Min: 1)~~
