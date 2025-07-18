@@ -2,8 +2,6 @@
 
 Learn about your options for participating in MODOK League, from intensely competitive options to casual participation in occasional rounds. 
 
----
-
 ## 🎯 PARTICIPATION MODES
 
 > 💡 **Pro Tip:** Both participation modes welcome ALL kouples - registered AND unregistered! Everyone's invited to this party! 🎉
@@ -23,9 +21,7 @@ Compete against other legendary kouples to earn the highest possible score! But,
 - 📚 Practice makes perfect - Revise your decks and practice unlimited times between attempts
 - 📊 Share the results from your practice rounds to contribute to league stats (and earn even more bragging rights)
 
----
-
-## 📝 Registered vs Unregistered Participation
+## 📝 REGISTERED VS UNREGISTERED PARTICIPATION 📝
 
 ### 🌟 **Registered Kouples**
 How to participate in the official league draft
@@ -43,9 +39,7 @@ How to participate outside of the official league draft
 - 🎨 OR choose your own heroes and aspects (total creative control!)
 - 🌈 Fun your way!
 
----
-
-## ❓ Frequently Asked Questions
+## ❓ FREQUENTLY ASKED QUESTIONS ❓
 
 ### **Q: Do I need to stay in the same participation mode for the entire season?**
 
