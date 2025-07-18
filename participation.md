@@ -45,8 +45,6 @@ How to participate outside of the official league draft
 
 **A:** Absolutely not! Flexibility is the name of the game! As long as all your games follow the rules of whichever participation mode you want to switch to, you can hop between modes.
 
----
-
-## 🎊 Ready to join the action?
+## 🎊 READY TO JOIN THE ACTION? 🎊
 
 The battlefield awaits, kouples! Whether you're here for friendly neighborhood vibes or ready to run the gauntlet, let's make those villains squirm.
