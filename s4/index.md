@@ -13,23 +13,27 @@ title: "Season 04 - MODOK League - Something's Missing"
 > <br>🎭 Those pesky nemesis sets have mysteriously vanished too!
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
 
+<div align="center"><header><h3><a href="https://modokleague.github.io/s4/pool/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
+<div align="center"><header><h3>📝 Submit your results (coming soon) 📝</h3></header></div>
+
 ## 📅 **CRITICAL DATES (2025)** 
 
 |  | 🗓️ | ⏰|
 |--------------|-------------|-------------|
-| 📝 **Registration Opens** | Monday, August 4 | Morning |
-| 🚫 **Registration Closes** | Wednesday, August 20 | 11:59 PM PDT |
-| 📊 **Draft Pool Revealed** | Thursday, August 21 | Morning |
-| 🚦 **Draft Begins** | Sunday, August 24 | 10:00 AM PDT |
-| 🏆 **Mid-Season Awards** | Monday, September 28 | Morning |
-| 🏁 **Season Ends** | Sunday, October 19 | 11:59 PM PDT |
+| 📝 **Registration Opens** | Monday, July 28 | Morning |
+| 🚫 **Registration Closes** | Wednesday, August 13 | 11:59 PM PDT |
+| 📊 **Draft Pool Revealed** | Thursday, August 14 | Morning |
+| 🚦 **Draft Begins** | Sunday, August 17 | 10:00 AM PDT |
+| 🏆 **Mid-Season Awards** | Monday, September 21 | Morning |
+| 🏁 **Season Ends** | Sunday, October 12 | 11:59 PM PDT |
 
 🆕 **What's different this season?**
 
 ```diff
 ! 🗓️ NO INTERMEDIATE DUE DATES! 
-+ All rounds are due at the END OF THE SEASON
++ 🎬 All rounds are due at the END OF THE SEASON
 + 🌟 Mid-season awards encourage early submissions 
+```
 
 ## ⚔️ **ROUND 401: [REDACTED]**
 
