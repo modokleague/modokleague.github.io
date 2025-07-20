@@ -14,6 +14,7 @@ title: "Season 04 - MODOK League - Something's Missing"
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
 
 ```diff
+DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 @ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 ~ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 + 👥 TWO HERO GROUPS: Maximum variety and strategic depth
