@@ -12,6 +12,13 @@ title: "Season 04 - MODOK League - Something's Missing"
 > <br>💀 Face **[REDACTED]** and **[REDACTED]** with crucial elements **MISSING** from each scenario!
 > <br>🎭 Those pesky nemesis sets have mysteriously vanished too!
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
+> <br>🎯 Draft format: Double double trouble (see below)
+
+```diff
+! DOULBE DOUBLE TROUBLE: Classic Two Hero + Two Aspect Draft with a TWIST!
++ 👥 TWO HERO GROUPS: Maximum variety and strategic depth
++ 🎭 TWO ASPECT GROUPS: Double the combinations, double the chaos
+```
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s4/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 <div align="center"><header><h3>📝 Submit your results (coming soon) 📝</h3></header></div>
