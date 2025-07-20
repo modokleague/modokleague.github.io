@@ -13,7 +13,7 @@ title: "Season 04 - MODOK League - Something's Missing"
 > <br>🎭 Those pesky nemesis sets have mysteriously vanished too!
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
 
-<div align="center"><header><h3><a href="https://modokleague.github.io/s4/pool/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
+<div align="center"><header><h3><a href="https://modokleague.github.io/s4/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 <div align="center"><header><h3>📝 Submit your results (coming soon) 📝</h3></header></div>
 
 ## 📅 **CRITICAL DATES (2025)** 
