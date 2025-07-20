@@ -15,10 +15,8 @@ title: "Season 04 - MODOK League - Something's Missing"
 
 ```diff
 DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
-@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
-~ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
-+ 👥 TWO HERO GROUPS: Maximum variety and strategic depth
-+ 🎭 TWO ASPECT GROUPS: Double the combinations, double the chaos
+👥 TWO HERO GROUPS: Maximum variety and strategic depth
+🎭 TWO ASPECT GROUPS: Double the combinations, double the chaos
 ```
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s4/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
