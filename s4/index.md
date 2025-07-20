@@ -24,7 +24,7 @@ title: "Season 04 - MODOK League - Something's Missing"
 | 🚫 **Registration Closes** | Wednesday, August 13 | 11:59 PM PDT |
 | 📊 **Draft Pool Revealed** | Thursday, August 14 | Morning |
 | 🚦 **Draft Begins** | Sunday, August 17 | 10:00 AM PDT |
-| 🏆 **Mid-Season Awards** | Monday, September 21 | Morning |
+| 🏆 **Mid-Season Awards** | Thursday, September 25 | Morning |
 | 🏁 **Season Ends** | Sunday, October 12 | 11:59 PM PDT |
 
 🆕 **What's different this season?**
