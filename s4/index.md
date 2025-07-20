@@ -36,9 +36,9 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 🆕 **What's different this season?**
 
 ```diff
-! 🗓️ NO INTERMEDIATE DUE DATES! 
-+ 🎬 All rounds are due at the END OF THE SEASON
-+ 🌟 Mid-season awards encourage early submissions 
+🗓️ NO INTERMEDIATE DUE DATES! 
+🎬 All rounds are due at the END OF THE SEASON
+🌟 Mid-season awards encourage early submissions 
 ```
 
 ## ⚔️ **ROUND 401: [REDACTED]**
