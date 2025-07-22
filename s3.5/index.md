@@ -92,7 +92,7 @@ title: "Season 3.5 - MODOK League - Kree Precon Party"
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 👹 **Setup: Formidable Foe Environment (Standard II/Expert II)** | 👑 **Setup: Kree Supremacy¹** | 🎁 **Other Cards Added During Setup** |
 |-------------|---------------------|----------------------|----------------------|-------------------|
-| ☆☆☆☆☆★ | Standard II + Expert II | ✅ Expert Mode | ✅ Expert Mode | 🔊 Sonic Converter |
+| ★★★★★★ | Standard II + Expert II | ✅ Expert Mode | ✅ Expert Mode | 🔊 Sonic Converter |
 | ☆☆☆☆☆ | Standard 1\* + Expert 1\* (see note 2) | ✅ Expert Mode | ✅ Standard Mode | 🔊 Sonic Converter |
 | ☆☆☆☆ | Standard I + Expert I | ✅ Expert Mode | ❌ None | 🔊 Sonic Converter |
 | ☆☆☆ | Standard I + Expert I | ❌ None | ❌ None | ❌ None |
