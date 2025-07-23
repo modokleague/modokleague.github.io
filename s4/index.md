@@ -9,7 +9,7 @@ title: "Season 04 - MODOK League - Something's Missing"
 <div align="center"><header><h2>🚫❓ SOMETHING'S MISSING ❓🚫</h2></header></div>
 
 > **New for Season 4: TWO rounds of mayhem instead of four!** *(Who doesn't want drafts to happen more often?)*
-> <br>💀 Face **BROTHERHOOD OF BADOON** and **[REDACTED]** with crucial elements **MISSING** from each scenario!
+> <br>💀 Face **BROTHERHOOD OF BADOON** and **CROSSBONES** with crucial elements **MISSING** from each scenario!
 > <br>🎭 Those pesky nemesis sets have mysteriously vanished too!
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
 
@@ -65,4 +65,18 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 > **When Revealed (for any number of players):** Discard the top 4👤 cards of the encounter deck. For each of the first X = 1.5👤 (rounded up) minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than X minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until X minions are in play from this entire When Revealed effect.
 
 
-## ⚔️ **ROUND 402: [REDACTED]**
+## ⚔️ **ROUND 402: CROSSER BONES**
+
+### Expert Crossbones + Deathstrike + Supersonic + Hounds + Standard III + Expert I (Base difficulty = ☆☆☆)
+
+**🚫 WHAT'S MISSING:** Experimental Weapons modular set is **REPLACED COMPLETELY** with the following cards (ordered from top to bottom during Setup):
+
+- **HEAT-SEEKING MISSILES** (from Supersonic)
+- **BLASTERS** (from Supersonic) 
+- **1x ADAMANTIUM UPGRADES** (from Deathstrike)
+- **AHAB'S ENERGY SPEAR** (from Hounds)
+
+> ⚠️ **Special Rule**: The second copy of ADAMANTIUM UPGRADES is shuffled into the encounter deck
+
+**CONDITION:** Instead of using your regular hero-specfiic nemesis sets, assign each of the following to a hero as their nemesis set. The minion and side scheme in each of these sets is considered that set’s nemesis minion and nemesis side scheme, respectively.
+> **Replacement nemesis sets:** 🏹 Hawkeye Nemesis Set, 🏃 Running Interference
