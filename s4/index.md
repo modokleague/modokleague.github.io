@@ -104,7 +104,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 |-------------|---------------------|-----------------------------------|---------------------------------------|
 | ★★★★★★ | Standard III + Expert I | 🦾 Super Strength + 🪶 Flight¹ | 🔪 Other copy of Adamantium Upgrades² |
 | ☆☆☆☆☆ | Standard III + Expert I | 🦾 Super Strength¹ | 🔪 Other copy of Adamantium Upgrades² |
-| ☆☆☆☆ | Standard III + Expert I | Formidable Foe Environment - Standard Side (Standard II/Expert II) | 🔱 Ahab's Spear³ |
+| ☆☆☆☆ | Standard III + Expert I | 👹 Formidable Foe Environment - Standard Side (Standard II/Expert II) | 🔱 Ahab's Spear³ |
 | ☆☆☆ | Standard III + Expert I |  |  |
 | ☆☆ | Standard III + Expert I |  | 🛠️ Improved Condition Upgrade⁴ |
 | ☆ | Standard III + Crossbones I/II |  | 🛠️ Improved Condition Upgrade⁴ |
