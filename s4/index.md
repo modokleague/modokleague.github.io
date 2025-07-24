@@ -64,6 +64,22 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 > **When Revealed (for any number of players):** Discard the top 4👤 cards of the encounter deck. For each of the first X = 1.5👤 (rounded up) minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than X minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until X minions are in play from this entire When Revealed effect.
 
+## 🏅 DIFFICULTY LEVELS
+
+| ⭐ **Level** | 🂡 **Encounter Set** | 🧤 **Setup: Infinity Gauntlet** | 🎁 **Other Cards Added During Setup** | ⚠️ **Additional Conditions** |
+|-------------|---------------------|----------------------------------|---------------------------------------|------------------------------|
+| ★★★★★★ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck | 👽 Badoon Blitz² | 🏹 Barrage counter threshold³ = 3<br><br>🏃 Pursued counter threshold⁴ = 4 |
+| ☆☆☆☆☆ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck |  |  |
+| ☆☆☆☆ | Standard III + Expert I | ⚡ **MODERATE THREAT**: Gauntlet Only (No Infinity Stones Deck)¹ |  |  |
+| ☆☆☆ | Standard III + Expert I |  |  |  |
+| ☆☆ | Standard III + Expert I |  | 🚀 Milano⁵ |  |
+| ☆ | Standard III + Crossbones I/II |  | 🚀 Milano⁵ |  |
+
+> 1. **Condition:** For the Moderate Threat version, treat the Forced Response on the Infinity Gauntlet as blank.
+> 2. Badoon Blitz side scheme (Galaxy’s Most Wanted campaign).
+> 3. **Condition:** The Charge Up ability on the BADOON SHIP environment now reads “Then, if there are 3 or more barrage counters here,...” (instead of 4).
+> 4. **Condition:** The Forced Response on the PURSUED BY THE PAST environment now reads “...if the number of counters here is at least 2 more than the number of players,...” (instead of 3).
+> 5. The rest of the Ship Command modular set is not added.
 
 ## ⚔️ **ROUND 402: CROSSER BONES**
 
@@ -80,3 +96,20 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 **CONDITION:** Instead of using your regular hero-specfiic nemesis sets, assign each of the following to a hero as their nemesis set. The minion and side scheme in each of these sets is considered that set’s nemesis minion and nemesis side scheme, respectively.
 > **Replacement nemesis sets:** 🏹 Hawkeye Nemesis Set, 🏃 Running Interference
+
+
+## 🏅 DIFFICULTY LEVELS
+
+| ⭐ **Level** | 🂡 **Encounter Set** | 🗡️ **Setup: Villain Permanents** | 🎁 **Other Cards Added During Setup** |
+|-------------|---------------------|-----------------------------------|---------------------------------------|
+| ★★★★★★ | Standard III + Expert I | 🦾 Super Strength + 🪶 Flight¹ | 🔪 Other copy of Adamantium Upgrades² |
+| ☆☆☆☆☆ | Standard III + Expert I | 🦾 Super Strength¹ | 🔪 Other copy of Adamantium Upgrades² |
+| ☆☆☆☆ | Standard III + Expert I | Formidable Foe Environment - Standard Side (Standard II/Expert II) | 🔱 Ahab's Spear³ |
+| ☆☆☆ | Standard III + Expert I |  |  |
+| ☆☆ | Standard III + Expert I |  | 🛠️ Improved Condition Upgrade⁴ |
+| ☆ | Standard III + Crossbones I/II |  | 🛠️ Improved Condition Upgrade⁴ |
+
+> 1. SUPER STRENGTH and FLIGHT attachments from the Super Strength and Flight modular sets, respectively. These are the only cards being added to the game from these modular sets.
+> 2. Attach the second copy of ADMANTIUM UPGRADES to Crossbones instead of shuffling it into the encounter deck.
+> 3. Attach AHAB'S SPEAR to Crossbones.
+> 4. Each player chooses one of the “Improved” Condition upgrades from the Rise of the Red Skull campaign (IMPROVED THWART UPGRADE, IMPROVED ATTACK UPGRADE, IMPROVED DEFENSE UPGRADE or IMPROVED RECOVERY UPGRADE) and starts with it in play. 
