@@ -45,7 +45,7 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 
 ## 🏆 CHOOSE YOUR PLAY MODE
 
-Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! 😤 Both modes welcome **registered** AND **unregistered** kouples. More details on the participation mode [page](https://modokleague.github.io/participation.html).
+Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! Both modes welcome **registered** AND **unregistered** kouples. More details on the participation mode [page](https://modokleague.github.io/participation.html).
 
 ## ⚔️ ROUND 401: DUDE, WHERE'S MY SHIP?
 
