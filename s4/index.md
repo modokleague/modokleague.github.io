@@ -64,7 +64,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 > **When Revealed (for any number of players):** Discard the top 4👤 cards of the encounter deck. For each of the first X = 1.5👤 (rounded up) minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than X minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until X minions are in play from this entire When Revealed effect.
 
-## 🏅 DIFFICULTY LEVELS
+### 🏅 Difficulty Levels
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 🧤 **Setup: Infinity Gauntlet** | 🎁 **Other Cards Added During Setup** | ⚠️ **Additional Conditions** |
 |-------------|---------------------|----------------------------------|---------------------------------------|------------------------------|
@@ -98,7 +98,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 > **Replacement nemesis sets:** 🏹 Hawkeye Nemesis Set, 🏃 Running Interference
 
 
-## 🏅 DIFFICULTY LEVELS
+### 🏅 Difficulty Levels
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 🗡️ **Setup: Villain Permanents** | 🎁 **Other Cards Added During Setup** |
 |-------------|---------------------|-----------------------------------|---------------------------------------|
@@ -112,4 +112,27 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 > 1. SUPER STRENGTH and FLIGHT attachments from the Super Strength and Flight modular sets, respectively. These are the only cards being added to the game from these modular sets.
 > 2. Attach the second copy of ADMANTIUM UPGRADES to Crossbones instead of shuffling it into the encounter deck.
 > 3. Attach AHAB'S SPEAR to Crossbones.
-> 4. Each player chooses one of the “Improved” Condition upgrades from the Rise of the Red Skull campaign (IMPROVED THWART UPGRADE, IMPROVED ATTACK UPGRADE, IMPROVED DEFENSE UPGRADE or IMPROVED RECOVERY UPGRADE) and starts with it in play. 
+> 4. Each player chooses one of the “Improved” Condition upgrades from the Rise of the Red Skull campaign (IMPROVED THWART UPGRADE, IMPROVED ATTACK UPGRADE, IMPROVED DEFENSE UPGRADE or IMPROVED RECOVERY UPGRADE) and starts with it in play. '
+
+
+## 📝 THE DRAFT
+
+### ⚙️ Draft Details
+
+| 🎮 **Feature** | 📋 **Details** |
+|----------------|----------------|
+| 👥 **Division Size** | Maximum 12 kouples per division |
+| 📚 **Draft Groups** | 2 hero groups + 2 aspects groups |
+| 📦 **Pool Size** | 3 more than needed per draft group |
+| 🦸‍♂️ **Hero Pool** | All heroes through Winter Soldier & Falcon (see bans below) |
+| 🌈 **Aspect Pool** | Added 1 at a time, with 'Pool half as likely to be added |
+| 🚫 **Pick Restrictions** | 1 hero per hero group + 1 aspect per aspect group |
+| ⏱️ **Pick Timer** | 24 hours per selection |
+| 🤖 **Auto-Pick** | Draft-bot chooses if you miss your window |
+| 🐍 **Draft Format** | 2 rounds, snake order (A→B→C then C→B→A) |
+
+Use the Draft-o-Matic at the top of the page to generate example draft pools or even simulate your own draft.
+
+### 🚫 Hall of Shames
+
+Bans to be determined by community vote
