@@ -33,6 +33,8 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 | 🏆 **Mid-Season Awards** | Thursday, September 25 | Morning |
 | 🏁 **Season Ends** | Sunday, October 12 | 11:59 PM PDT |
 
+> Join our [Discord server](https://discord.gg/6b4zBfchhA)
+
 🆕 **What's different this season?**
 
 ```diff
@@ -40,6 +42,10 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 🎬 All rounds are due at the END OF THE SEASON
 🌟 Mid-season awards encourage early submissions 
 ```
+
+## 🏆 CHOOSE YOUR PLAY MODE
+
+Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! 😤 Both modes welcome **registered** AND **unregistered** kouples. More details on the participation mode [page](https://modokleague.github.io/participation.html).
 
 ## ⚔️ ROUND 401: DUDE, WHERE'S MY SHIP?
 
