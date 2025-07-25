@@ -133,6 +133,6 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 Use the Draft-o-Matic at the top of the page to generate example draft pools or even simulate your own draft.
 
-### 🚫 Hall of Shames
+### 🚫 Hall of Shame
 
 Bans to be determined by community vote
