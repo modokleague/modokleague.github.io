@@ -74,8 +74,8 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 🧤 **Setup: Infinity Gauntlet** | 🎁 **Other Cards Added During Setup** | ⚠️ **Additional Conditions** |
 |-------------|---------------------|----------------------------------|---------------------------------------|------------------------------|
-| ★★★★★★ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck | 👽 Badoon Blitz² | 🏹 Barrage counter threshold³ = 3<br><br>🏃 Pursued counter threshold⁴ = 4 |
-| ☆☆☆☆☆ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck |  |  |
+| ★★★★★★ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck | 👽 Badoon Blitz (Expert Side)² | 🏹 Barrage counter threshold³ = 3<br><br>🏃 Pursued counter threshold⁴ = 4 |
+| ☆☆☆☆☆ | Standard III + Expert I | 🌩️ **MAXIMUM THREAT**: Gauntlet + Infinity Stones Deck | 👽 Badoon Blitz (Expert Side)² |  |
 | ☆☆☆☆ | Standard III + Expert I | ⚡ **MODERATE THREAT**: Gauntlet Only (No Infinity Stones Deck)¹ |  |  |
 | ☆☆☆ | Standard III + Expert I |  |  |  |
 | ☆☆ | Standard III + Expert I |  | 🚀 Milano⁵ |  |
