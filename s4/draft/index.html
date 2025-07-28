@@ -464,7 +464,8 @@
    // CRITICAL: All JavaScript code must remain within this script block
    
    // V1.6 Enhancement: Dynamic pool aspect count with equal hero/aspect totals
-   var TOOL_VERSION = 'V1.6';
+   // V1.7 Enhancement: Pool is 50% as likelt to be added to draft pool as the other aspects
+   var TOOL_VERSION = 'V1.7';
    
    // Initialize version displays
    document.addEventListener('DOMContentLoaded', function() {
@@ -1012,28 +1013,36 @@
        heroGroup1 = selectedHeroes.slice();
        heroGroup2 = [];
      }
+
+    // New 1.7 code
+    // Generate aspect pool
+    var aspectPool = [];
+    var aspectTypes = ['Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'];
+    // Weights: Aggression=2, Justice=2, Leadership=2, Protection=2, Pool=1 (50% as likely)
+    var aspectWeights = [2, 2, 2, 2, 1];
+    var totalWeight = aspectWeights.reduce(function(sum, weight) {
+      return sum + weight;
+    }, 0);
+    
+    // Generate all aspects using weighted random selection
+    for (var i = 0; i < numberOfHeroes; i++) {
+      var random = rng.next() * totalWeight;
+      var cumulativeWeight = 0;
+      var selectedAspect = aspectTypes[0]; // default fallback
+      
+      for (var j = 0; j < aspectTypes.length; j++) {
+        cumulativeWeight += aspectWeights[j];
+        if (random <= cumulativeWeight) {
+          selectedAspect = aspectTypes[j];
+          break;
+        }
+      }
+      
+      aspectPool.push(selectedAspect);
+    }
      
-     // Generate aspect pool
-     var aspectPool = [];
-     var mainAspects = ['Aggression', 'Justice', 'Leadership', 'Protection'];
-     
-     // Calculate dynamic pool aspects count
-     var extrasValue = numberOfExtras;
-     var X = Math.max(1, Math.min(3, extrasValue - 1));
-     var numberOfAspectGroups = draftPoolGroups === '4' ? 2 : 1;
-     var poolAspectsToAdd = X * numberOfAspectGroups;
-     
-     // Generate main aspects (reduced by the number of pool aspects we'll add)
-     var mainAspectsToGenerate = numberOfHeroes - poolAspectsToAdd;
-     for (var i = 0; i < mainAspectsToGenerate; i++) {
-       var randomAspect = mainAspects[Math.floor(rng.next() * mainAspects.length)];
-       aspectPool.push(randomAspect);
-     }
-     
-     // Add pool aspects
-     for (var i = 0; i < poolAspectsToAdd; i++) {
-       aspectPool.push('Pool');
-     }
+
+    
      
      // Number aspects
      var numberedAspectPool = [];
