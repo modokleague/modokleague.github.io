@@ -1013,30 +1013,37 @@
        heroGroup2 = [];
      }
      
-     // Generate aspect pool
+    // Generate aspect pool
      var aspectPool = [];
      var mainAspects = ['Aggression', 'Justice', 'Leadership', 'Protection'];
      
-     // Calculate dynamic pool aspects count
-     var extrasValue = numberOfExtras;
-     var X = Math.max(1, Math.min(3, extrasValue - 1));
-     var numberOfAspectGroups = draftPoolGroups === '4' ? 2 : 1;
-     var poolAspectsToAdd = X * numberOfAspectGroups;
+     // Create weighted aspect selection (Pool has 50% weight of other aspects)
+     var aspectWeights = [
+       { aspect: 'Aggression', weight: 1.0 },
+       { aspect: 'Justice', weight: 1.0 },
+       { aspect: 'Leadership', weight: 1.0 },
+       { aspect: 'Protection', weight: 1.0 },
+       { aspect: 'Pool', weight: 0.5 }
+     ];
      
-     // Generate main aspects (reduced by the number of pool aspects we'll add)
-     var mainAspectsToGenerate = numberOfHeroes - poolAspectsToAdd;
-     for (var i = 0; i < mainAspectsToGenerate; i++) {
-       var randomAspect = mainAspects[Math.floor(rng.next() * mainAspects.length)];
-       aspectPool.push(randomAspect);
+     // Calculate total weight
+     var totalWeight = aspectWeights.reduce(function(sum, item) {
+       return sum + item.weight;
+     }, 0);
+     
+     // Generate all aspects randomly with weights
+     for (var i = 0; i < numberOfHeroes; i++) {
+       var random = rng.next() * totalWeight;
+       var cumulativeWeight = 0;
+       
+       for (var j = 0; j < aspectWeights.length; j++) {
+         cumulativeWeight += aspectWeights[j].weight;
+         if (random <= cumulativeWeight) {
+           aspectPool.push(aspectWeights[j].aspect);
+           break;
+         }
+       }
      }
-     
-     // Add pool aspects
-     for (var i = 0; i < poolAspectsToAdd; i++) {
-       aspectPool.push('Pool');
-     }
-     
-     // Number aspects
-     var numberedAspectPool = [];
      
      ['Aggression', 'Justice', 'Leadership', 'Protection', 'Pool'].forEach(function(aspectType) {
        var instances = aspectPool.filter(function(aspect) {
