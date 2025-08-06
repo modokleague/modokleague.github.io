@@ -47,6 +47,11 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 
 Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! Participate in the official draft as a **registered** kouple or join the fun as an **unregistered** kouple. More details on the participation mode [page](https://modokleague.github.io/participation.html).
 
+### 🎯 Scoring
+
+🏆 Your season score is just the combined score from each round. 
+🥊 Each round your score = the highest-difficulty you defeat! 
+
 ## ⚔️ ROUND 401: DUDE, WHERE'S MY SHIP?
 
 ### Brotherhood of Badoon + Goblin Nation\* + Extreme Risk + Standard III + Expert I (Base difficulty = ☆☆☆)
