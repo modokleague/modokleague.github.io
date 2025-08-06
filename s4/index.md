@@ -49,7 +49,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ### 🎯 Scoring
 
-> 🏆 Your season score is just the combined score from each round. 
+> 🏆 Your season score is just the combined score from each round. <br>
 > 🥊 Each round your score = the highest-difficulty you defeat! 
 
 ## ⚔️ ROUND 401: DUDE, WHERE'S MY SHIP?
