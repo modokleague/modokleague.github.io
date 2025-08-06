@@ -13,7 +13,7 @@ title: "Season 04 - MODOK League - Something's Missing"
 > <br>🎭 Those pesky nemesis sets have mysteriously vanished too!
 > <br>😈 It seems HIGHLY unlikely this will make things easier for our heroes...
 
-```diff
+```
 DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 👥 TWO HERO GROUPS: Maximum variety and strategic depth
 🎭 TWO ASPECT GROUPS: Double the combinations, double the chaos
@@ -21,7 +21,10 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s4/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 <div align="center"><header><h3>📝 Submit your results (coming soon) 📝</h3></header></div>
+
+```
 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
+```
 
 ## 📅 **CRITICAL DATES (2025)** 
 
