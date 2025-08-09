@@ -155,4 +155,4 @@ Bans to be determined by community vote
 
 📜 Standard deck-building rules apply<br>
 ✨ Regular uniqueness rules during play<br>
-⚙️ Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
+🔧 Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
