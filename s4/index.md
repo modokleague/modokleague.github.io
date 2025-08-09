@@ -150,3 +150,9 @@ Use the Draft-o-Matic at the top of the page to generate example draft pools or 
 ### 🚫 Hall of Shame
 
 Bans to be determined by community vote
+
+## 📚 **DECK-BUILDING**
+
+📜 Standard deck-building rules apply
+✨ Regular uniqueness rules during play
+⚙️ Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
