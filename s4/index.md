@@ -87,7 +87,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 | ☆☆☆☆ | Standard III + Expert I | ⚡ **MODERATE THREAT**: Gauntlet Only (No Infinity Stones Deck)¹ |  |  |
 | ☆☆☆ | Standard III + Expert I |  |  |  |
 | ☆☆ | Standard III + Expert I |  | 🚀 Milano⁵ |  |
-| ☆ | Standard III + Crossbones I/II |  | 🚀 Milano⁵ |  |
+| ☆ | Standard III + Brotherhood of Badoon I/II |  | 🚀 Milano⁵ |  |
 
 > 1. **Condition:** For the Moderate Threat version, treat the Forced Response on the Infinity Gauntlet as blank.
 > 2. Badoon Blitz side scheme (Galaxy’s Most Wanted campaign).
