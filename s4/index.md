@@ -76,7 +76,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 **CONDITION 2:** The **When Revelealed** text on **Drang III** is changed to the following:
 > **When Revealed:** Discard the top 8 cards of the encounter deck. For each of the first 3 minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than 3 minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until 3 minions are in play from this entire When Revealed effect.
 
-> **When Revealed (for any number of players):** Discard the top 4👤 cards of the encounter deck. For each of the first X = 1.5👤 (rounded up) minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than X minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until X minions are in play from this entire When Revealed effect.
+> **When Revealed (version: if you play this scenario outside of MODOK League):** Discard the top 4👤 cards of the encounter deck. For each of the first X = 1.5👤 (rounded up) minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than X minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until X minions are in play from this entire When Revealed effect.
 
 ### 🏅 Difficulty Levels
 
