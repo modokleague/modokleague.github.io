@@ -71,7 +71,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 - Goblin Nation Side Scheme
 
 **CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign each of the following to a hero as their nemesis set. The minion and side scheme in each of these sets is considered that set’s nemesis minion and nemesis side scheme, respectively.
-> **Replacement nemesis sets:** Iceman's nemesis set, Badoon Headhunter (nemesis minion: Badoon Headhunter)
+> **Replacement nemesis sets:** Iceman's nemesis set, Badoon Headhunter (nemesis minion: Badoon Headhunter; treat the Victory keyword as intended)
 
 **CONDITION 2:** The **When Revelealed** text on **Drang III** is changed to the following:
 > **When Revealed:** Discard the top 8 cards of the encounter deck. For each of the first 3 minions discarded this way, put it into play engaged with the player who is engaged with the fewest minions. If fewer than 3 minions come into play this way, search the encounter deck and discard pile for additional minions and put them into play the same way, repeating until 3 minions are in play from this entire When Revealed effect.
