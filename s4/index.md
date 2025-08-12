@@ -20,7 +20,7 @@ DOULBE DOUBLE TROUBLE DRAFT: Classic Two Hero + Two Aspect Draft with a TWIST!
 ```
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s4/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
-<div align="center"><header><h3>📝 Submit your results (coming soon) 📝</h3></header></div>
+<div align="center"><header><h3><a href="https://forms.gle/1uw6xJNPHa23xMWX7" target = "_blank">📝 Submit your results 📝</a></h3></header></div>
 
 > 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
 
