@@ -110,7 +110,7 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 **CONDITION:** Instead of using your regular hero-specfiic nemesis sets, assign each of the following to a hero as their nemesis set. The minion and side scheme in each of these sets is considered that set’s nemesis minion and nemesis side scheme, respectively.
 > **Replacement nemesis sets:** 🏹 Hawkeye Nemesis Set, 🏃 Running Interference
-> _(Note: The **When Revealed** effect from the Marked for Death side scheme will only find something if there is a Hawkeye player. It has no effect otherwise.)_
+> _(The **When Revealed** effect from the Marked for Death side scheme will only find something if there is a Hawkeye player. It has no effect otherwise.)_
 
 
 
