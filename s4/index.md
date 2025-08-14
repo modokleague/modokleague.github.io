@@ -157,7 +157,7 @@ Use the Draft-o-Matic at the top of the page to generate example draft pools or 
 
 ### 🚫 Hall of Shame
 
-Bans to be determined by community vote
+There were no hero bans for this season
 
 ## 📚 **DECK-BUILDING**
 
