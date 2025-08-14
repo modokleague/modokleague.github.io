@@ -132,6 +132,11 @@ _(These cards are all played as written so it is possible for them to end up on 
 > 3. Attach AHAB'S SPEAR to Crossbones.
 > 4. Each player chooses one of the “Improved” Condition upgrades from the Rise of the Red Skull campaign (IMPROVED THWART UPGRADE, IMPROVED ATTACK UPGRADE, IMPROVED DEFENSE UPGRADE or IMPROVED RECOVERY UPGRADE) and starts with it in play. '
 
+## 📚 **DECK-BUILDING**
+
+📜 Standard deck-building rules apply<br>
+✨ Regular uniqueness rules during play<br>
+🔧 Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
 
 ## 📝 THE DRAFT
 
@@ -159,8 +164,43 @@ Use the Draft-o-Matic at the top of the page to generate example draft pools or 
 
 There were no hero bans for this season
 
-## 📚 **DECK-BUILDING**
+### 🧤 Gauntlet Division (12 kouples)
 
-📜 Standard deck-building rules apply<br>
-✨ Regular uniqueness rules during play<br>
-🔧 Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
+🦸‍♂️ **HERO POOL**
+
+**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, Gamora, Iceman, Maria Hill, Nebula, Nightcrawler, Nova, Quicksilver, Rogue, Star-Lord, Wolverine
+
+**Hero Group 2:** Colossus, Domino, Hawkeye, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, She-Hulk, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Thor, Wasp
+
+**Excluded Heroes:** Adam Warlock, Angel, Ant-Man, Bishop, Black Panther (Shuri), Black Panther (T'Challa), Cable, Deadpool, Drax, Falcon, Gambit, Ghost-Spider, Groot, Hulk, Ironheart, Magneto, Nick Fury, Phoenix, Psylocke, SP//dr, Scarlet Witch, Shadowcat, Silk, Spectrum, Storm, Valkyrie, Venom, Vision, War Machine, Winter Soldier, X-23
+
+🌈 **ASPECT POOL**
+
+| **Aspect** | **Group 1 Count** | **Group 2 Count** |
+|------------|-------------------|-------------------|
+| ❤️ Aggression | - | 5 |
+| 💛 Justice | 5 | 6 |
+| 💙 Leadership | 4 | 2 |
+| 💚 Protection | 4 | 2 |
+| 🩷 Pool | 2 | - |
+
+📋 **DRAFT ORDER**
+
+1. **DarkScyth & Levi** - Reapers
+2. **Caldias & N1GHTCRAW73R** - BAMF Nation
+3. **Weezy Breezy** - Queasy Breezy Squad
+4. **McMackey & Ron Baker** - Chaos Core
+5. **Kamehameha & teberle** - One Shot Wonders
+6. **hipham & TempletonCat** - Hip Cats
+7. **soamazinglybad** - Silly Soloer
+8. **sl0th & The_Chase** - Chumpin Ain't Easy
+9. **Dristin** - The Exhaustables
+10. **LACK OF SUBTLETY** - One Man Posse
+11. **SpartacusN7** - The Eh-Venger(s)
+12. **josseroo jr and josseroo** - Groot Hulking ain't easy when you're a Valkyrie Hawkeye
+
+
+
+
+
+
