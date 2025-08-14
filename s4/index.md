@@ -150,8 +150,8 @@ _(These cards are all played as written so it is possible for them to end up on 
 | 🐍 **Draft Format** | 2 rounds, snake order (A→B→C then C→B→A) |
 
 **Further draft notes:**
-> **Spider-Woman:** If Spider-Woman is added to the pool, she will have a pre-selected aspect that you must use, and then her other aspect will be whichever of your drafted aspects that you assign to her.<br>
-> **Adan Warlock:** If you draft Adam Warlock, the aspect that you assign to him must be one of the four aspects that you use to build his deck.
+> * **Spider-Woman:** If Spider-Woman is added to the pool, she will have a pre-selected aspect that you must use, and then her other aspect will be whichever of your drafted aspects that you assign to her.<br>
+> * **Adam Warlock:** If you draft Adam Warlock, the aspect that you assign to him must be one of the four aspects that you use to build his deck.
 
 Use the Draft-o-Matic at the top of the page to generate example draft pools or even simulate your own draft.
 
