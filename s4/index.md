@@ -108,6 +108,8 @@ _(This modular set and its use in Brotherhood of Badoon is Astrodar's clever ide
 
 > ⚠️ **Special Rule**: The second copy of ADAMANTIUM UPGRADES is shuffled into the encounter deck
 
+_(These cards are all played as written so it is possible for them to end up on minions instead of the villain when they are revealed from this revised Experimental Weapons deck.)_
+
 **CONDITION:** Instead of using your regular hero-specfiic nemesis sets, assign each of the following to a hero as their nemesis set. The minion and side scheme in each of these sets is considered that set’s nemesis minion and nemesis side scheme, respectively.
 > **Replacement nemesis sets:** 🏹 Hawkeye Nemesis Set, 🏃 Running Interference
 > _(The **When Revealed** effect from the Marked for Death side scheme will only find something if there is a Hawkeye player. It has no effect otherwise.)_
