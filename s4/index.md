@@ -164,7 +164,7 @@ Use the Draft-o-Matic at the top of the page to generate example draft pools or 
 
 There were no hero bans for this season
 
-### 🧤 Gauntlet Division (12 kouples)
+### 🧤 Gauntlet Division (12 Kouples)
 
 🦸‍♂️ **HERO POOL**
 
@@ -199,7 +199,40 @@ There were no hero bans for this season
 11. **SpartacusN7** - The Eh-Venger(s)
 12. **josseroo jr and josseroo** - Groot Hulking ain't easy when you're a Valkyrie Hawkeye
 
+### 🏘️ Friendly Neighborhood Division (12 Kouples)
 
+🦸‍♂️ **HERO POOL**
+
+**Hero Group 1:** Ant-Man, Black Widow, Domino, Drax, Iron Man, Ironheart, Nebula, Nick Fury, Psylocke, Rogue, Silk, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Venom
+
+**Hero Group 2:** Angel, Black Panther (Shuri), Black Panther (T'Challa), Captain Marvel, Colossus, Falcon, Ghost-Spider, Hawkeye, Hulk, Iceman, Magik, Rocket, Spider-Ham, Storm, Wolverine
+
+**Excluded Heroes:** Adam Warlock, Bishop, Cable, Captain America, Cyclops, Deadpool, Doctor Strange, Gambit, Gamora, Groot, Jubilee, Magneto, Maria Hill, Ms Marvel, Nightcrawler, Nova, Phoenix, Quicksilver, SP//dr, Scarlet Witch, Shadowcat, She-Hulk, Spectrum, Star-Lord, Thor, Valkyrie, Vision, War Machine, Wasp, Winter Soldier, X-23
+
+🌈 **ASPECT POOL**
+
+| **Aspect** | **Group 1 Count** | **Group 2 Count** |
+|------------|-------------------|-------------------|
+| ❤️ Aggression | 3 | 4 |
+| 💛 Justice | 4 | 2 |
+| 💙 Leadership | 3 | 4 |
+| 💚 Protection | 3 | 4 |
+| 🩷 Pool | 2 | 1 |
+
+📋 **DRAFT ORDER**
+
+1. **tjjj & jarratt** - TJ Jonah Jarrettson
+2. **Grrreg** - The New Grrrex-Men
+3. **pebokun** - pebbles
+4. **Jake** - Tuna Badoona
+5. **MrSelfDestruct & dvadr501** - Yancy Street Gang
+6. **Dr Impossible** - Rocket Badoon
+7. **Drexler** - Double Drex
+8. **KnightAdz** - 2-armed Bandit
+9. **Mournful** - Draw More Cards
+10. **KentMalin** - Cowabunga It Is
+11. **Gnipp** - Thor Losers
+12. **aut0boi** - Jube-Jubes
 
 
 
