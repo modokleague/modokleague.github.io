@@ -170,9 +170,9 @@ There were no hero bans for this season
 
 *Underlines indicate undrafted choices*
 
-**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, <u>Gamora</u>, Iceman, Maria Hill, <ins>Nebula</ins>, Nightcrawler, Nova, <u>Quicksilver</u>, Rogue, Star-Lord, Wolverine
+**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, <ins>Gamora</ins>, Iceman, Maria Hill, <ins>Nebula</ins>, Nightcrawler, Nova, <ins>Quicksilver</ins>, Rogue, Star-Lord, Wolverine
 
-**Hero Group 2:** Colossus, Domino, <u>Hawkeye</u>, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, <u>She-Hulk</u>, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), <u>Spider-Woman - Justice</u>, Thor, Wasp
+**Hero Group 2:** Colossus, Domino, <ins>Hawkeye</is>, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, <ins>She-Hulk</ins>, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), <ins>Spider-Woman - Justice</ins>, Thor, Wasp
 
 **Excluded Heroes:** Adam Warlock, Angel, Ant-Man, Bishop, Black Panther (Shuri), Black Panther (T'Challa), Cable, Deadpool, Drax, Falcon, Gambit, Ghost-Spider, Groot, Hulk, Ironheart, Magneto, Nick Fury, Phoenix, Psylocke, SP//dr, Scarlet Witch, Shadowcat, Silk, Spectrum, Storm, Valkyrie, Venom, Vision, War Machine, Winter Soldier, X-23
 
@@ -207,9 +207,9 @@ There were no hero bans for this season
 
 🦸‍♂️ **HERO POOL**
 
-**Hero Group 1:** Ant-Man, Black Widow, Domino, Drax, Iron Man, Ironheart, Nebula, Nick Fury, Psylocke, Rogue, Silk, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Venom
+**Hero Group 1:** Ant-Man, <ins>Black Widow</ins>, Domino, Drax, Iron Man, Ironheart, <ins>Nebula</ins>, Nick Fury, Psylocke, <ins>Rogue</ins>, Silk, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Venom
 
-**Hero Group 2:** Angel, Black Panther (Shuri), Black Panther (T'Challa), Captain Marvel, Colossus, Falcon, Ghost-Spider, Hawkeye, Hulk, Iceman, Magik, Rocket, Spider-Ham, Storm, Wolverine
+**Hero Group 2:** Angel, Black Panther (Shuri), Black Panther (T'Challa), Captain Marvel, Colossus, Falcon, Ghost-Spider, <ins>Hawkeye</ins>, <ins>Hulk</ins>, <ins>Iceman</ins>, Magik, Rocket, Spider-Ham, Storm, Wolverine
 
 **Excluded Heroes:** Adam Warlock, Bishop, Cable, Captain America, Cyclops, Deadpool, Doctor Strange, Gambit, Gamora, Groot, Jubilee, Magneto, Maria Hill, Ms Marvel, Nightcrawler, Nova, Phoenix, Quicksilver, SP//dr, Scarlet Witch, Shadowcat, She-Hulk, Spectrum, Star-Lord, Thor, Valkyrie, Vision, War Machine, Wasp, Winter Soldier, X-23
 
