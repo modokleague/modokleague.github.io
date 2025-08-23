@@ -168,9 +168,11 @@ There were no hero bans for this season
 
 🦸‍♂️ **HERO POOL**
 
-**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, Gamora, Iceman, Maria Hill, Nebula, Nightcrawler, Nova, Quicksilver, Rogue, Star-Lord, Wolverine
+*Underlines indicate undrafted choices*
 
-**Hero Group 2:** Colossus, Domino, Hawkeye, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, She-Hulk, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Thor, Wasp
+**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, <u>Gamora</u>, Iceman, Maria Hill, <u>Nebula</u>, Nightcrawler, Nova, <u>Quicksilver</u>, Rogue, Star-Lord, Wolverine
+
+**Hero Group 2:** Colossus, Domino, <u>Hawkeye</u>, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, <u>She-Hulk</u>, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), <u>Spider-Woman - Justice</u>, Thor, Wasp
 
 **Excluded Heroes:** Adam Warlock, Angel, Ant-Man, Bishop, Black Panther (Shuri), Black Panther (T'Challa), Cable, Deadpool, Drax, Falcon, Gambit, Ghost-Spider, Groot, Hulk, Ironheart, Magneto, Nick Fury, Phoenix, Psylocke, SP//dr, Scarlet Witch, Shadowcat, Silk, Spectrum, Storm, Valkyrie, Venom, Vision, War Machine, Winter Soldier, X-23
 
@@ -184,20 +186,22 @@ There were no hero bans for this season
 | 💚 Protection | 4 | 2 |
 | 🩷 Pool | 2 | - |
 
-📋 **DRAFT ORDER**
+📋 **DRAFT RESULTS**
 
-1. **DarkScyth & Levi** - Reapers
-2. **Caldias & N1GHTCRAW73R** - BAMF Nation
-3. **Weezy Breezy** - Queasy Breezy Squad
-4. **McMackey & Ron Baker** - Chaos Core
-5. **Kamehameha & teberle** - One Shot Wonders
-6. **hipham & TempletonCat** - Hip Cats
-7. **soamazinglybad** - Silly Soloer
-8. **sl0th & The_Chase** - Chumpin Ain't Easy
-9. **Dristin** - The Exhaustables
-10. **LACK OF SUBTLETY** - One Man Posse
-11. **SpartacusN7** - The Eh-Venger(s)
-12. **josseroo jr and josseroo** - Groot Hulking ain't easy when you're a Valkyrie Hawkeye
+| | **Round 1** |	**Round 2**	| **Round 3** |	**Round 4** |
+| :--- | :--- | :--- | :--- | :--- |
+| DarkScythe & Levi - Reapers |	G1 Maria Hill |	G2 Wasp |	G3 Protection #6 |	G4 Justice #10 |
+| Caldias & N1GHTCRAW73R - BAMF Nation |	G1 Nightcrawler |	G2 Jubilee |	G3 Protection #4 |	G4 Leadership #4 |
+| Weezy Breezy - Queasy Breezy Squad |	G1 Captain Marvel |	G2 Spider-Man (Peter Parker) | 	G3 Leadership #3 |	G4 Justice #11 |
+| McMackey & Ron Baker - Chaos Core |	G4 Aggression #5 |	G2 Ms Marvel |	G3 Justice #9 |	G1 Star-Lord |
+| Kamehameha & teberle - One Shot Wonders | 	G1 Nova	G2 Colossus |	G4 Aggression #3 |	G3 Justice #3 |
+| hipham & TempletonCat - Hip Cats |	G3 Leadership #5 |	G2 Domino |	G1 Rogue |	G4 Aggression #1 |
+| soamazinglybad - Silly Soloer |	G2 Iron Man |	G1 Iceman |	G3 Protection #2 |	G4 Justice #6 |
+| sl0th & The_Chase - Chumpin Ain't Easy |	G1 Captain America |	G2 Magik |	G3 Leadership #2 |	G4 Aggression #2 |
+| Dristin - The Exhaustables |	G2 Spider-Man (Miles Morales) |	G1 Doctor Strange |	G3 Leadership #1 |	G4 Justice #4 |
+| LACK OF SUBTLETY -  One Man Posse |	G2 Thor |	G4 Aggression #4 |	G3 Protection #1 |	G1 Black Widow |
+| SpartacusN7  - The Eh-Venger(s) |	G1 Wolverine |	G2 Rocket |	G4 Protection #5 |	G3 Justice #1 |
+| josseroo jr and josseroo - Groot Hulking ain't easy when you're a Valkyrie Hawkeye |	G1 Cyclops |	G2 Spider-Ham |	G4 Leadership #6 |	G3 Justice #5 |
 
 ### 🏘️ Friendly Neighborhood Division (12 Kouples)
 
