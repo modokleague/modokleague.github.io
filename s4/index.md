@@ -170,7 +170,7 @@ There were no hero bans for this season
 
 *Underlines indicate undrafted choices*
 
-**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, <u>Gamora</u>, Iceman, Maria Hill, <u>Nebula</u>, Nightcrawler, Nova, <u>Quicksilver</u>, Rogue, Star-Lord, Wolverine
+**Hero Group 1:** Black Widow, Captain America, Captain Marvel, Cyclops, Doctor Strange, <u>Gamora</u>, Iceman, Maria Hill, <ins>Nebula</ins>, Nightcrawler, Nova, <u>Quicksilver</u>, Rogue, Star-Lord, Wolverine
 
 **Hero Group 2:** Colossus, Domino, <u>Hawkeye</u>, Iron Man, Jubilee, Magik, Ms Marvel, Rocket, <u>She-Hulk</u>, Spider-Ham, Spider-Man (Miles Morales), Spider-Man (Peter Parker), <u>Spider-Woman - Justice</u>, Thor, Wasp
 
