@@ -194,7 +194,7 @@ There were no hero bans for this season
 | Caldias & N1GHTCRAW73R - BAMF Nation |	G1 Nightcrawler |	G2 Jubilee |	G3 Protection #4 |	G4 Leadership #4 |
 | Weezy Breezy - Queasy Breezy Squad |	G1 Captain Marvel |	G2 Spider-Man (Peter Parker) | 	G3 Leadership #3 |	G4 Justice #11 |
 | McMackey & Ron Baker - Chaos Core |	G4 Aggression #5 |	G2 Ms Marvel |	G3 Justice #9 |	G1 Star-Lord |
-| Kamehameha & teberle - One Shot Wonders | 	G1 Nova	G2 Colossus |	G4 Aggression #3 |	G3 Justice #3 |
+| Kamehameha & teberle - One Shot Wonders | 	G1 Nova	| G2 Colossus |	G4 Aggression #3 |	G3 Justice #3 |
 | hipham & TempletonCat - Hip Cats |	G3 Leadership #5 |	G2 Domino |	G1 Rogue |	G4 Aggression #1 |
 | soamazinglybad - Silly Soloer |	G2 Iron Man |	G1 Iceman |	G3 Protection #2 |	G4 Justice #6 |
 | sl0th & The_Chase - Chumpin Ain't Easy |	G1 Captain America |	G2 Magik |	G3 Leadership #2 |	G4 Aggression #2 |
