@@ -178,13 +178,13 @@ There were no hero bans for this season
 
 🌈 **ASPECT POOL**
 
-| **Aspect** | **Group 1 Count** | **Group 2 Count** |
+| **Aspect** | **Group 1 Count<br>(Undrafted)** | **Group 2 Count<br>(Undreafted)** |
 |------------|-------------------|-------------------|
-| ❤️ Aggression | - | 5 |
-| 💛 Justice | 5 | 6 |
-| 💙 Leadership | 4 | 2 |
-| 💚 Protection | 4 | 2 |
-| 🩷 Pool | 2 | - |
+| ❤️ Aggression | - (-) | 5 (0) |
+| 💛 Justice | 5 (1) | 6 (2) |
+| 💙 Leadership | 4 (0) | 2 (0) |
+| 💚 Protection | 4 (0) | 2 (1) |
+| 🩷 Pool | 2 (2) | - (-) |
 
 📋 **DRAFT RESULTS**
 
@@ -206,6 +206,8 @@ There were no hero bans for this season
 ### 🏘️ Friendly Neighborhood Division (12 Kouples)
 
 🦸‍♂️ **HERO POOL**
+
+*Underlines indicate undrafted choices*
 
 **Hero Group 1:** Ant-Man, <ins>Black Widow</ins>, Domino, Drax, Iron Man, Ironheart, <ins>Nebula</ins>, Nick Fury, Psylocke, <ins>Rogue</ins>, Silk, Spider-Man (Miles Morales), Spider-Man (Peter Parker), Spider-Woman - Justice, Venom
 
