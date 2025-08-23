@@ -217,13 +217,13 @@ There were no hero bans for this season
 
 🌈 **ASPECT POOL**
 
-| **Aspect** | **Group 1 Count** | **Group 2 Count** |
+| **Aspect** | **Group 1 Count<br>(Undrafted)** | **Group 2 Count<br>(Undreafted)** |
 |------------|-------------------|-------------------|
-| ❤️ Aggression | 3 | 4 |
-| 💛 Justice | 4 | 2 |
-| 💙 Leadership | 3 | 4 |
-| 💚 Protection | 3 | 4 |
-| 🩷 Pool | 2 | 1 |
+| ❤️ Aggression | 3 (0) | 4 (1) |
+| 💛 Justice | 4 (1) | 2 (0) |
+| 💙 Leadership | 3 (0) | 4 (0) |
+| 💚 Protection | 3 (0) | 4 (1) |
+| 🩷 Pool | 2 (2) | 1 (1) |
 
 📋 **DRAFT ORDER**
 
