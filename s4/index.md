@@ -231,14 +231,14 @@ There were no hero bans for this season
 | :--- | :--- | :--- | :--- | :--- |
 | tjjj & jarratt - TJ Jonah Jarrettson |	G3 Leadership #7 |	G1 Iron Man |	G2 Black Panther (T'Challa) |	G4 Protection #3 |
 | Grrreg - The New Grrrex-Men |	G2 Magik |	G1 Venom |	G3 Protection #5 |	G4 Aggression #2 |
-| pebokun - pebbles |	G2 Ghost-Spider	G1 Domino |	G3 Protection #4 |	G4 Justice #4 |
+| pebokun - pebbles |	G2 Ghost-Spider	| G1 Domino |	G3 Protection #4 |	G4 Justice #4 |
 | Jake - Tuna Badoona |	G4 Protection #7 |	G2 Colossus |	G1 Spider-Woman - Justice |	G3 Justice #2 |
 | MrSelfDestruct & dvadr501 - Yancy Street Gang |	G3 Leadership #4 |	G2 Captain Marvel |	G1 Spider-Man (Peter Parker) |	G4 Protection #6 |
 | Dr Impossible - Rocket Badoon |	G2 Spider-Ham |	G3 Aggression #7 |	G1 Nick Fury |	G4 Justice #5 |
 | Drexler - Double Drex |	G3 Leadership #2 |	G1 Spider-Man (Miles Morales) | 	G2 Rocket |	G4 Aggression #3 |
 | KnightAdz - 2-armed Bandit |	G2 Storm |	G1 Psylocke |	G3 Protection #1 |	G4 Aggression #4 |
 | Mournful - Draw More Cards |	G4 Leadership #6 |	G1 Ironheart |	G3 Aggression #6 |	G2 Wolverine |
-| KentMalin - Cowabunga It Is |	G1 Silk	G4 Leadership #1 |	G2 Falcon |	G3 Justice #3 |
+| KentMalin - Cowabunga It Is |	G1 Silk	| G4 Leadership #1 |	G2 Falcon |	G3 Justice #3 |
 | Gnipp - Thor Losers |	G2 Black Panther (Shuri) |	G4 Leadership #3 |	G1 Ant-Man |	G3 Justice #6 |
 | aut0boi - Jube-Jubes |	G2 Angel |	G4 Leadership #5 |	G1 Drax	| G3 Aggression #5 |
 
