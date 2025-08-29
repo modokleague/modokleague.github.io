@@ -1,0 +1,480 @@
+Marvel Champions Stats - Changelog
+=====================================
+
+Version 2.1.0 - August 29, 2025 (6-Group Mode Implementation)
+-------------------------------------------------------------
+
+Major Feature: 6-Group Draft Mode (3H+3A with 6 picks)
+- Added new "6 (3 hero, 3 aspect, 6 picks)" option to draft group dropdown
+- Implemented H-A-H-A-H-A drafting pattern (Hero in R1,R3,R5; Aspect in R2,R4,R6)
+- Each team drafts exactly 1 hero from each of 3 hero groups + 1 aspect from each of 3 aspect groups
+- Maximum 6 rounds total with complete group restriction enforcement
+
+Technical Implementation:
+- Created splitAspectPoolIntoThreeGroups() function for equal aspect distribution
+- Added aspectGroup3 variable with global window assignment
+- Extended getAspectGroup() function to return group 3 for third aspect group
+- Updated canTeamDraft() to support 3 aspects maximum in 6-group mode
+- Enhanced constraint messages to show availability across all 3 aspect groups
+
+Bot Logic Enhancements:
+- Implemented H-A-H-A-H-A round preference pattern for bot drafting
+- Updated bot aspect group restrictions to handle 3 aspect groups dynamically
+- Enhanced bot validation to prevent multiple aspects from same group
+- Proper bot aspect filtering using usedGroups.map() for group exclusion
+
+UI & Display Updates:
+- Added complete Aspect Group 3 display in draft interface with click handlers
+- Updated export functionality with G4/G5/G6 aspect group numbering
+- Enhanced result pool display to show all 3 aspect groups with type summaries
+- Updated all constraint messages to provide 3-aspect group availability feedback
+
+Validation & Security:
+- Extended draftItem() validation to include 6-group mode group restrictions
+- Updated canTeamDraftFromAspectGroup() to support aspect group 3 validation
+- Applied identical group restriction logic to both human players and bots
+- Complete group validation coverage across all 6 groups (3H+3A)
+
+Architecture Consistency:
+- Built upon proven 5-group mode foundation with 3 hero groups
+- Extended existing 2-aspect group pattern to 3-aspect group pattern  
+- Maintained full backward compatibility with 2-group, 4-group, and 5-group modes
+- Consistent group restriction enforcement: one pick per group maximum
+
+**Bug Fixes - Post Release:**
+- Fixed draft turn progression hanging in rounds 5-6 by extending advanceTurn() function snake draft logic
+- Fixed aspect selection bug where same aspect types couldn't be picked from different groups
+- Added comprehensive debugging output for draft progression monitoring
+
+**Technical Fixes:**
+- Updated advanceTurn() function to handle rounds 5 and 6 with proper forward/reverse snake draft pattern
+- Extended draftItem() aspect selection logic to include 6-group mode support
+- Added console logging for turn advancement debugging and issue diagnosis
+
+Status: **6-group mode fully functional and debugged** with H-A-H-A-H-A pattern and complete group restrictions
+
+Files Modified:
+- index.html (comprehensive updates across ~300 lines plus bug fixes)
+
+Version 2.0.8 - August 29, 2025 (Human Player Group Restrictions Fix)
+-------------------------------------------------------------
+
+Critical Bug Fix: Human Players Bypassing Group Restrictions
+- Fixed human players being able to select multiple heroes from same group in 4-group mode
+- Added missing group validation to draftItem() function that executes on hero/aspect clicks
+- Both 4-group and 5-group modes now properly enforce group restrictions for human players
+- Closed security gap between UI display logic and actual draft validation
+
+Root Cause Analysis:
+- UI correctly called canTeamDraftFromGroup() to gray out unavailable heroes
+- However, draftItem() function only checked canTeamDraft() for general limits
+- Missing canTeamDraftFromGroup() validation allowed bypassing group restrictions
+- Created potential exploit where disabled buttons could still execute drafts
+
+Technical Implementation:
+- Added group validation to draftItem() function (lines 2826-2840)
+- Heroes: Check canTeamDraftFromGroup(playerTeamName, heroGroup) before draft
+- Aspects: Check canTeamDraftFromAspectGroup(playerTeamName, aspectGroup) before draft
+- Applies to both 4-group and 5-group modes for complete coverage
+
+Version 2.0.7 - August 29, 2025 (Bot Group Restrictions Fix)
+-------------------------------------------------------------
+
+Critical Bug Fix: Bot Violating Hero Group Restrictions in 5-Group Mode
+- Fixed draft bot selecting multiple heroes from same group in 5-group mode
+- Bot now properly enforces "one hero per group" rule across all 3 hero groups
+- Restored fair drafting behavior where bots follow same group restrictions as human players
+- Bot hero selection now filters out already-used groups dynamically
+
+Root Cause Analysis:
+- Bot hero group restrictions only handled 4-group mode, missing 5-group mode support
+- Aspect group restrictions were correctly implemented for both modes (inconsistency)
+- Bot could draft multiple heroes from same group, violating core 5-group mode rules
+- Human players were restricted correctly, creating unfair advantage for bot teams
+
+Technical Implementation:
+- Added 5-group mode condition to bot hero filtering logic (line 2943-2954)
+- Implemented dynamic group filtering: excludes heroes from already-used groups
+- Enhanced logic progression:
+  - 0 heroes: Bot can pick from Groups 1,2,3
+  - 1 hero from Group 1: Bot can only pick from Groups 2,3
+  - 2 heroes from Groups 1,2: Bot can only pick from Group 3
+  - 3 heroes: Bot cannot pick more (existing limit works)
+
+Behavior Consistency:
+- Bot aspect restrictions: Already worked correctly ✅
+- Bot hero restrictions: Now work correctly ✅
+- Human restrictions: Already worked correctly ✅
+- All players now follow identical group restriction rules
+
+Status: **Bot behavior now fair and consistent** with proper group restrictions in 5-group mode
+
+Files Modified:
+- index.html (lines 2943-2966)
+
+Version 2.0.6 - August 29, 2025 (Constraint Messages Fix)
+----------------------------------------------------------
+
+Critical Bug Fix: Incorrect Hero Count and Missing Group Info in Constraint Messages
+- Fixed constraint messages showing "hero (2 left)" instead of "hero (3 left)" in 5-group mode
+- Enhanced both hero and aspect group availability feedback with clear group indicators
+- Constraint messages now show specific available groups for better user decision-making
+- Corrected dynamic hero limits to match actual draft rules (2 for 2/4-group, 3 for 5-group)
+
+Issues Resolved:
+- Hardcoded hero limit of 2 in constraint calculation (should be 3 for 5-group mode)
+- Generic group availability messages that didn't specify which groups were available
+- Inconsistency between draft validation (correct) and user messages (incorrect)
+- Poor user feedback on which hero/aspect groups remained available
+
+Enhanced User Experience:
+- **5-group mode, 0 picks**: "You can pick either a hero (3 left from Groups 1,2,3) or aspect (2 left from Groups 1,2)"
+- **5-group mode, 1 hero from Group 1**: "You can pick either a hero (2 left from Groups 2,3) or aspect (2 left from Groups 1,2)"
+- **5-group mode, 1 hero + 1 aspect**: "You can pick either a hero (2 left from Groups 2,3) or aspect (1 left from Group 2)"
+- Clear progression showing exactly which groups are available at each step
+
+Technical Implementation:
+- Added dynamic hero limit calculation: `var maxHeroes = draftPoolGroups === '5' ? 3 : 2;`
+- Enhanced group feedback format: "from Groups 1,2,3" instead of "(only Hero Group 2 available)"
+- Consistent formatting for both hero and aspect group availability
+- Applies to both 4-group and 5-group modes for complete group visibility
+
+Status: **Constraint messages now accurate and informative** across all draft modes
+
+Files Modified:
+- index.html (lines 1805-1858)
+
+Version 2.0.5 - August 29, 2025 (Draft Interface Fix)
+-----------------------------------------------------
+
+Critical Bug Fix: Draft Interface Missing Hero Group 3 Support
+- Fixed draft UI displaying 5-group mode as single list instead of 3 separate groups
+- Added complete Hero Group 3 display with proper constraints and styling
+- Enhanced constraint message generation to handle all 3 hero groups dynamically
+- Draft interface now enforces proper group restrictions (max 1 hero per group)
+
+Major Issues Resolved:
+- Draft bot interface was falling back to 2-group mode display in 5-group mode
+- Hero Group 3 was invisible and non-interactive during drafting
+- Constraint messages only checked groups 1 and 2, ignoring group 3
+- Group restrictions were not being enforced, allowing multiple heroes per group
+
+Technical Implementation:
+- Added 5-group mode condition to draft display logic (line 2347-2425)  
+- Enhanced constraint generation with 3-group availability checking (line 1813-1829)
+- Hero Group 3 now displays with proper click handlers and group restrictions
+- Dynamic constraint messages show available groups combinations (1, 2, 3 groups)
+
+User Experience Improvements:
+- 5-group mode now shows distinct Hero Group 1, 2, and 3 sections
+- Visual feedback shows which groups are available/restricted
+- Proper constraint enforcement prevents invalid drafting patterns
+- Consistent styling and interaction across all 3 hero groups
+
+Status: **5-group mode draft interface fully functional** with proper group restrictions
+
+Files Modified:
+- index.html (lines 2346-2425, 1813-1829)
+
+Version 2.0.4 - August 29, 2025 (Draft Bot Fix)
+------------------------------------------------
+
+Critical Bug Fix: Draft Bot Hero Selection in 5-Group Mode
+- Fixed draft bot treating concatenated hero names as single hero in 5-group mode
+- Corrected allHeroes array population to properly handle 3 hero groups
+- Draft bot now correctly selects individual heroes instead of "Hero Group 3BishopGamora..."
+- Resolved DOM parsing issue in startDraftSimulator() function
+
+Root Cause Analysis:
+- 5-group mode creates complex DOM structure with section containers
+- Draft bot was reading textContent from section divs instead of individual hero cards  
+- allHeroes population logic was missing 5-group mode case, falling back to DOM parsing
+- Result: Bot saw concatenated text of all Hero Group 3 heroes as one hero name
+
+Technical Fix:
+- Added 5-group mode case to allHeroes population logic (line 2091-2093)
+- Uses heroGroup1.concat(heroGroup2).concat(heroGroup3) for proper hero array
+- Maintains consistent behavior across 2-group, 4-group, and 5-group modes
+- Draft bot now accesses heroes via array variables instead of DOM parsing
+
+Status: **Draft bot fully functional in 5-group mode** with individual hero selection
+
+Files Modified:
+- index.html (lines 2091-2093)
+
+Version 2.0.3 - August 29, 2025 (Phase 3 Fix)
+-----------------------------------------------
+
+Critical Bug Fix: 5-Group Mode Aspect Groups
+- Fixed 5-group mode to properly display 2 aspect groups instead of single aspect pool
+- Corrected aspect group creation logic to split aspects in 5-group mode
+- Updated all aspect validation functions to recognize 5-group mode
+- 5-group mode now correctly shows: 3 hero groups + 2 aspect groups (as designed)
+
+Bug Fix Details:
+- Aspect group creation was falling back to 2-group mode behavior in 5-group mode
+- Aspect display logic wasn't recognizing 5-group mode, showing single pool
+- Multiple validation functions were missing 5-group mode support
+- Draft bot logic and constraint validation now work properly with aspect groups
+
+Technical Implementation:
+- Updated aspect splitting condition: `draftPoolGroups === '4' || draftPoolGroups === '5'`
+- Fixed aspect display condition for proper group visualization
+- Enhanced validation functions: canTeamDraftFromAspectGroup, getConstraintMessage, etc.
+- Corrected bot aspect selection logic to respect group restrictions in 5-group mode
+
+Status: **5-group mode now fully functional** with proper 3H+2A group structure
+
+Files Modified:
+- index.html (lines 1328, 1454, 1739, 1780, 1827, 2431, 2704, 2922)
+
+Version 2.0.2 - August 29, 2025 (Phase 3)
+------------------------------------------
+
+UI Displays & Export Complete
+- Added Hero Group 3 display in 5-group mode with proper visual formatting
+- Updated export function to handle all 3 hero groups (G1, G2, G3) in 5-group mode
+- Enhanced aspect export with correct G4/G5 numbering for 5-group mode (vs G3/G4 in 4-group)
+- Fixed Draft Bot Priority export to use dynamic aspect group numbering based on draft mode
+
+Phase 3 Features:
+- Hero Pool Display: Shows all 3 hero groups with consistent styling in 5-group mode
+- Export functionality: Properly exports 3 hero groups with correct group prefixes
+- Aspect export: Uses G4/G5 numbering in 5-group mode (aspectGroup + 3 offset)
+- Draft Bot Priority: Dynamic group numbering ensures correct G4/G5 for aspects in 5-group mode
+
+Technical Implementation:
+- Added 5-group mode case to hero pool display logic (index.html:1398-1424)
+- Enhanced export function with 5-group mode support for heroes and aspects
+- Updated aspect group offset calculation: 5-group mode uses +3 offset vs +2 for 4-group
+- Maintained full backward compatibility with 2-group and 4-group modes
+
+System Status:
+- **v2.0 Complete**: All 3 phases fully implemented and tested
+- 5-group mode (H-A-H-A-H pattern) ready for production use
+- UI displays, export, and draft simulation all working correctly
+- Full feature parity with existing 2-group and 4-group modes
+
+Files Modified:
+- index.html (lines 1398-1424, 1893-1911, 1936-1953, 2006-2010)
+
+Version 2.0.1 - August 28, 2025 (Phase 2)
+------------------------------------------
+
+Draft Logic & Validation Complete
+- Implemented 5-round system with dynamic UI text based on draft mode
+- Updated draft validation for 3 heroes maximum in 5-group mode (vs 2 heroes in other modes)
+- Implemented H-A-H-A-H bot round preferences (Hero in R1, R3, R5; Aspect in R2, R4)
+- Added comprehensive group restrictions for 3 hero groups in 5-group mode
+
+Phase 2 Features:
+- Dynamic UI text: Descriptions update automatically when switching between draft modes
+- Enhanced `canTeamDraft()` validation with mode-aware hero limits (2 vs 3)
+- Updated `getHeroGroup()` to support returning group 3 for third hero group
+- Enhanced `canTeamDraftFromGroup()` with 5-group mode support
+- Bot strategy now properly handles H-A-H-A-H pattern in 5-group mode
+- Dynamic `maxRounds` updates (4 rounds for 2/4-group, 5 rounds for 5-group)
+
+Technical Details:
+- Added heroGroup3 support throughout validation logic
+- Enhanced bot preference logic in `processNextTurn()` for 5-round pattern
+- Updated bot text generation to show "R1&R3&R5" for hero rounds in 5-group mode
+- Integrated draft mode awareness across all validation functions
+
+System Status:
+- Phase 1 & 2 Complete: Infrastructure and core logic fully implemented
+- 5-group mode foundation is solid for display and export work
+- All validation and bot logic ready for Phase 3 (UI displays)
+
+Files Modified:
+- index.html (lines 405, 453, 592-617, 1159-1205, 1670-1697, 1725-1733, 1978-1979, 2722-2732, 2740-2742, 478, 559, 637-645)
+
+Version 2.0.0 - August 28, 2025 (Phase 1)
+------------------------------------------
+
+Major Update: 5-Pick Draft System Foundation
+- Added new "5 (3 hero, 2 aspect, 5 picks)" mode to Number of Draft Groups dropdown
+- Introduces 5-round drafting system where each team drafts 3 heroes and 2 aspects
+- Built foundation for H-A-H-A-H round pattern (Hero in R1, R3, R5; Aspect in R2, R4)
+
+Phase 1 Infrastructure Changes:
+- Added 5-group mode support to pool calculations (3 * teams + extras for heroes)
+- Created `splitHeroPoolIntoThreeGroups()` function for equal hero distribution across 3 groups
+- Added heroGroup3 variable and integrated 5-group logic into hero assignment system
+- Updated max extras calculations for 3-group hero distribution
+- Maintains full backward compatibility with existing 2-group and 4-group modes
+
+Technical Details:
+- Enhanced dropdown with new 5-group option
+- Updated pool sizing: 3 groups of heroes, 2 groups of aspects
+- Equal distribution logic ensures balanced groups with remainder handling
+- All existing functionality preserved for 2-group and 4-group modes
+
+Next Phases Coming:
+- Phase 2: Draft logic and 5-round system
+- Phase 3: UI displays and export functionality  
+- Phase 4: Draft simulator updates
+- Phase 5: Bot intelligence and final testing
+
+Files Modified:
+- index.html (lines 275, 1046-1049, 1096-1098, 1215-1229, 570-574, 839-922, 478)
+
+Version 1.9.7 - August 28, 2025
+--------------------------------
+
+Enhancement:
+- Fixed aspect sorting to maintain proper aspect type grouping while preserving numerical order
+- Aspects now display in correct order: Aggression → Justice → Leadership → Protection → Pool (each group sorted numerically in descending order)
+- Within each aspect type, numbered aspects sort correctly (e.g., Aggression #15, Aggression #12, Aggression #8)
+- This provides the intended user experience where aspects are grouped by type first, then sorted numerically within each type
+
+Technical Details:
+- Added `getAspectTypeOrder()` helper function that assigns sort priorities to each aspect type
+- Updated both `splitHeroPoolIntoGroups()` and `splitAspectPoolIntoGroups()` functions with two-tier sorting:
+  1. Primary sort: By aspect type order (0=Aggression, 1=Justice, 2=Leadership, 3=Protection, 4=Pool)
+  2. Secondary sort: Within same type, descending numerical order for numbered aspects
+- Maintains compatibility with hero sorting and non-numbered items
+
+Files Modified:
+- index.html (lines 715-724, 732-752, 769-789, 477)
+
+Version 1.9.6 - August 28, 2025
+--------------------------------
+
+Bug Fix:
+- Fixed numerical sorting for numbered aspects in both display and export
+- Numbered aspects (e.g., "Protection #11", "Protection #2") now sort in correct descending numerical order instead of alphabetical order
+- This affects both the app display and export file output where aspects now appear as: #21, #20, #19, #18, #17, #15, #14, #12, #11, #7, #6, #5, #4, #2 (instead of #11, #12, #14, #15, #17, #18, #19, #2, #20, #21)
+
+Technical Details:
+- Updated `splitHeroPoolIntoGroups()` and `splitAspectPoolIntoGroups()` functions with custom sorting logic
+- Added numerical comparison for items containing '#' with descending order (numB - numA)
+- Maintained alphabetical fallback for non-numbered items
+- Applied consistent sorting across both hero and aspect pool splitting functions
+
+Files Modified:
+- index.html (lines 721-750, 761-780, 477)
+
+Version 1.9.5 - August 28, 2025
+--------------------------------
+
+UI Improvements:
+- Updated seed control title from "Seed for randomization (optional)" to "Seed for Randomization (Optional)" with proper capitalization
+- Moved seed control to be last position in control panel, after Team Names
+- New control order: Number of Draft Groups → Number of Teams → Extra Choices → Pool Aspect Inclusion → Team Names → Seed for Randomization (Optional)
+
+Technical Details:
+- Repositioned seed control group for improved logical user workflow
+- Enhanced interface organization with seed control at the end of all other options
+- Maintained all existing functionality while improving accessibility
+
+Files Modified:
+- index.html (lines 291, 310-313, 477, removed old seed control from lines 290-293)
+
+Version 1.9.4 - August 28, 2025
+--------------------------------
+
+UI Improvements:
+- Reordered control panel layout for better logical flow
+  * Moved "Extra Choices per Draft Pool Group" above "Seed for randomization (optional)"
+  * New order: Number of Draft Groups → Number of Teams → Extra Choices → Seed → Pool Aspect Inclusion → Team Names
+
+Technical Details:
+- Repositioned control group elements for improved user experience
+- Maintained functionality while enhancing interface organization
+
+Files Modified:
+- index.html (lines 284-293, 477)
+
+Version 1.9.3 - August 28, 2025
+--------------------------------
+
+New Feature:
+- Added Pool Aspect Inclusion control dropdown
+  * Users can now choose "Include the Pool aspect" or "Exclude the Pool aspect"
+  * Default setting is "Include the Pool aspect" (maintains existing behavior)
+  * When excluded, Pool aspects are completely removed from generation and drafting
+  * Setting is documented in export file metadata
+
+Technical Details:
+- Added new dropdown control "Pool Aspect Inclusion" with user-friendly labels
+- Updated aspect generation arrays to conditionally include Pool based on setting
+- Modified Spider-Woman aspect assignment to exclude Pool when disabled
+- Enhanced export file to include Pool aspect setting in metadata section
+- All Pool-related functions now respect the inclusion setting
+
+Files Modified:
+- index.html (lines 289-296, 477, 772-778, 1030-1036, 1064, 1582, 1595)
+
+Version 1.9.2 - August 28, 2025
+--------------------------------
+
+UI Improvements:
+- Updated dropdown control labels for better clarity
+  * "Draft Pool Groups" → "Number of Draft Groups" (dropdown title)
+  * "Number of separate pools for heroes and aspects" → "Number of separate groups for heroes and aspects" (description)
+  * Improved terminology consistency throughout interface
+
+Technical Details:
+- Updated UI labels to use consistent "groups" terminology instead of mixed "pools/groups"
+- Enhanced user experience with clearer control descriptions
+
+Files Modified:
+- index.html (lines 468, 270, 271)
+
+Version 1.9.1 - August 28, 2025
+--------------------------------
+
+Refinements:
+- Refined Export Draft Pool group numbering system
+  * Aspect groups now use G3/G4 numbering (continuing from hero groups G1/G2)
+  * Excluded heroes no longer display group prefixes (clean hero names only)
+  * Creates logical numbering sequence: Heroes (G1/G2), Aspects (G3/G4), Excluded (no prefix)
+
+Technical Details:
+- Updated 4-group mode aspects: G1→G3, G2→G4
+- Updated 2-group mode aspects: G1→G3 
+- Updated Draft Bot Priority aspects: dynamic +2 offset for group numbering
+- Simplified excluded heroes export: removed group prefix logic
+
+Files Modified:
+- index.html (lines 468, 1614, 1621, 1629, 1658, 1667)
+
+Version 1.9 - August 28, 2025
+------------------------------
+
+Enhancement:
+- Enhanced Export Draft Pool functionality with group prefixes for all draftable objects
+  * All heroes now display with group prefixes (G1/G2) in export file
+  * All aspects now display individually with group prefixes instead of summary counts
+  * Draft Bot Priority sections now show group prefixes for both heroes and aspects
+  * Excluded Heroes section now includes group prefixes
+  * Export format now matches reference webpage standards with complete group visibility
+
+Technical Details:
+- Updated Hero Pool export to prepend "G1 " or "G2 " to all hero names in both 2-group and 4-group modes
+- Replaced Aspect Pool count summaries with individual aspect listings including group prefixes
+- Enhanced Draft Bot Priority sections to use getHeroGroup() and getAspectGroup() functions for dynamic group assignment
+- Updated Excluded Heroes section to include group prefixes using same logic
+- All draftable objects in export now clearly indicate their group assignment for strategic reference
+
+Files Modified:
+- index.html (lines 468, 1588, 1593, 1600, 1613-1621, 1628-1630, 1645-1650, 1655-1660, 1666-1671)
+
+Version 1.8 - August 28, 2025
+------------------------------
+
+Bug Fixes:
+- Fixed Spider-Woman (with aspect) variants not appearing in draft bot priority display
+  * Spider-Woman aspect variants (e.g., "Spider-Woman - Leadership") now properly show up in the "Draft Bot Priority (Heroes)" section
+  * Resolved duplicate hero entries appearing in bot priority pool caused by incorrect array index usage after sorting
+  * Fixed Spider-Woman replacement logic to use correct hero variant after selectedHeroes.sort()
+
+Technical Details:
+- Root cause: selectedHeroes.sort() changed array positions after Spider-Woman transformation, causing wrong hero replacement
+- Fixed Spider-Woman variant finding logic to search for hero.startsWith('Spider-Woman - ') after sorting
+- Added allHeroes array update to replace Spider-Woman with variant for proper bot priority filtering
+- Updated filteredDraftOrder to use corrected draftBot array with proper Spider-Woman variants
+
+Files Modified:
+- index.html (lines 1084-1089, 1097-1098, 1755-1767)
