@@ -335,7 +335,16 @@
        <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One kouple per line. <strong>First will be your kouple</strong> in the draft simulator. Remaining names replace default kouple names.</small>
        <textarea id="teamListInput" placeholder="My Kouple Name&#10;Kouple Beta&#10;Kouple Gamma&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
      </div>
-     
+
+     <div class="control-group">
+       <label>
+         <input type="checkbox" id="requireHeroesCheckbox" checked style="margin-right: 8px;">
+         Enable Required Heroes
+       </label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Ensures these heroes always appear in the draft pool across groups</small>
+       <textarea id="requiredHeroesDisplay" readonly style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: none; min-height: 60px; font-family: inherit; background-color: #f9f9f9; color: #666;">Tigra, Hulkling, Falcon, Winter Soldier, Black Panther (Shuri), Silk</textarea>
+     </div>
+
      <div class="control-group">
        <label for="seedInput">Seed for Randomization (Optional)</label>
        <input type="text" id="seedInput" placeholder="For reproducible results">
@@ -513,7 +522,7 @@
    
    // Dynamic pool aspect count with equal hero/aspect totals
    // Pool is 50% as likely to be added to draft pool as the other aspects
-   var TOOL_VERSION = 'V0.6';
+   var TOOL_VERSION = 'V0.8';
   var DEFAULT_DRAFT_GROUPS = '6';
    
    // Initialize version displays
@@ -783,23 +792,45 @@
 
   // Function to split hero pool into two groups for 4-group mode
    function splitHeroPoolIntoGroups(heroPool, rng) {
-     var shuffledPool = heroPool.slice();
+     var group1 = [];
+     var group2 = [];
+
+     // Handle required heroes distribution
+     var requiredDistribution = distributeRequiredHeroes(heroPool, 2);
+     if (requiredDistribution) {
+       group1 = requiredDistribution.groups[0].slice();
+       group2 = requiredDistribution.groups[1].slice();
+     }
+
+     // Remove required heroes from pool for random distribution
+     var shuffledPool = heroPool.filter(function(hero) {
+       return !requiredDistribution || !requiredDistribution.requiredHeroes.includes(hero);
+     });
      shuffleArray(shuffledPool, rng);
-     
-     var midPoint = Math.floor(shuffledPool.length / 2);
-     var group1 = shuffledPool.slice(0, midPoint).sort(function(a, b) {
+
+     // Calculate remaining spots needed for each group
+     var targetGroup1Size = Math.floor(heroPool.length / 2);
+     var remainingForGroup1 = targetGroup1Size - group1.length;
+     var remainingForGroup2 = heroPool.length - targetGroup1Size - group2.length;
+
+     // Add remaining heroes to groups
+     group1 = group1.concat(shuffledPool.slice(0, remainingForGroup1));
+     group2 = group2.concat(shuffledPool.slice(remainingForGroup1, remainingForGroup1 + remainingForGroup2));
+
+     // Sort both groups
+     group1 = group1.sort(function(a, b) {
       // First, sort by aspect type order (Aggression, Justice, Leadership, Protection, Pool)
       var typeOrderA = getAspectTypeOrder(a);
       var typeOrderB = getAspectTypeOrder(b);
-      
+
       if (typeOrderA !== typeOrderB) {
         return typeOrderA - typeOrderB; // Sort by aspect type first
       }
-      
+
       // Traits don't use numbered suffixes, use alphabetical sorting within same type
       return a.localeCompare(b);
     });
-     var group2 = shuffledPool.slice(midPoint).sort(function(a, b) {
+     group2 = group2.sort(function(a, b) {
       // First, sort by aspect type order (Aggression, Justice, Leadership, Protection, Pool)
       var typeOrderA = getAspectTypeOrder(a);
       var typeOrderB = getAspectTypeOrder(b);
@@ -906,25 +937,58 @@
 
    // Function to split hero pool into three groups for 6-group mode
    function splitHeroPoolIntoThreeGroups(heroPool, rng) {
-     var shuffledPool = heroPool.slice();
+     var group1 = [];
+     var group2 = [];
+     var group3 = [];
+
+     // Handle required heroes distribution
+     var requiredDistribution = distributeRequiredHeroes(heroPool, 3);
+     if (requiredDistribution) {
+       group1 = requiredDistribution.groups[0].slice();
+       group2 = requiredDistribution.groups[1].slice();
+       group3 = requiredDistribution.groups[2].slice();
+     }
+
+     // Remove required heroes from pool for random distribution
+     var shuffledPool = heroPool.filter(function(hero) {
+       return !requiredDistribution || !requiredDistribution.requiredHeroes.includes(hero);
+     });
      shuffleArray(shuffledPool, rng);
-     
+
      var groupSize = Math.floor(shuffledPool.length / 3);
      var remainder = shuffledPool.length % 3;
-     
-     var group1 = shuffledPool.slice(0, groupSize + (remainder > 0 ? 1 : 0)).sort(function(a, b) {
+
+     // Calculate how many more heroes each group needs
+     var targetSizes = [
+       Math.floor(heroPool.length / 3) + (remainder > 0 ? 1 : 0),
+       Math.floor(heroPool.length / 3) + (remainder > 1 ? 1 : 0),
+       Math.floor(heroPool.length / 3)
+     ];
+
+     var remaining1 = targetSizes[0] - group1.length;
+     var remaining2 = targetSizes[1] - group2.length;
+     var remaining3 = targetSizes[2] - group3.length;
+
+     // Add remaining heroes to groups
+     var currentIndex = 0;
+     group1 = group1.concat(shuffledPool.slice(currentIndex, currentIndex + remaining1));
+     currentIndex += remaining1;
+     group2 = group2.concat(shuffledPool.slice(currentIndex, currentIndex + remaining2));
+     currentIndex += remaining2;
+     group3 = group3.concat(shuffledPool.slice(currentIndex, currentIndex + remaining3));
+
+     // Sort all groups alphabetically
+     group1 = group1.sort(function(a, b) {
        // Alphabetical sorting for heroes
        return a.localeCompare(b);
      });
-     
-     var group2Start = groupSize + (remainder > 0 ? 1 : 0);
-     var group2 = shuffledPool.slice(group2Start, group2Start + groupSize + (remainder > 1 ? 1 : 0)).sort(function(a, b) {
+
+     group2 = group2.sort(function(a, b) {
        // Alphabetical sorting for heroes
        return a.localeCompare(b);
      });
-     
-     var group3Start = group2Start + groupSize + (remainder > 1 ? 1 : 0);
-     var group3 = shuffledPool.slice(group3Start).sort(function(a, b) {
+
+     group3 = group3.sort(function(a, b) {
        // Alphabetical sorting for heroes
        return a.localeCompare(b);
      });
@@ -958,7 +1022,7 @@
    }
 
    // Banned heroes
-   var bannedHeroes = ['Angel', 'Wasp', 'Ant-Man', 'Ironheart', 'SP//dr'];
+   var bannedHeroes = ['Shadowcat', 'SP//dr'];
 
   // Banned traits
   var bannedTraits = [];
@@ -980,6 +1044,8 @@
      "(Hulk) Hero: Avenger, Gamma - AE: Genius, Scientist",
      "(Quicksilver) Hero: Avenger - AE: Civilian",
      "(Scarlet Witch) Hero: Avenger, Mystic - AE: Mystic",
+     "(Ant-Man) Hero: Avenger, Tiny, Giant - AE: Civilian",
+     "(Wasp) Hero: Avenger, Tiny, Giant - AE: Genius",
      "(Groot) Hero: Guardian - AE: Outlaw",
      "(Rocket Raccoon) Hero: Guardian - AE: Genius, Outlaw",
      "(Star-Lord) Hero: Guardian - AE: Outlaw",
@@ -995,6 +1061,7 @@
      "(Ghost-Spider) Hero: Web-Warrior - AE: Civilian",
      "(Spider-Man - Miles Morales) Hero: Champion, Web-Warrior - AE: Civilian",
      "(Nova) Hero: Champion - AE: Civilian",
+     "(Ironheart) Hero: Aerial, Champion - AE: Genius",
      "(Spider-Ham) Hero: Cartoon, Web-Warrior - AE: Cartoon, Civilian",
      "(Colossus) Hero: X-Men - AE: Mutant",
      "(Shadowcat) Hero: X-Men - AE: Mutant",
@@ -1007,6 +1074,7 @@
      "(Cable) Hero: Soldier, X-Force - AE: Mutant, Soldier",
      "(Domino) Hero: Posse, X-Force - AE: Mutant",
      "(Psylocke) Hero: Psionic, X-Force - AE: Mutant, Psionic",
+     "(Angel) Hero: Aerial, X-Force - AE: Mutant",
      "(X-23) Hero: X-Force - AE: Mutant",
      "(Deadpool) Hero: Deadpool Corps, X-Force - AE: Mercenary, Mutant",
      "(Bishop) Hero: Temporal, X-Men - AE: Mutant, Temporal",
@@ -1020,7 +1088,9 @@
      "(Black Panther - Shuri) Hero: Wakanda - AE: Genius, Wakanda",
      "(Silk) Hero: Web-Warrior - AE: Genius",
      "(Falcon) Hero: Aerial, Avenger - AE: SHIELD",
-     "(Winter Soldier) Hero: SHIELD, Soldier - AE: SHIELD, Soldier"
+     "(Winter Soldier) Hero: SHIELD, Soldier - AE: SHIELD, Soldier",
+     "(Tigra) Hero: Avenger - AE: Police",
+     "(Hulkling) Hero: Avenger, Kree, Skrull - AE: Kree, Skrull"
    ];
 
    // Bot draft order
@@ -1034,7 +1104,7 @@
      'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
      'Ant-Man', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee', 
      'Gambit', 'Iceman', 'Rocket',
-     'Falcon', 'Winter Soldier',
+     'Falcon', 'Winter Soldier', 'Tigra', 'Hulkling',
      'Adam Warlock', 'Gamora', 'Ghost-Spider', 'Drax', 'Black Widow', 'Nightcrawler', 'Wasp',
      'Ms Marvel', 'Nebula', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
      'Hawkeye', 'Groot', 'Valkyrie', 'Hulk'
@@ -1072,6 +1142,36 @@
      return !isHeroBanned(hero);
    });
    var marvelHeroes = filteredDraftOrder.slice().sort();
+
+  // Required heroes that must always appear in draft pools
+  var REQUIRED_HEROES = ['Tigra', 'Hulkling', 'Falcon', 'Winter Soldier', 'Black Panther (Shuri)', 'Silk'];
+
+  // Helper function to distribute required heroes across groups
+  function distributeRequiredHeroes(heroPool, numGroups) {
+    var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
+    if (!requireHeroesEnabled) {
+      return null;
+    }
+
+    var requiredInPool = heroPool.filter(function(hero) {
+      return REQUIRED_HEROES.includes(hero);
+    });
+
+    var groups = [];
+    for (var i = 0; i < numGroups; i++) {
+      groups.push([]);
+    }
+
+    // Distribute required heroes evenly across groups
+    for (var i = 0; i < requiredInPool.length; i++) {
+      groups[i % numGroups].push(requiredInPool[i]);
+    }
+
+    return {
+      groups: groups,
+      requiredHeroes: requiredInPool
+    };
+  }
 
    // Team name pools
    var teamNamePools = {
@@ -1280,10 +1380,45 @@
 
      // Generate hero pool
      var heroesPool = marvelHeroes.slice();
-     shuffleArray(heroesPool, rng);
+     // Check if required heroes option is enabled
+    var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
 
-     var selectedHeroes = heroesPool.slice(0, numberOfHeroes);
-     var excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
+    if (!requireHeroesEnabled) {
+      shuffleArray(heroesPool, rng);
+    }
+
+     var selectedHeroes = [];
+     var excludedHeroes = [];
+
+     if (requireHeroesEnabled) {
+       // Ensure required heroes are included
+       var availableRequiredHeroes = REQUIRED_HEROES.filter(function(hero) {
+         return heroesPool.includes(hero);
+       });
+
+       if (availableRequiredHeroes.length > numberOfHeroes) {
+         alert('Pool size too small for all required heroes! Please increase pool size or disable required heroes.');
+         return;
+       }
+
+       // Add required heroes first
+       selectedHeroes = availableRequiredHeroes.slice();
+
+       // Remove required heroes from the pool for random selection
+       var remainingPool = heroesPool.filter(function(hero) {
+         return !availableRequiredHeroes.includes(hero);
+       });
+
+       // Shuffle remaining pool and add heroes to reach target count
+       shuffleArray(remainingPool, rng);
+       var remainingNeeded = numberOfHeroes - selectedHeroes.length;
+       selectedHeroes = selectedHeroes.concat(remainingPool.slice(0, remainingNeeded));
+       excludedHeroes = remainingPool.slice(remainingNeeded).sort();
+     } else {
+       // Original logic for when required heroes is disabled
+       selectedHeroes = heroesPool.slice(0, numberOfHeroes);
+       excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
+     }
      
      // Handle Spider-Woman aspect assignment
      var spiderWomanIndex = selectedHeroes.findIndex(function(hero) {
