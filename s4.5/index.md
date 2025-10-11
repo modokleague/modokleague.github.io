@@ -48,7 +48,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 **🛠️ OSBORNE TECH DECK:** As part of setup, shuffle the Osborne Tech encounter deck and set it aside, face down. This will be known as the Osborne Tech Deck:
 - The Osborne Tech Deck has its own discard pile. When an Osborne Tech card is discared, it is placed in the Osborne Tech Discard. If the Osborne Tech Deck is ever empty, shuffle the Osborne Tech Discard back into the Osborne Tech Deck.
 - At the start of each Hero Phase, discard all Osborne Tech cards attached to the villain and then draw the top card of the Osborne Tech Deck and attach it to the villain.
-- You can remove an Osborne Tech card from the villain using its Hero Action, and this will cause the card to go to the Osborne Tech Discard in the same way as if it was discarded at the start of the Hero Phase.
+- You can remove an Osborne Tech card from the villain using its printed Hero Action, and this will cause the card to go to the Osborne Tech Discard in the same way as if it was discarded at the start of the Hero Phase.
 
 **🔄 CONDITION: Modification to Demons Unleashed 1A (Main Scheme):** Change "Each player puts an Inner Demon minion (Demon Brute or Demon Swordsmen) into play engaged with them." to "Deal an Inner Demon minion (Demon Brute or Demon Swordsmen) to each player as a face-down encounter card."
 
