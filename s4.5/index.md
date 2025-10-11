@@ -56,8 +56,8 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** |
 |-------------|---------------------|-----------------------------------|
-| ★★★★★★ | Standard I + Expert I | 👤 Each minion put into play gains the Self-Teamwork¹ trait<br>⚠️ Mister Negative When Revealed: +2 encounter cards to each player³ |
-| ☆☆☆☆☆ | Standard I + Expert I | 👤 The first minion put into play each phase gains the Self-Teamwork¹ trait<br>⚠️ Mister Negative When Revealed: +2 encounter cards to each player³ |
+| ★★★★★★ | Standard I + Expert I | 👤 Each minion put into play gains the Self-Teamwork¹ trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player³ |
+| ☆☆☆☆☆ | Standard I + Expert I | 👤 The first minion put into play each phase gains the Self-Teamwork¹ trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player³ |
 | ☆☆☆☆ | Standard I + Expert I | ⚠️ Mister Negative When Revealed: +1 encounter card to each player² |
 | ☆☆☆ | Standard I + Expert I |  |  |
 | ☆☆ | Standard I + Expert I | 🛠️ Osborne Tech is not used |
