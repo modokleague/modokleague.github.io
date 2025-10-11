@@ -65,7 +65,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 > 1. During setup attach Negative's Sword to the villain
 > 2. **Self-Teamwork (trait):** After a minion with self-teamwork enters play and engages a player, it activates against the player it is engaged with. This is in addition to other game effects that would cause this minion to activate when it enters play (such as Quickstrike).
-> 3. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Find and deal each player's nemesis minion to them as a face-down encounter card"
+> 3. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Find and deal each player's nemesis minion to them as a face-down encounter card." Based on setup order, these cards will be dealt to each player after the initial Inner Demons, and thus will be revealed during the villain phase after these Inner Demons.
 > 4. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 2 face-down encounter cards to each player."
 
 
