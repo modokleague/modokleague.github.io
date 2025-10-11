@@ -90,7 +90,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 | 🦸‍♂️ **Hero Pool** | All heroes through Tigra & Hulkling |
 | 🚫 **Bans** | Shadowcat and SP//dr |
 | 👨‍👨‍👦 **Recent Releases** | The 6 most recently-released heroes in the pool are always included in the draft groups |
-| 🔒 **Pick Restrictions** | 1 pick per group |
+| 🔒 **Pick Restrictions** | Each kouple: 1 pick per group |
 | ⏱️ **Pick Timer** | 24 hours per selection |
 | 🤖 **Auto-Pick** | Draft-bot chooses if you miss your window |
 | 🐍 **Draft Format** | 6 rounds, snake order (A→B→C then C→B→A and so on) |
