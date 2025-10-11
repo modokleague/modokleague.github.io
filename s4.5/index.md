@@ -56,13 +56,14 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** |
 |-------------|---------------------|-----------------------------------|
-| ★★★★★★ | Standard I + Expert I | 👤 Each minion put into play gains the Self-Teamwork¹ trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player³ |
-| ☆☆☆☆☆ | Standard I + Expert I | 👤 The first minion put into play each phase gains the Self-Teamwork¹ trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player³ |
-| ☆☆☆☆ | Standard I + Expert I | ⚠️ Mister Negative When Revealed: +1 encounter card to each player² |
+| ★★★★★★ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 Each minion put into play gains the Self-Teamwork² trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
+| ☆☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 The first minion put into play each phase gains the Self-Teamwork² trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
+| ☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>⚠️ Mister Negative When Revealed: +1 encounter card to each player³ |
 | ☆☆☆ | Standard I + Expert I |  |  |
 | ☆☆ | Standard I + Expert I | 🛠️ Osborne Tech is not used |
 | ☆ | Standard I + Mister Negative I/II | 🛠️ Osborne Tech is not used |
 
-> 1. **Self-Teamwork (trait):** After a minion with self-teamwork enters play and engages a player, it activates against the player it is engaged with. This is in addition to other game effects that would cause this minion to activate when it enters play (such as Quickstrike).
-> 2. Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 1 face-down encounter card to each player."
-> 3. Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 2 face-down encounter cards to each player."
+> 1. During setup attach Negative's Sword to the villain
+> 2. **Self-Teamwork (trait):** After a minion with self-teamwork enters play and engages a player, it activates against the player it is engaged with. This is in addition to other game effects that would cause this minion to activate when it enters play (such as Quickstrike).
+> 3. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 1 face-down encounter card to each player."
+> 4. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 2 face-down encounter cards to each player."
