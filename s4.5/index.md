@@ -9,7 +9,7 @@ title: "Season 4.5 - Mister Negative - MODOK League off-season challenge"
 <div align="center"><header><h2>⚫⚪ Mister Negative ⚪⚫&nbsp;</h2></header></div>
 
 > **Another round off-season mayhem**
-> <br>Each kouple drafts **THREE HEROES** and and **THREE SETS OF ASPECTS** that can be added to their drafted heroes as they take on Andy N's custom Mister Negative scenario. Mister Negative is bringing along some nastiness to ruin your day, including the villainous **Wrecking Crew**, the might **Armadillo**, and at higher difficulties some **Osborne Tech** he got on loan.
+> <br>Each kouple drafts **THREE HEROES** and and **THREE SETS OF ASPECTS** that can be added to their drafted heroes as they take on Andy N's custom Mister Negative scenario. Mister Negative is bringing along some nastiness to ruin your day, including the nefarious **Sinister Syndicate**, the devious **Iron Spider's Sinister Six**, and at higher difficulties some **Osborne Tech** he got on loan.
 ```
 📚 no aspect restrictions
 🕹️ Friendly Neighborhood mode or Gauntlet mode
@@ -43,10 +43,10 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ## ⚔️ **ROUND DETAILS: MISTER NEGATIVE**
 
-### Expert Mister Negative + Wrecking Crew + Armadillo + Osborne Tech as an additional deck (see below) + Standard I + Expert I (Base difficulty = ☆☆☆)
+### Expert Mister Negative + Sinister Syndicate + Iron Spider's Sinister Six + Osborne Tech as an additional deck (see below) + Standard I + Expert I (Base difficulty = ☆☆☆)
 
 **🛠️ OSBORNE TECH DECK:** As part of setup, shuffle the Osborne Tech encounter deck and set it aside, face down. This will be known as the Osborne Tech Deck:
-- The Osborne Tech Deck has its own discard pile. When an Osborne Tech card is discared, it is placed in the Osborne Tech Discard. If the Osborne Tech Deck is ever empty, shuffle the Osborne Tech Discar back into the Osborne Tech Deck.
+- The Osborne Tech Deck has its own discard pile. When an Osborne Tech card is discared, it is placed in the Osborne Tech Discard. If the Osborne Tech Deck is ever empty, shuffle the Osborne Tech Discard back into the Osborne Tech Deck.
 - At the start of each Hero Phase, discard all Osborne Tech cards attached to the villain and then draw the top card of the Osborne Tech Deck and attach it to the villain.
 - You can remove an Osborne Tech card from the villain using its Hero Action, and this will cause the card to go to the Osborne Tech Discard in the same way as if it was discarded at the start of the Hero Phase.
 
@@ -56,16 +56,16 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** |
 |-------------|---------------------|-----------------------------------|
-| ★★★★★★ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 Each minion put into play gains the Self-Teamwork² trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
-| ☆☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 The first minion put into play each phase gains the Self-Teamwork² trait<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
-| ☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>⚠️ Mister Negative When Revealed: +1 encounter card to each player³ |
+| ★★★★★★ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 Each minion put into play gains the Self-Teamwork² trait<br>🆚 Nemesis minions³<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
+| ☆☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>👤 The first minion put into play each phase gains the Self-Teamwork² trait<br>🆚 Nemesis minions³<br>☢️ Mister Negative When Revealed: +2 encounter cards to each player⁴ |
+| ☆☆☆☆ | Standard I + Expert I | ⚔️ Negative's Sword¹<br>🆚 Nemesis minions³ |
 | ☆☆☆ | Standard I + Expert I |  |  |
 | ☆☆ | Standard I + Expert I | 🛠️ Osborne Tech is not used |
 | ☆ | Standard I + Mister Negative I/II | 🛠️ Osborne Tech is not used |
 
 > 1. During setup attach Negative's Sword to the villain
 > 2. **Self-Teamwork (trait):** After a minion with self-teamwork enters play and engages a player, it activates against the player it is engaged with. This is in addition to other game effects that would cause this minion to activate when it enters play (such as Quickstrike).
-> 3. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 1 face-down encounter card to each player."
+> 3. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Find and deal each player's nemesis minion to them as a face-down encounter card"
 > 4. **Condition:** Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 2 face-down encounter cards to each player."
 
 
@@ -86,7 +86,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 |----------------|----------------|
 | 📚 **Draft Groups** | 3 hero groups + 3 trait set groups |
 | 📦 **Pool Size** | 2 more than needed per draft group |
-| 🦸‍♂️ **Hero Pool** | All heroes through Winter Soldier & Falcon |
+| 🦸‍♂️ **Hero Pool** | All heroes through Tigra & Hulkling |
 | 🚫 **Bans** | Shadowcat and SP//dr |
 | 👨‍👨‍👦 **Recent Releases** | The 6 most recently-released heroes in the pool are always included in the draft groups |
 | 🚫 **Pick Restrictions** | 1 pick per group |
