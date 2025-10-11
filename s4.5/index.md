@@ -38,8 +38,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ### 🎯 Scoring
 
-> 🥊 Each round your score = the highest-difficulty you defeat! <br>
-> 🏆 Your season score is just the combined score from each round.
+> 🏆 In this one-round season, your score = the highest-difficulty you defeat! <br>
 
 
 ## ⚔️ **ROUND DETAILS: MISTER NEGATIVE**
@@ -51,17 +50,19 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 - At the start of each Hero Phase, discard all Osborne Tech cards attached to the villain and then draw the top card of the Osborne Tech Deck and attach it to the villain.
 - You can remove an Osborne Tech card from the villain using its Hero Action, and this will cause the card to go to the Osborne Tech Discard in the same way as if it was discarded at the start of the Hero Phase.
 
-**🔄 MODIFIED DEMONS UNLEASHED 1A (MAIN SCHEME):** Change "Each player puts an Inner Demon minion (Demon Brute or Demon Swordsmen) into player engaged with them." to "Deal an Inner Demon minion (Demon Brute or Demon Swordsmen) to each player as a face-down encounter card."
+**🔄 CONDITION: Modification to Demons Unleashed 1A (Main Scheme):** Change "Each player puts an Inner Demon minion (Demon Brute or Demon Swordsmen) into play engaged with them." to "Deal an Inner Demon minion (Demon Brute or Demon Swordsmen) to each player as a face-down encounter card."
 
 ### 🏅 Difficulty Levels
 
-| ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** | 🎁 **Other Cards Added During Setup** |
-|-------------|---------------------|-----------------------------------|---------------------------------------|
-| ★★★★★★ | Standard I + Expert I | 👤 Each minion put into play gains the Self-Teamwork¹ trait |  |
-| ☆☆☆☆☆ | Standard I + Expert I | 👤 The first minion put into play each villain phase gains the Self-Teamwork¹ trait | |
-| ☆☆☆☆ | Standard I + Expert I |  |  |
+| ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** |
+|-------------|---------------------|-----------------------------------|
+| ★★★★★★ | Standard I + Expert I | 👤 Each minion put into play gains the Self-Teamwork¹ trait<br>⚠️ Mister Negative When Revealed: +2 encounter cards to each player³ |
+| ☆☆☆☆☆ | Standard I + Expert I | 👤 The first minion put into play each phase gains the Self-Teamwork¹ trait<br>⚠️ Mister Negative When Revealed: +2 encounter cards to each player³ |
+| ☆☆☆☆ | Standard I + Expert I | ⚠️ Mister Negative When Revealed: +1 encounter card to each player² |
 | ☆☆☆ | Standard I + Expert I |  |  |
-| ☆☆ | Standard I + Expert I |  | 🛠️ Osborne Tech is not used |
-| ☆ | Standard I + Mister Negative I/II |  | 🛠️ Osborne Tech is not used |
+| ☆☆ | Standard I + Expert I | 🛠️ Osborne Tech is not used |
+| ☆ | Standard I + Mister Negative I/II | 🛠️ Osborne Tech is not used |
 
 > 1. **Self-Teamwork (trait):** After a minion with self-teamwork enters play and engages a player, it activates against the player it is engaged with. This is in addition to other game effects that would cause this minion to activate when it enters play (such as Quickstrike).
+> 2. Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 1 face-down encounter card to each player."
+> 3. Each stage of Mister Negative gains the following text: "**When Revealed:** Deal 2 face-down encounter cards to each player."
