@@ -73,8 +73,8 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 📜 Standard deck-building rules apply<br>
 ✨ Regular uniqueness rules during play<br>
-🌈 You choose each hero's aspect(s).
-🧬 Assign an additional set of drafted traits to each hero when you play\*
+🌈 You choose each hero's aspect(s)<br>
+🧬 Assign an additional set of drafted traits to each hero when you play\*<br>
 🔧 Change aspects, reassign trait sets, modify your decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
 
 \*Each game you will choose to play two of your drafted heroes and assign each of them an additional set of traits. Each identity must be assigned a different set of traits from among the 3 sets that you drafted. For a given set of additional traits, the additional Alter-Ego traits will apply to the Alter-Ego side of that identitry and the additional Hero traits will apply to the Hero side of that identity
