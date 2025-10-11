@@ -51,6 +51,8 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 - At the start of each Hero Phase, discard all Osborne Tech cards attached to the villain and then draw the top card of the Osborne Tech Deck and attach it to the villain.
 - You can remove an Osborne Tech card from the villain using its Hero Action, and this will cause the card to go to the Osborne Tech Discard in the same way as if it was discarded at the start of the Hero Phase.
 
+**🔄 MODIFIED DEMONS UNLEASHED 1A (MAIN SCHEME):** Change "Each player puts an Inner Demon minion (Demon Brute or Demon Swordsmen) into player engaged with them." to "Deal an Inner Demon minion (Demon Brute or Demon Swordsmen) to each player as a face-down encounter card."
+
 ### 🏅 Difficulty Levels
 
 | ⭐ **Level** | 🂡 **Encounter Set** | 📋 **Conditions** | 🎁 **Other Cards Added During Setup** |
