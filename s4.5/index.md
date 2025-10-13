@@ -9,9 +9,9 @@ title: "Season 4.5 - Mister Negative - MODOK League off-season challenge"
 <div align="center"><header><h2>⚫⚪ Mister Negative ⚪⚫&nbsp;</h2></header></div>
 
 > **Another round of off-season mayhem**
-> <br>Each kouple drafts **THREE HEROES** and and **THREE SETS OF ASPECTS** that can be added to their drafted heroes as they take on Andy N's custom Mister Negative scenario. Mister Negative is bringing along some nastiness to ruin your day, including the nefarious **Sinister Syndicate**, the devious **Iron Spider's Sinister Six**, and at higher difficulties some **Osborne Tech** he got on loan.
+> <br>Each kouple drafts **THREE HEROES** and and **THREE SETS OF TRAITS**. Kouples take two heroes at a time up against Andy N's custom Mister Negative scenario, and give each of those heroes one of the drafted sets of traits as bonus bonus traits for that hero. Mister Negative is bringing along some nastiness to ruin your day, including the nefarious **Sinister Syndicate**, the devious **Iron Spider's Sinister Six**, and at higher difficulties some **Osborne Tech** he got on loan.
 ```
-📚 no aspect restrictions
+📚 No aspect restrictions
 🕹️ Friendly Neighborhood mode or Gauntlet mode
 ```
 
@@ -74,10 +74,10 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 📜 Standard deck-building rules apply<br>
 ✨ Regular uniqueness rules during play<br>
 🌈 You choose each hero's aspect(s)<br>
-🧬 Assign an additional set of drafted traits to each hero when you play\*<br>
-🔧 Change aspects, reassign trait sets, modify your decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
+🧬 Assign a different set of drafted traits to each of your heroes when you play\*<br>
+🔧 Change heroes, change aspects, reassign trait sets, modify your decks and practice as much as you want between official attempts and rounds
 
-> \*Each game you will choose to play two of your drafted heroes and assign each of them an additional set of traits. Each identity must be assigned a different set of traits from among the 3 sets that you drafted. For a given set of additional traits, the additional Alter-Ego traits will apply to the Alter-Ego side of that identitry and the additional Hero traits will apply to the Hero side of that identity
+> \*Each game you will choose to play two of your drafted heroes and assign each of them a bonus set of traits in addition to the ones already present on their identity card. Each identity must be assigned a different set of traits from among the 3 sets that you drafted. For a given set of additional traits, the additional Alter-Ego traits will apply to the Alter-Ego side of that identitry and the additional Hero traits will apply to the Hero side of that identity
 
 ## 📝 THE DRAFT
 
