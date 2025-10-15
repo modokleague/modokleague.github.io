@@ -15,8 +15,8 @@ title: "Season 4.5 - Mister Negative - MODOK League off-season challenge"
 🕹️ Friendly Neighborhood mode or Gauntlet mode
 ```
 
-<div align="center"><header><h3><a href="https://modokleague.github.io/s4.5/draft/" target = "_blank">🤖 S4.5 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
-<div align="center"><header><h3>📝 Submit your results (link coming soon) 📝</a></h3></header></div>
+<div align="center"><header><h3>🤖 <a href="https://modokleague.github.io/s4.5/draft/" target = "_blank">S4.5 Draft-o-matic Draft Pool Generator and Simulator (link)</a> 🤖</h3></header></div>
+<div align="center"><header><h3>📝 <a href="https://forms.gle/wPhPXcjkds7ccwF99" target = "_blank">Submit your results (link)</a> 📝</h3></header></div>
 
 > 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
 
