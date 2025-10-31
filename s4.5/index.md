@@ -71,7 +71,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ## 📚 **DECK-BUILDING**
 
-📜 Standard deck-building rules apply<br>
+📜 Standard deck-building rules apply, except Strength in Diversity is banned<br>
 ✨ Regular uniqueness rules during play<br>
 🌈 You choose each hero's aspect(s)<br>
 🧬 Assign a different set of drafted traits to each of your heroes when you play\*<br>
