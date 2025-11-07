@@ -96,3 +96,36 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 | 🐍 **Draft Format** | 6 rounds, snake order (A→B→C then C→B→A and so on) |
 
 Use the Draft-o-Matic at the top of the page to generate example draft pools or simulate your own draft.
+
+### 📋 Draft Results
+
+| Team | Round 1 | Round 2 | Round 3 | Round 4 | Round 5 | Round 6 |
+|------|----|----|----|----|----|----|
+| **sl0th & The_Chase - Chumpin' Ain't Easy** | G1 Gamora | G2 Doctor Strange |  | G4 (Phoenix) Hero: Psionic, X-Men - AE: Mutant, Psionic | G5 (Hulk) Hero: Avenger, Gamma - AE: Genius, Scientist | G6 (Magneto) Hero: X-Men - AE: Mutant |
+| **Ron Baker & All McMackey - Chaos Core** | G1 Vision | G2 Spider-Man (Miles Morales) | G3 Phoenix | G4 (Wolverine) Hero: X-Men - AE: Mutant | G5 (Adam Warlock) Hero: Guardian, Mystic - AE: Mystic |  |
+| **Kamehameha & Teberle - One Shot Wonders** | G1 Black Panther (Shuri) | G2 Black Panther (T'Challa) | G3 Winter Soldier | G4 (Star-Lord) Hero: Guardian - AE: Outlaw |  | G6 (Silk) Hero: Web-Warrior - AE: Genius |
+| **MrSelfDestruct & dvader501 - Yancy Street Gang** | G1 Nick Fury | G2 Ironheart | G3 Valkyrie | G4 (Cable) Hero: Soldier, X-Force - AE: Mutant, Soldier |  | G6 (Scarlet Witch) Hero: Avenger, Mystic - AE: Mystic |
+| **Drexler - Dissociative Identity Duet** | G1 Silk | G2 Ghost-Spider | G3 Spider-Ham | G4 (Jubilee) Hero: X-Men - AE: Mutant |  | G6 (Captain Marvel) Hero: Avenger, Soldier - AE: SHIELD, Soldier |
+| **Dristin - The Exhaustables** | G1 Cable | G2 Storm | G3 X-23 | G4 (Spider-Man - Miles Morales) Hero: Champion, Web-Warrior - AE: Civilian |  | G6 (Venom) Hero: Guardian, Space Knight - AE: Soldier |
+| **Gnipp - Thor Losers** |  | G2 Tigra | G3 Cyclops | G4 (Groot) Hero: Guardian - AE: Outlaw | G5 (Ms. Marvel) Hero: Champion, Inhuman - AE: Inhuman | G6 (Nick Fury) Hero: SHIELD, Soldier, Spy - AE: SHIELD, Soldier, Spy |
+| **Grrreg - The New Grrrex-Men** | G1 Psylocke | G2 Wolverine | G3 Scarlet Witch |  | G5 (Spider-Ham) Hero: Cartoon, Web-Warrior - AE: Cartoon, Civilian | G6 (Ghost-Spider) Hero: Web-Warrior - AE: Civilian |
+| **pebokun (pebble) - The Raft won't save Martin Li this time** | G1 Deadpool | G2 Iron Man | G3 Star-Lord | G4 (Winter Soldier) Hero: SHIELD, Soldier - AE: SHIELD, Soldier |  | G6 (Rogue) Hero: X-Men - AE: Mutant |
+| **josseroo & josseroo jr - Don't give Cathy Engelbert the Infinity Gauntlet** | G1 Magik | G2 Captain Marvel | G3 Spider-Man (Peter Parker) |  | G5 (Nightcrawler) Hero: X-Men - AE: Mutant | G6 (Falcon) Hero: Aerial, Avenger - AE: SHIELD |
+| **soamazinglybad - Kouple Name** | G1 Magneto | G2 Falcon | G3 Hulkling | G4 (Rocket Raccoon) Hero: Guardian - AE: Genius, Outlaw | G5 (Black Panther - Shuri) Hero: Wakanda - AE: Genius, Wakanda |  |
+
+### 🦸‍♂️ Hero Pool
+
+_Underlines indicate undrafted choices_
+
+**Group 1 (Heroes):** <u>G1 Adam Warlock</u>, G1 Black Panther (Shuri), G1 Cable, G1 Colossus, G1 Deadpool, G1 Gamora, G1 Magik, G1 Magneto, G1 Nick Fury, G1 Psylocke, G1 Silk, G1 Vision, <u>G1 War Machine</u>
+
+**Group 2 (Heroes):** G2 Black Panther (T'Challa), G2 Captain Marvel, G2 Doctor Strange, <u>G2 Drax</u>, G2 Falcon, G2 Ghost-Spider, G2 Iron Man, G2 Ironheart, <u>G2 Rocket</u>, G2 Spider-Man (Miles Morales), G2 Storm, G2 Tigra, G2 Wolverine
+
+**Group 3 (Heroes):** G3 Cyclops, G3 Hulkling, <u>G3 Ms Marvel</u>, G3 Phoenix, G3 Scarlet Witch, G3 Spider-Ham, G3 Spider-Man (Peter Parker), G3 Spider-Woman, G3 Star-Lord, <u>G3 Thor</u>, G3 Valkyrie, G3 Winter Soldier, G3 X-23
+
+**Group 4 (Traits):** G4 (Ant-Man) Hero: Avenger, Tiny, Giant - AE: Civilian; G4 (Cable) Hero: Soldier, X-Force - AE: Mutant, Soldier; G4 (Groot) Hero: Guardian - AE: Outlaw; <u>G4 (Hulkling) Hero: Avenger, Kree, Skrull - AE: Kree, Skrull</u>; G4 (Jubilee) Hero: X-Men - AE: Mutant; G4 (Phoenix) Hero: Psionic, X-Men - AE: Mutant, Psionic; G4 (Rocket Raccoon) Hero: Guardian - AE: Genius, Outlaw; <u>G4 (She-Hulk) Hero: Avenger, Gamma - AE: Attorney, Gamma</u>; G4 (Spider-Man - Miles Morales) Hero: Champion, Web-Warrior - AE: Civilian; G4 (Star-Lord) Hero: Guardian - AE: Outlaw; G4 (Thor) Hero: Asgard, Avenger - AE: Asgard; G4 (Winter Soldier) Hero: SHIELD, Soldier - AE: SHIELD, Soldier; G4 (Wolverine) Hero: X-Men - AE: Mutant
+
+**Group 5 (Traits):** <u>G5 (Deadpool) Hero: Deadpool Corps, X-Force - AE: Mercenary, Mutant</u>; G5 (Adam Warlock) Hero: Guardian, Mystic - AE: Mystic; G5 (Black Panther - Shuri) Hero: Wakanda - AE: Genius, Wakanda; G5 (Black Panther - T'Challa) Hero: Avenger, Wakanda - AE: King, Wakanda; G5 (Colossus) Hero: X-Men - AE: Mutant; G5 (Drax) Hero: Guardian - AE: Outlaw; G5 (Hulk) Hero: Avenger, Gamma - AE: Genius, Scientist; G5 (Iceman) Hero: Ice, X-Men - AE: Mutant; G5 (Ms. Marvel) Hero: Champion, Inhuman - AE: Inhuman; G5 (Nightcrawler) Hero: X-Men - AE: Mutant; G5 (Spider-Ham) Hero: Cartoon, Web-Warrior - AE: Cartoon, Civilian; G5 (Spider-Man - Peter Parker) Hero: Avenger - AE: Genius; <u>G5 (X-23) Hero: X-Force - AE: Mutant</u>
+
+**Group 6 (Traits):** G6 (Captain Marvel) Hero: Avenger, Soldier - AE: SHIELD, Soldier; <u>G6 (Domino) Hero: Posse, X-Force - AE: Mutant</u>
+; G6 (Falcon) Hero: Aerial, Avenger - AE: SHIELD; G6 (Ghost-Spider) Hero: Web-Warrior - AE: Civilian; G6 (Magneto) Hero: X-Men - AE: Mutant; G6 (Nick Fury) Hero: SHIELD, Soldier, Spy - AE: SHIELD, Soldier, Spy; <u>G6 (Nova) Hero: Champion - AE: Civilian</u>; G6 (Rogue) Hero: X-Men - AE: Mutant; G6 (Scarlet Witch) Hero: Avenger, Mystic - AE: Mystic; G6 (Silk) Hero: Web-Warrior - AE: Genius; G6 (Spider-Woman) Hero: Avenger, Spy - AE: SHIELD, Spy; G6 (Valkyrie) Hero: Asgard, Avenger - AE: Asgard; G6 (Venom) Hero: Guardian, Space Knight - AE: Soldier
