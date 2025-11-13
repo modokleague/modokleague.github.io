@@ -38,7 +38,7 @@
    }
 
    // Banned heroes
-   var bannedHeroes = ['Shadowcat', 'SP//dr'];
+   var bannedHeroes = [];
 
   // Banned traits
   var bannedTraits = [];
