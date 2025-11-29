@@ -28,7 +28,7 @@ title: "Season 4.5 - Mister Negative - MODOK League off-season challenge"
 | 🚫 **Registration Closes** | Tuesday, Oct 21 | 11:59 PM PDT |
 | 📊 **Draft Pool Revealed** | Wednesday, Oct 22 | Morning |
 | 🚦 **Draft Begins** | Saturday, Oct 25 | 10:00 AM PDT |
-| 🏁 **Season Ends** | Wednesday, Dec 03 | 11:59 PM PDT |
+| 🏁 **Season Ends** | ~~Wednesday, Dec 03~~ Thursday, Jan 15 | 11:59 PM PDT |
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
