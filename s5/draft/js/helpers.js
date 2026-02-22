@@ -1,6 +1,6 @@
 /* ========================================
    MODOK League Season 5.0 - Helper Functions
-   V5.0.0-alpha.10
+   V5.0.0-alpha.11
 
    Contains utility functions for:
    - Ban checking

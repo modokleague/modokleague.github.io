@@ -1,10 +1,10 @@
 /* ========================================
    MODOK League Season 5.0 - Configuration
-   V5.0.0-alpha.9
+   V5.0.0-alpha.11
    ======================================== */
 
 // Version information
-var TOOL_VERSION = 'V5.0.0-alpha.9';
+var TOOL_VERSION = 'V5.0.0-alpha.11';
 var DEFAULT_DRAFT_GROUPS = '4'; // Season 5.0: Hero pairs + Aspect pairs = 4 groups total
 
 // ===== SEASON 5.0: HERO PAIRING CONFIGURATION =====

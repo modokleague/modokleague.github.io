@@ -1,6 +1,6 @@
 /* ========================================
    MODOK League Season 5.0 - Pool Generation
-   V5.0.0-alpha.10
+   V5.0.0-alpha.11
 
    Contains functions for:
    - Hero pool splitting (2-group mode)

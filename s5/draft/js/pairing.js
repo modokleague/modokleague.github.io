@@ -1,6 +1,6 @@
 /* ========================================
    MODOK League Season 5.0 - Pairing Logic
-   V5.0.0-alpha.10
+   V5.0.0-alpha.11
 
    NEW FOR SEASON 5.0
    Core pairing logic for:

@@ -1,6 +1,6 @@
 /* ========================================
    MODOK League Season 5.0 - Legacy Code
-   V5.0.0-alpha.10
+   V5.0.0-alpha.11
 
    Contains all remaining JavaScript from index.html
    This includes:
@@ -38,7 +38,7 @@
    }
 
    // Banned heroes
-   var bannedHeroes = ['Shadowcat', 'SP//dr'];
+   var bannedHeroes = [];
 
   // Banned traits
   var bannedTraits = [];
@@ -109,23 +109,6 @@
      "(Hulkling) Hero: Avenger, Kree, Skrull - AE: Kree, Skrull"
    ];
 
-   // Bot draft order
-   var draftOrder = [
-     'Spider-Ham', 'Cable', 'Cyclops', 'Storm', 'Magik', 'Psylocke', 'Maria Hill',
-     'Bishop', 'Spider-Man (Peter Parker)', 'Doctor Strange', 'Spider-Man (Miles Morales)',
-     'Captain Marvel', 'Scarlet Witch', 'X-23', 'Deadpool',
-     'Black Panther (Shuri)', 'Magneto', 'Ironheart', 'Vision', 'Captain America', 
-     'Domino', 'Angel', 'Shadowcat', 'Nova',
-     'Nick Fury', 'Iron Man', 'Silk', 'Spider-Woman', 'SP//dr',
-     'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
-     'Ant-Man', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee', 
-     'Gambit', 'Iceman', 'Rocket',
-     'Falcon', 'Winter Soldier', 'Tigra', 'Hulkling',
-     'Adam Warlock', 'Gamora', 'Ghost-Spider', 'Drax', 'Black Widow', 'Nightcrawler', 'Wasp',
-     'Ms Marvel', 'Nebula', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
-     'Hawkeye', 'Groot', 'Valkyrie', 'Hulk'
-   ];
-
    // Check if hero is banned
    function isHeroBanned(heroName) {
      if (bannedHeroes.includes(heroName)) return true;
@@ -182,9 +165,6 @@
    });
    var marvelHeroes = filteredDraftOrder.slice().sort();
 
-  // Required heroes that must always appear in draft pools
-  var REQUIRED_HEROES = ['Tigra', 'Hulkling', 'Falcon', 'Winter Soldier', 'Black Panther (Shuri)', 'Silk'];
-
   // Helper function to distribute required heroes across groups
   function distributeRequiredHeroes(heroPool, numGroups) {
     var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
@@ -211,22 +191,6 @@
       requiredHeroes: requiredInPool
     };
   }
-
-   // Team name pools
-   var teamNamePools = {
-     0: ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'],
-     1: ['Betty Ross', 'Bullseye', 'Bruno Carrelli', 'Baron Mordo', 'Beetle', 'Black Tom Cassidy', 'Black Swan', 'Boomerang', 'Betty Brant'],
-     2: ['Calvin Zabo', 'Cassandra Nova', 'Curt Connors', 'Clea', 'Carl "Crusher" Creel', 'Cassie Lang', 'Colleen Wing'],
-     3: ['Doctor Doom', 'Donald Pierce', 'Dormammu', 'Daken', 'Danny Rand', 'Donald Blake'],
-     4: ['Edwin Jarvis', 'Elektra', 'Emil Blonsky', 'Everett Ross', 'Ebony Maw', 'Eddie Brock', 'Exodus', 'Ego the Living Planet'],
-     5: ['Felicia Hardy', 'Fin Fang Foom', 'Frank Castle', 'Franklin Richards', 'Frigga', 'Foggy Nelson'],
-     6: ['Gwen Stacy', 'George Stacy', 'Gorgon', 'Giganto', 'Gilgamesh', 'Grandmaster', 'Gorr'],
-     7: ['Harry Osborn', 'Howard Stark', 'Hope Pym', 'Hobgoblin', 'Helmut Zemo', 'Happy Hogan', 'Howard the Duck', 'Husk', 'High Evolutionary'],
-     8: ['Illyana Rasputin', 'Imperial Guard', 'Iron Fist'],
-     9: ['J Jonah Jameson', 'Janet Van Dyne', 'Jessica Jones', 'Jacosta', 'Jamie Madrox', 'Jimmy Woo', 'Johnny Blaze', 'Jessica Drew'],
-     10: ['Karnak', 'Kurt Wagner', 'Kitty Pryde', 'Kaluu', 'Kamala Khan', 'Kang the Conqueror', 'Kid Omega', 'Killmonger', 'Kingpin', 'Klaw'],
-     11: ['Laufey', 'Leo Fitz', 'Lucia von Bardas', 'Luke Cage', 'Loki', 'Lizard', 'Lorna Dane', 'Logan']
-   };
 
    // Random number generator
    function Random(seed) {
@@ -479,13 +443,14 @@
        excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
      }
      
-     // Handle Spider-Woman aspect assignment
+     // Determine Spider-Woman aspect if she's in the pool.
+     // Rename is deferred until after createHeroPairs so draftOrder.indexOf works correctly.
+     var spiderWomanAspect = null;
      var spiderWomanIndex = selectedHeroes.findIndex(function(hero) {
        return hero === 'Spider-Woman';
      });
      if (spiderWomanIndex !== -1) {
-       var assignedAspect = assignSpiderWomanAspect(rng);
-       selectedHeroes[spiderWomanIndex] = 'Spider-Woman - ' + assignedAspect;
+       spiderWomanAspect = assignSpiderWomanAspect(rng); // consume RNG at same point to keep seeds stable
      }
      
      selectedHeroes.sort();
@@ -498,6 +463,23 @@
      // Season 5.0: Create hero pairs
      var heroPairs = createHeroPairs(selectedHeroes, pairingMode, rng);
      allHeroPairs = heroPairs;
+
+     // Apply Spider-Woman rename now that pairing is complete
+     if (spiderWomanAspect !== null) {
+       var swIdx = selectedHeroes.indexOf('Spider-Woman');
+       if (swIdx !== -1) {
+         selectedHeroes[swIdx] = 'Spider-Woman - ' + spiderWomanAspect;
+       }
+       // Update the pair object that contains her
+       for (var i = 0; i < allHeroPairs.length; i++) {
+         var p = allHeroPairs[i];
+         if (p.hero1 === 'Spider-Woman') { p.hero1 = 'Spider-Woman - ' + spiderWomanAspect; }
+         if (p.hero2 === 'Spider-Woman') { p.hero2 = 'Spider-Woman - ' + spiderWomanAspect; }
+         if (p.displayName.indexOf('Spider-Woman') !== -1) {
+           p.displayName = p.displayName.replace('Spider-Woman', 'Spider-Woman - ' + spiderWomanAspect);
+         }
+       }
+     }
 
      // Season 5.0: Split pairs into 2 groups
      var heroPairGroups = splitPairsIntoTwoGroups(heroPairs, rng);

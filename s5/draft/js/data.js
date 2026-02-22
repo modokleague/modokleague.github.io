@@ -1,9 +1,9 @@
 /* ========================================
    MODOK League Season 5.0 - Static Data
-   V5.0.0-alpha.10
+   V5.0.0-alpha.11
 
    Contains:
-   - Draft order (61 heroes ranked by tier)
+   - Draft order (65 heroes ranked by tier)
    - Required heroes list
    - Team name pools (alphabetized villain/character names)
    ======================================== */
@@ -21,8 +21,8 @@ var draftOrder = [
   'Black Panther (Shuri)', 'Magneto', 'Ironheart', 'Vision', 'Captain America',
   'Domino', 'Angel', 'Shadowcat', 'Nova',
   'Nick Fury', 'Iron Man', 'Silk', 'Spider-Woman', 'SP//dr',
-  'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
-  'Ant-Man', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee',
+  'Wonder Man', 'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
+  'Ant-Man', 'Hercules', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee',
   'Gambit', 'Iceman', 'Rocket',
   'Falcon', 'Winter Soldier', 'Tigra', 'Hulkling',
   'Adam Warlock', 'Gamora', 'Ghost-Spider', 'Drax', 'Black Widow', 'Nightcrawler', 'Wasp',
@@ -33,8 +33,10 @@ var draftOrder = [
 // ===== REQUIRED HEROES =====
 // Heroes that must always appear in draft pools (when feature enabled)
 // Ensures new/featured heroes get playtesting
+// Current: Wonder Man (T3), Hercules (T4), Tigra (T5), Hulkling (T5), Falcon (T5), Winter Soldier (T5)
+// Updated: replaced Black Panther (Shuri) and Silk with Wonder Man and Hercules (S5 new additions)
 
-var REQUIRED_HEROES = ['Tigra', 'Hulkling', 'Falcon', 'Winter Soldier', 'Black Panther (Shuri)', 'Silk'];
+var REQUIRED_HEROES = ['Wonder Man', 'Hercules', 'Tigra', 'Hulkling', 'Falcon', 'Winter Soldier'];
 
 // ===== TEAM NAME POOLS =====
 // Alphabetized pools of villain/character names for team naming
