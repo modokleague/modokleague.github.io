@@ -59,7 +59,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 ### 🏅 Difficulty Levels
 
 | ⭐ **Level** | 🂡 **Obligations and Attachments Encounter Set¹** |  **Villain Levels** | 🧲 **Magneto Ally²** | 🛠️ **Further Modifications** |
-|-------------|---------------------|-----------------------------------|---------------------------------------|----------|
+|:-------------:|:---------------------:|:-----------------------------------:|:---------------------------------------:|:----------:|
 | ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 Nimrod's Portal + Nimrod's Stun Beam + No Victory Future Past⁴ |
 | ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 Nimrod's Portal + Nimrod's Stun Beam + No Victory Future Past⁴ |
 | ☆☆☆☆ | ✅ | II/III | 🚫 | |
