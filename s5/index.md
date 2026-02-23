@@ -44,7 +44,7 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ## ⚔️ ROUND 501: MOLDY OLDIES
 
-### Master Mold + Sentinels + Future Past + Obligations and Attachments Encounter Set\* (Base difficulty = ☆☆☆)
+### Master Mold + Sentinels + Future Past + Obligations and Attachments Encounter Set (Base difficulty = ☆☆☆)
 
 🚫 WHAT'S MISSING: Regular encounter and nemesis sets, plus the **Magneto ally** isn't showing up at difficulties of 4☆+
 
