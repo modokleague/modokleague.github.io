@@ -144,7 +144,7 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 
 ### Modified and alt-art cards
 <img src="Mister_Sinister_II.png" alt="Mister Sinister II alt" style="width:300px;height:430px;">&nbsp;<img src="Mister_Sinister_III.png" alt="Mister Sinister III alt" style="width:300px;height:430px;">&nbsp;<img src="Mister_Sinister_IV.png" alt="Mister Sinister IV modified" style="width:300px;height:430px;">
-<p><img src="Hope_Summers_MODOK.png" alt="Hope Summers mod" style="width:300px;height:430px;">
+<p><img src="Hope_Summers_MODOK.png" alt="Hope Summers mod" style="width:300px;height:430px;"></p>
 
 
 ## 📚 **DECK-BUILDING**
