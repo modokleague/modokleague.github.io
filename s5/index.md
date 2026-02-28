@@ -23,7 +23,6 @@ ODD COUPLE DRAFT: Heroes come in pre-determined pairs and so do the aspects!
 
 |  | 🗓️ | ⏰|
 |--------------|-------------|-------------|
-| 📝 **Registration Opens** | Monday, March 04 | Morning |
 | 🚫 **Registration Closes** | Wednesday, March 18 | 11:59 PM PDT |
 | 📊 **Draft Pool Revealed** | Thursday, March 19 | Morning |
 | 🚦 **Draft Begins** | Sunday, March 22 | 10:00 AM PDT |
@@ -60,8 +59,8 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 | ⭐ **Level** | 🂡 **Obligations and Attachments Encounter Set¹** |  **Villain Levels** | 🧲 **Magneto Ally²** | 🛠️ **Further Modifications** |
 |:-------------:|:---------------------:|:-----------------------------------:|:---------------------------------------:|:----------:|
-| ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 Nimrod's Portal + Nimrod's Stun Beam + No Victory Future Past⁴ |
-| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 Nimrod's Portal + Nimrod's Stun Beam + No Victory Future Past⁴ |
+| ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
+| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
 | ☆☆☆☆ | ✅ | II/III | 🚫 | |
 | ☆☆☆ | ✅ | II/III | 🧲 | |
 | ☆☆ | ✅ | II/III | 🧲 | 🎁 Role upgrades + Metro PD⁵ |
@@ -70,8 +69,13 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 > 1. 🂡 The **Obligations and Attachments Encounter Set** is detailed in the next section.
 > 2. 🧲 The **Magneto Ally** (Mutant Genesis 172B) is not added to the game at difficulties of 4☆+.
 > 3. 🤖 Start on Master Mold III. When Master Mold III is defeated, advance to Master Mold IV (see image below). Master Mold IV is identical to Master Mold III except that it has 18 health per player, 4* Scheme and 5 Attack. As a reminder of the increased stats, slide a copy of the Inifinity Gauntlet or the Desparate side of Hope’s Captor attachment behind the villain, with the stat bonuses showing.
-> 4. 🚧
-> 5. 🎁
+> 4. 🚧 Difficulty enhancements:
+>    * **Condition:** Ignore the Victory keyword on all cards in the FUTURE PAST modular set, meaning they do not go to the victory display when defeated.
+>    * **Setup:** After resolving the When Revealed effect on Main Scheme 1B, find a copy of the STUN BEAM attachment and attach it to the NIMROD ally.
+>    * **Setup:** Find and reveal a copy of the NIMROD'S PORTAL side scheme.
+> 5. 🎁 Hero benefits:
+>    * **Setup:** Each player may start with any one role upgrade in play from the Mutant Genesis campaign. These role upgrades may be from the same or different roles.
+>    * **Setup:** The players start with METRO P.D. support in play. This card is the back side of the FRIGHTENED POLICE side scheme (Mutant Genesis campaign card 1/5)
 
 ## 📚 **DECK-BUILDING**
 
