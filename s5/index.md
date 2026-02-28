@@ -95,7 +95,7 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader)
 
 ### Modified and alt-art cards
-<img src="Master_Mold_II.png" alt="Master Mold II alt" style="width:300px;height:430px;"><img src="Master_Mold_III.png" alt="Master Mold III alt" style="width:300px;height:430px;"><img src="Master_Mold_IV.png" alt="Master Mold IV modified" style="width:300px;height:430px;">
+<img src="Master_Mold_II.png" alt="Master Mold II alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_III.png" alt="Master Mold III alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_IV.png" alt="Master Mold IV modified" style="width:300px;height:430px;">
 <p><img src="The_Sentinel_Factory.png" alt="The Sentinel Factory modified" style="width:430px;height:300px;">
 
 ## ⚔️ ROUND 502: SOUPED-UP SINISTER
@@ -141,6 +141,11 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 7. SPREADING LIES (treachery, Red Skull) - Any text referring to Red Skull instead refers to "the villain"
 8. SUMMONED BACK (treachery, Mad Titan's Shadow Campaign)
 9. SWINGING ASSAULT (treachery, Symbiotic Strength)
+
+### Modified and alt-art cards
+<img src="Mister_Sinister_II.png" alt="Mister Sinister II alt" style="width:300px;height:430px;">&nbsp;<img src="Mister_Sinister_III.png" alt="Mister Sinister III alt" style="width:300px;height:430px;">&nbsp;<img src="Mister_Sinister_IV.png" alt="Mister Sinister IV modified" style="width:300px;height:430px;">
+<img src="Hope_Summers_MODOK.png" alt="Hope Summers mod" style="width:300px;height:430px;">
+
 
 ## 📚 **DECK-BUILDING**
 
