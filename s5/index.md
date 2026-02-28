@@ -79,6 +79,20 @@ _(Inspired by Con of Heroes 2023 Challenge “Mark VII My Lunch” and a challen
 >    * **Setup:** Each player may start with any one role upgrade in play from the Mutant Genesis campaign. These role upgrades may be from the same or different roles.
 >    * **Setup:** The players start with METRO P.D. support in play. This card is the back side of the FRIGHTENED POLICE side scheme (Mutant Genesis campaign card 1/5)
 
+### 🂡 Obligations and Attachments Encounter Set 
+
+Instead of regular Standard or Expert encounter sets, the following cards are used to make up the encounter set:
+
+1. ANALYSIS PARALYSIS (side scheme, Whispers of Paranoia)
+2. CITIZEN V'S SWORD (attachemnt, Thunderbolts) - Any text referring to Citizen V instead refers to "the villain"
+3. HIGH-TECH ARMAMENT (attachement, Winter Soldier Nemesis)
+4. HUNTED (obligation, Distopian Nightmare)
+5. LIFE DRAIN (attachment, Sauron)
+6. OLD GRUDGE (attachment, Whispers of Paranoia)
+7. PAPARAZZI (obligation, Mojo)
+8. PAST MACHINATIONS (treachery, Kang)
+9. TABULA RASA (attachment, Deadpool Nemesis)
+10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader)
 
 ## ⚔️ ROUND 502: SOUPED-UP SINISTER
 
@@ -109,6 +123,20 @@ _(Inspired by the Gene Hack Man Con of Heroes 2024 Challenge)_
 > 3. 📎 **Condition:** When you complete Main scheme 1B, resolve the When Revealed ability of the Stage 2 main scheme you are removing from the game before advancing to the random stage 2A. 
 > 4. 🚧 **Setup:** Put the TELEPORTED AWAY side scheme into play. Put the ARMADILLO minion into play, engaged with one of the players. Put the SAURON minion into play engaged with the other player.
 > 5. 🎁 The players start the game with two of the Next Evolution Campaign Environments in play (Team Assembled, Safehouse Established, Geared Up, Mission Prepped, Practiced Maneurvers and Prepared Defenses). You do not need to include the associated campaign minion or side scheme with any of these environments. 
+
+### 🂡 Treacherous Encounter Set 
+
+Instead of regular Standard or Expert encounter sets, the following cards are used to make up the encounter set:
+
+1. COVERT OPS (treachery, Black Widow) - Any text referring to Black Widow instead refers to "the villain"
+2. DEAD TO RIGHTS (treachery, Badoon Headhunter)
+3. INFINITE POWER (treachery, Red Skull) - Any text referring to Red Skull instead refers to "the villain"
+4. NO PLACE FOR THE LIVING (treachery, Legions of Hel)
+5. POWER AND DECADENCE (treachery, Hellfire)
+6. SMEAR CAMPAIGN (treachery, Sinister Motives Campaign Bad Publicity)
+7. SPREADING LIES (treachery, Red Skull) - Any text referring to Red Skull instead refers to "the villain"
+8. SUMMONED BACK (treachery, Mad Titan's Shadow Campaign)
+9. SWINGING ASSAULT (treachery, Symbiotic Strength)
 
 ## 📚 **DECK-BUILDING**
 
