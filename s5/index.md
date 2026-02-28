@@ -94,6 +94,10 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 9. TABULA RASA (attachment, Deadpool Nemesis)
 10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader)
 
+### Modified and alt-art cards
+
+<img src="The_Sentinel_Factory.png" alt="The Sentinel Factory modified" style="width:430px;height:300px;">
+
 ## ⚔️ ROUND 502: SOUPED-UP SINISTER
 
 ### Mister Sinister +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
