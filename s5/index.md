@@ -43,9 +43,11 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 
 ## ⚔️ ROUND 501: MOLDY OLDIES
 
-### Master Mold + Sentinels + Future Past + Obligations and Attachments Encounter Set (Base difficulty = ☆☆☆)
+### Master Mold + Sentinels + Future Past + Obligations and Attachments Encounter Set + No Magneto ally (Base difficulty = 4☆)
 
 🚫 WHAT'S MISSING: Regular encounter and nemesis sets, plus the **Magneto ally** isn't showing up at difficulties of 4☆+
+
+_(Inspired by Con of Heroes 2023 Challenge “Mark VII My Lunch” and a challenge Kakita Jamie brought to Con of Heroes 2025)_
 
 **CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign the following minions and side scheme as the heroes nemesis minions and side scheme
 > 🧲 **Replacement nemesis minion 1:** Put **Magneto 2.6 (Sci-Fi)** out of play and assign it to one of the heroes as their nemesis minion
@@ -60,13 +62,49 @@ Choose between **Friendly Neighborhood Mode** for maximum flexibility where you 
 | ⭐ **Level** | 🂡 **Obligations and Attachments Encounter Set¹** |  **Villain Levels** | 🧲 **Magneto Ally²** | 🛠️ **Further Modifications** |
 |:-------------:|:---------------------:|:-----------------------------------:|:---------------------------------------:|:----------:|
 | ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
-| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
+| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
 | ☆☆☆☆ | ✅ | II/III | 🚫 | |
 | ☆☆☆ | ✅ | II/III | 🧲 | |
 | ☆☆ | ✅ | II/III | 🧲 | 🎁 Role upgrades + Metro PD⁵ |
 | ☆ | ✅ | I/II | 🧲 | 🎁 Role upgrades + Metro PD⁵ |
 
 > 1. 🂡 The **Obligations and Attachments Encounter Set** is detailed in the next section.
+> 2. 🧲 The **Magneto Ally** (Mutant Genesis 172B) is not added to the game at difficulties of 4☆+.
+> 3. 🤖 Start on Master Mold III. When Master Mold III is defeated, advance to Master Mold IV (see image below). Master Mold IV is identical to Master Mold III except that it has 18 health per player, 4* Scheme and 5 Attack. As a reminder of the increased stats, slide a copy of the Inifinity Gauntlet or the Desparate side of Hope’s Captor attachment behind the villain, with the stat bonuses showing.
+> 4. 🚧 Difficulty enhancements:
+>    * **Condition:** Ignore the Victory keyword on all cards in the FUTURE PAST modular set, meaning they do not go to the victory display when defeated.
+>    * **Setup:** After resolving the When Revealed effect on Main Scheme 1B, find a copy of the STUN BEAM attachment and attach it to the NIMROD ally.
+>    * **Setup:** Find and reveal a copy of the NIMROD'S PORTAL side scheme.
+> 5. 🎁 Hero benefits:
+>    * **Setup:** Each player may start with any one role upgrade in play from the Mutant Genesis campaign. These role upgrades may be from the same or different roles.
+>    * **Setup:** The players start with METRO P.D. support in play. This card is the back side of the FRIGHTENED POLICE side scheme (Mutant Genesis campaign card 1/5)
+
+
+## ⚔️ ROUND 502: SOUPED-UP SINISTER
+
+### Mister Sinister +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
+
+🚫 WHAT'S MISSING: Regular encounter and nemesis sets + the Hope Summers ally as it appears in the Hope Summer modular set
+
+_(Inspired by the Gene Hack Man Con of Heroes 2024 Challenge)_
+
+**CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign SAURON to one hero as their nemesis minion and ARMADILLO to the other hero. These minions are included in the encounter deck built for this scenario and are not set aside like regular nemesis minions are. There are no nemesis side schemes for this scenario.
+
+**CONDITION 2:** Replace the HOPE SUMMERS ally from the Home Summers modular set with a modified version of the basic HOPE SUMMERS ally used in deck building. This copy of HOPE SUMMERS gains the text "Setup. The first player controls Hope Summers. Hope Summers does not count against your ally limit. If Hope Summers leaves play, the players lose the game." Additionally, change the card cost to "-". See below for a modified version of this card. 
+
+
+### 🏅 Difficulty Levels
+
+| ⭐ **Level** | 🂡 **Treacherous Encounter Set¹** |  **Villain Levels** | 🛠️ **Further Modifications** |
+|:-------------:|:---------------------:|:-----------------------------------:|:---------------------------------------:|:----------:|
+| ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 ⁴<br>⚡ |
+| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 ⁴ <br>⚡|
+| ☆☆☆☆ | ✅ | II/III | 🚫 | ⚡ |
+| ☆☆☆ | ✅ | II/III | 🧲 | |
+| ☆☆ | ✅ | II/III | 🧲 | 🎁 ⁵ |
+| ☆ | ✅ | I/II | 🧲 | 🎁⁵ |
+
+> 1. 🂡 The **Treacherous Encounter Set** is detailed in the next section.
 > 2. 🧲 The **Magneto Ally** (Mutant Genesis 172B) is not added to the game at difficulties of 4☆+.
 > 3. 🤖 Start on Master Mold III. When Master Mold III is defeated, advance to Master Mold IV (see image below). Master Mold IV is identical to Master Mold III except that it has 18 health per player, 4* Scheme and 5 Attack. As a reminder of the increased stats, slide a copy of the Inifinity Gauntlet or the Desparate side of Hope’s Captor attachment behind the villain, with the stat bonuses showing.
 > 4. 🚧 Difficulty enhancements:
