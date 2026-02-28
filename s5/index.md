@@ -95,8 +95,10 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader)
 
 ### Modified and alt-art cards
-
-<img src="The_Sentinel_Factory.png" alt="The Sentinel Factory modified" style="width:430px;height:300px;">
+<img src="Master_Mold_II.png" alt="Master Mold II alt" style="width:300px;height:430px;">
+<img src="Master_Mold_III.png" alt="Master Mold III alt" style="width:300px;height:430px;">
+<img src="Master_Mold_IV.png" alt="Master Mold IV modified" style="width:300px;height:430px;">
+<p><img src="The_Sentinel_Factory.png" alt="The Sentinel Factory modified" style="width:430px;height:300px;">
 
 ## ⚔️ ROUND 502: SOUPED-UP SINISTER
 
