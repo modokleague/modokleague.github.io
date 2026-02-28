@@ -15,19 +15,19 @@ ODD COUPLE DRAFT: Heroes come in pre-determined pairs and so do the aspects!
 👥 TWO HERO-PAIR GROUPS + 🎭 TWO ASPECT-PAIR GROUPS
 ```
 
-<div align="center"><header><h3><a href="https://modokleague.github.io/s5/draft/" target = "_blank">🤖 S4 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
+<div align="center"><header><h3><a href="https://modokleague.github.io/s5/draft/" target = "_blank">🤖 S5 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 
 > 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
 
-## 📅 **CRITICAL DATES (2026)** 
+## 📅 **CRITICAL DATES** 
 
 |  | 🗓️ | ⏰|
 |--------------|-------------|-------------|
-| 🚫 **Registration Closes** | Wednesday, March 18 | 11:59 PM PDT |
-| 📊 **Draft Pool Revealed** | Thursday, March 19 | Morning |
-| 🚦 **Draft Begins** | Sunday, March 22 | 10:00 AM PDT |
-| 🏆 **Mid-Season Awards** | Monday, May 04 | Morning |
-| 🏁 **Season Ends** | Sunday, June 07 | 11:59 PM PDT |
+| 🚫 **Registration Closes** | Wednesday, March 18, 2026 | 11:59 PM PDT |
+| 📊 **Draft Pool Revealed** | Thursday, March 19,2026 | Morning |
+| 🚦 **Draft Begins** | Sunday, March 22, 2026 | 10:00 AM PDT |
+| 🏆 **Mid-Season Awards** | Monday, May 04, 2026 | Morning |
+| 🏁 **Season Ends** | Sunday, June 07, 2026 | 11:59 PM PDT |
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
