@@ -176,7 +176,9 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 
 Use the Draft-o-Matic at the top of the page to generate example draft pools or even simulate your own draft.
 
+## 💚🥊 SHE-HULK'S PUNCH CLUB 🥊💚
 
+📢 Compete for bragging rights with your off-picks
 
-
+> After you earn your top score in a round, take your unused hero pair and aspect pair from that round and try to top the Punch Club leaderboard following Friendly Neighborhood Mode scoring rules.
 
