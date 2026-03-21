@@ -180,5 +180,5 @@ Use the Draft-o-Matic at the top of the page to generate example draft pools or 
 
 📢 Compete for bragging rights with your off-picks
 
-> After you earn your top score in a round, take your unused hero pair and aspect pair from that round and try to top the Punch Club leaderboard following Friendly Neighborhood Mode scoring rules.
+> After you earn your top score in a round, take your unused hero pair and aspect pair from that round and try to top the Punch Club leaderboard following Friendly Neighborhood Mode scoring rules. Uses the regular score submission form.
 
