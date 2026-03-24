@@ -17,7 +17,7 @@ ODD COUPLE DRAFT: Heroes come in pre-determined pairs and so do the aspects!
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s5/draft/" target = "_blank">🤖 S5 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 
-> 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
+> 📊 [Submit ALL your games, kouples!](https://forms.gle/Mv8Zqt2TZy2M11dU8) Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
 
 ## 📅 **CRITICAL DATES** 
 
