@@ -92,7 +92,7 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 7. PAPARAZZI (obligation, Mojo)
 8. PAST MACHINATIONS (treachery, Kang)
 9. TABULA RASA (attachment, Deadpool Nemesis)
-10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader)
+10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader) - Any text referring to She-Hulk instead refers to "the villain"
 
 ### Modified and alt-art cards
 <img src="Master_Mold_II.png" alt="Master Mold II alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_III.png" alt="Master Mold III alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_IV.png" alt="Master Mold IV modified" style="width:300px;height:430px;">
