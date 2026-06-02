@@ -377,229 +377,51 @@
      var numberOfExtras = parseInt(document.getElementById('extrasInput').value) || 6;
      var draftPoolGroups = document.getElementById('draftPoolGroups').value;
 
-     // ===== SEASON 5.0: Calculate pairs needed =====
-     // For 4-group mode: 2 hero pair groups + 2 aspect pair groups
-     // Each group needs (numberOfTeams + numberOfExtras) pairs
-     var heroPairsNeeded = 2 * (numberOfTeams + numberOfExtras);
-     var aspectPairsNeeded = 2 * (numberOfTeams + numberOfExtras);
+     // ===== SEASON 6.0: Hero + aspect pool generation =====
+     var itemsPerGroup = numberOfTeams + numberOfExtras;
 
-     // Total individual heroes needed for pairing (each pair = 2 heroes)
-     var numberOfHeroes;
-     if (draftPoolGroups === '4') {
-       // Season 5.0: 4-group mode uses pairs
-       numberOfHeroes = heroPairsNeeded * 2;
-     } else if (draftPoolGroups === '6') {
-       // Legacy: For 6-group mode: each group has (teams + extras), total = 3 * (teams + extras)
-       numberOfHeroes = 3 * (numberOfTeams + numberOfExtras);
-     } else {
-       // Fallback to 4-group mode behavior
-       numberOfHeroes = heroPairsNeeded * 2;
-     }
+     // Read the S6 toggles.
+     currentDraftMode = document.getElementById('draftMode')
+       ? document.getElementById('draftMode').value : DEFAULT_DRAFT_MODE;
+     currentUniverseMode = document.getElementById('universeMode')
+       ? document.getElementById('universeMode').value : DEFAULT_UNIVERSE_MODE;
 
-     if (numberOfHeroes > marvelHeroes.length) {
-       alert('Pool size too large! Maximum extras possible: ' + (marvelHeroes.length - (2 * numberOfTeams)));
+     // marvelHeroes is already filtered for outright-banned heroes.
+     var heroPool = marvelHeroes.slice();
+
+     // Required heroes (only when the feature is enabled).
+     var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
+     var requiredHeroesList = requireHeroesEnabled
+       ? REQUIRED_HEROES.filter(function(hero) { return heroPool.indexOf(hero) !== -1; })
+       : [];
+
+     var s6Result = generateS6DraftPool({
+       mode: currentDraftMode,
+       universe: currentUniverseMode,
+       itemsPerGroup: itemsPerGroup,
+       heroPool: heroPool,
+       requiredHeroes: requiredHeroesList
+     }, rng);
+
+     if (s6Result.error) {
+       alert(s6Result.error);
        return;
      }
 
-     // Generate hero pool
-     var heroesPool = marvelHeroes.slice();
-     // Check if required heroes option is enabled
-    var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
+     draftGroups = s6Result.groups;
+     s6Excluded = s6Result.excluded;
 
-    if (!requireHeroesEnabled) {
-      shuffleArray(heroesPool, rng);
-    }
+     // Flatten for hero tracking and bot priority.
+     var allItems = [].concat.apply([], draftGroups);
+     allHeroes = allItems.map(function(item) { return item.hero; });
 
-     var selectedHeroes = [];
-     var excludedHeroes = [];
-
-     if (requireHeroesEnabled) {
-       // Ensure required heroes are included
-       var availableRequiredHeroes = REQUIRED_HEROES.filter(function(hero) {
-         return heroesPool.includes(hero);
-       });
-
-       if (availableRequiredHeroes.length > numberOfHeroes) {
-         alert('Pool size too small for all required heroes! Please increase pool size or disable required heroes.');
-         return;
-       }
-
-       // Add required heroes first
-       selectedHeroes = availableRequiredHeroes.slice();
-
-       // Remove required heroes from the pool for random selection
-       var remainingPool = heroesPool.filter(function(hero) {
-         return !availableRequiredHeroes.includes(hero);
-       });
-
-       // Shuffle remaining pool and add heroes to reach target count
-       shuffleArray(remainingPool, rng);
-       var remainingNeeded = numberOfHeroes - selectedHeroes.length;
-       selectedHeroes = selectedHeroes.concat(remainingPool.slice(0, remainingNeeded));
-       excludedHeroes = remainingPool.slice(remainingNeeded).sort();
-     } else {
-       // Original logic for when required heroes is disabled
-       selectedHeroes = heroesPool.slice(0, numberOfHeroes);
-       excludedHeroes = heroesPool.slice(numberOfHeroes).sort();
-     }
-     
-     // Determine Spider-Woman aspect if she's in the pool.
-     // Rename is deferred until after createHeroPairs so draftOrder.indexOf works correctly.
-     var spiderWomanAspect = null;
-     var spiderWomanIndex = selectedHeroes.findIndex(function(hero) {
-       return hero === 'Spider-Woman';
-     });
-     if (spiderWomanIndex !== -1) {
-       spiderWomanAspect = assignSpiderWomanAspect(rng); // consume RNG at same point to keep seeds stable
-     }
-     
-     selectedHeroes.sort();
-
-     // Season 5.0: Get pairing mode from UI
-     var pairingMode = document.getElementById('pairingMode')
-       ? document.getElementById('pairingMode').value
-       : DEFAULT_PAIRING_MODE;
-
-     // Season 5.0: Create hero pairs
-     var heroPairs = createHeroPairs(selectedHeroes, pairingMode, rng);
-     allHeroPairs = heroPairs;
-
-     // Apply Spider-Woman rename now that pairing is complete
-     if (spiderWomanAspect !== null) {
-       var swIdx = selectedHeroes.indexOf('Spider-Woman');
-       if (swIdx !== -1) {
-         selectedHeroes[swIdx] = 'Spider-Woman - ' + spiderWomanAspect;
-       }
-       // Update the pair object that contains her
-       for (var i = 0; i < allHeroPairs.length; i++) {
-         var p = allHeroPairs[i];
-         if (p.hero1 === 'Spider-Woman') { p.hero1 = 'Spider-Woman - ' + spiderWomanAspect; }
-         if (p.hero2 === 'Spider-Woman') { p.hero2 = 'Spider-Woman - ' + spiderWomanAspect; }
-         if (p.displayName.indexOf('Spider-Woman') !== -1) {
-           p.displayName = p.displayName.replace('Spider-Woman', 'Spider-Woman - ' + spiderWomanAspect);
-         }
-       }
-     }
-
-     // Season 5.0: Split pairs into 2 groups
-     var heroPairGroups = splitPairsIntoTwoGroups(heroPairs, rng);
-     heroPairGroup1 = heroPairGroups.group1;
-     heroPairGroup2 = heroPairGroups.group2;
-
-     // Sort hero pairs alphabetically by displayName within each group
-     heroPairGroup1.sort(function(a, b) {
+     // Bot priority: items sorted by tier (lower draftOrder index = higher priority).
+     s6BotPriority = allItems.slice().sort(function(a, b) {
+       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+       if (ta !== tb) { return ta - tb; }
        return a.displayName.localeCompare(b.displayName);
      });
-     heroPairGroup2.sort(function(a, b) {
-       return a.displayName.localeCompare(b.displayName);
-     });
-
-     // Keep legacy hero groups for display (temporary - will update displays in Alpha.4)
-     allHeroes = selectedHeroes;
-
-     // Check for 4-group mode and split heroes
-      if (draftPoolGroups === '4') {
-       var heroGroups = splitHeroPoolIntoGroups(selectedHeroes, rng);
-       heroGroup1 = heroGroups.group1;
-       heroGroup2 = heroGroups.group2;
-       heroGroup3 = [];
-     } else if (draftPoolGroups === '6') {
-       var heroGroups = splitHeroPoolIntoThreeGroups(selectedHeroes, rng);
-       heroGroup1 = heroGroups.group1;
-       heroGroup2 = heroGroups.group2;
-       heroGroup3 = heroGroups.group3;
-     } else {
-       // Fallback to 4-group mode behavior
-       var heroGroups = splitHeroPoolIntoGroups(selectedHeroes, rng);
-       heroGroup1 = heroGroups.group1;
-       heroGroup2 = heroGroups.group2;
-       heroGroup3 = [];
-     }
-
-    // Season 5.0: Generate aspect pairs
-    var aspectPairs = createAspectPairs(aspectPairsNeeded, rng);
-    allAspectPairs = aspectPairs;
-
-    // Season 5.0: Split aspect pairs into 2 groups
-    var aspectPairGroups = splitPairsIntoTwoGroups(aspectPairs, rng);
-    aspectPairGroup1 = aspectPairGroups.group1;
-    aspectPairGroup2 = aspectPairGroups.group2;
-
-    // Sort aspect pairs alphabetically by displayName within each group
-    aspectPairGroup1.sort(function(a, b) {
-      return a.displayName.localeCompare(b.displayName);
-    });
-    aspectPairGroup2.sort(function(a, b) {
-      return a.displayName.localeCompare(b.displayName);
-    });
-
-    // Season 5.0: Extract aspect pair displayNames for legacy variable compatibility
-    // (These "traits" variables actually store aspect pair displayNames in Season 5.0)
-    var traitsPool = aspectPairs.map(function(pair) {
-      return pair.displayName;
-    });
-    allTraits = traitsPool.slice();
-     
-     // Check for 4-group mode and split aspects
-      // Add 6-group mode support for 3 aspect groups
-     if (draftPoolGroups === '6') {
-       var traitsGroups = splitTraitsPoolIntoThreeGroups(traitsPool, rng);
-       traitsGroup1 = traitsGroups.group1;
-       traitsGroup2 = traitsGroups.group2;
-       traitsGroup3 = traitsGroups.group3;
-       window.traitsGroup1 = traitsGroup1;
-       window.traitsGroup2 = traitsGroup2;
-       window.traitsGroup3 = traitsGroup3;
-     } else if (draftPoolGroups === '4') {
-       var traitsGroups = splitTraitsPoolIntoGroups(traitsPool, rng);
-       traitsGroup1 = traitsGroups.group1;
-       traitsGroup2 = traitsGroups.group2;
-       traitsGroup3 = [];
-       window.traitsGroup1 = traitsGroup1;
-       window.traitsGroup2 = traitsGroup2;
-       window.traitsGroup3 = traitsGroup3;
-     } else {
-       // Fallback to 4-group mode behavior
-       var traitsGroups = splitTraitsPoolIntoGroups(traitsPool, rng);
-       traitsGroup1 = traitsGroups.group1;
-       traitsGroup2 = traitsGroups.group2;
-       traitsGroup3 = [];
-       window.traitsGroup1 = traitsGroup1;
-       window.traitsGroup2 = traitsGroup2;
-       window.traitsGroup3 = traitsGroup3;
-     }
-
-    // Season 5.0: No aspect pairs are excluded from the pool
-    var excludedTraits = [];
-     
-     // Season 5.0: Initialize pair priorities for bot AI
-    initializeHeroPairPriority(heroPairs, rng);
-    initializeAspectPairPriority(aspectPairs, rng);
-
-     // Season 5.0: Aspect pair priority is now initialized in js/pairing.js
-     // Legacy trait priority removed - no longer needed
-
-     // Update draft bot order to use the aspect-assigned Spider-Woman name
-     var draftBot = filteredDraftOrder.slice();
-     var spiderWomanBotIndex = draftBot.findIndex(function(hero) {
-       return hero === 'Spider-Woman';
-     });
-     // Find Spider-Woman variant in selectedHeroes after sorting
-    var spiderWomanVariantInSelected = selectedHeroes.find(function(hero) {
-      return hero.startsWith('Spider-Woman - ');
-    });
-    
-    if (spiderWomanBotIndex !== -1 && spiderWomanVariantInSelected) {
-       draftBot[spiderWomanBotIndex] = spiderWomanVariantInSelected;
-     }
-     
-    draftBot = draftBot.filter(function(hero) {
-       return selectedHeroes.includes(hero);
-     });
-
-     
-    // Update filteredDraftOrder to use the corrected draftBot array
-    filteredDraftOrder = draftBot.slice();
 
     // Get custom teams
      var customTeamList = document.getElementById('teamListInput').value.trim();
@@ -633,171 +455,50 @@
      
      shuffleArray(teams, rng);
 
-     // Display results based on group mode
-     if (draftPoolGroups === '6') {
-       // Display three hero groups for 6-group mode
-       document.getElementById('resultPool').innerHTML = 
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Group 1</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             heroGroup1.map(function(hero) {
-               return '<div class="hero-card">' + hero + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Group 2</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             heroGroup2.map(function(hero) {
-               return '<div class="hero-card">' + hero + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Group 3</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             heroGroup3.map(function(hero) {
-               return '<div class="hero-card">' + hero + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>';
-     } else if (draftPoolGroups === '4') {
-       // Season 5.0: Display hero pairs instead of individuals
-       document.getElementById('resultPool').innerHTML =
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Pair Group 1</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             heroPairGroup1.map(function(pair) {
-               return '<div class="hero-card" style="padding: 12px 16px;">' + pair.displayName + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Hero Pair Group 2</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             heroPairGroup2.map(function(pair) {
-               return '<div class="hero-card" style="padding: 12px 16px;">' + pair.displayName + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>';
-     } else {
-       // Display single hero pool
-       document.getElementById('resultPool').innerHTML = selectedHeroes.map(function(hero) {
-         return '<div class="hero-card">' + hero + '</div>';
-       }).join('');
+     // ===== SEASON 6.0: Render the four draft groups =====
+     function s6AspectColor(aspect) {
+       var c = (typeof ASPECT_COLORS !== 'undefined') && ASPECT_COLORS[aspect];
+       return c ? c.main : '#666';
      }
-     
-     // Display aspects based on group mode
-      // Add 6-group mode support for 3 aspect groups display
-     if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0) {
-       // Display separate aspect groups with type summaries for 6-group mode
-       document.getElementById('resultTraitsPool').innerHTML = 
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Traits Group 1</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             traitsGroup1.map(function(aspect) {
-               var aspectType = getAspectType(aspect);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspect);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               return '<div class="hero-card trait-card-multiline" style="' + traitStyle + '">' + multiLineContent + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Traits Group 2</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             traitsGroup2.map(function(aspect) {
-               var aspectType = getAspectType(aspect);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspect);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               return '<div class="hero-card trait-card-multiline" style="' + traitStyle + '">' + multiLineContent + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Traits Group 3</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             traitsGroup3.map(function(aspect) {
-               var aspectType = getAspectType(aspect);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspect);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               return '<div class="hero-card trait-card-multiline" style="' + traitStyle + '">' + multiLineContent + '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>';
-     } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0) {
-       // Season 5.0: Display aspect pairs instead of individual traits
-       document.getElementById('resultTraitsPool').innerHTML =
-         '<div class="result-section" style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Aspect Pair Group 1</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             aspectPairGroup1.map(function(pair) {
-               var pairStyle = getAspectPairStyle(pair);
-               return '<div class="hero-card" style="background: ' + pairStyle + '; color: white; padding: 12px 16px;">' +
-                      pair.displayName +
-                      '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>' +
-         '<div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
-           '<h3 style="margin-bottom: 10px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">Aspect Pair Group 2</h3>' +
-           '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-             aspectPairGroup2.map(function(pair) {
-               var pairStyle = getAspectPairStyle(pair);
-               return '<div class="hero-card" style="background: ' + pairStyle + '; color: white; padding: 12px 16px;">' +
-                      pair.displayName +
-                      '</div>';
-             }).join('') +
-           '</div>' +
-         '</div>';
+     function s6ItemCard(item) {
+       return '<div class="hero-card" style="background: ' + s6AspectColor(item.aspect) +
+              '; color: #fff; padding: 12px 16px;">' + item.displayName + '</div>';
      }
-     
-     // Season 5.0: Display hero pair priority instead of individual heroes
-     document.getElementById('resultDraftBot').innerHTML = heroPairPriorityList.map(function(pair) {
-       return '<div class="hero-card" style="padding: 12px 16px;">' + pair.displayName + '</div>';
-     }).join('');
-     
-     // Season 5.0: Display aspect pair priority instead of individual traits
-     document.getElementById('resultDraftBotTraits').innerHTML = aspectPairPriorityList.map(function(pair) {
-       var pairStyle = getAspectPairStyle(pair);
-       return '<div class="hero-card" style="background: ' + pairStyle + '; color: white; padding: 12px 16px;">' +
-              pair.displayName +
+
+     document.getElementById('resultPool').innerHTML = draftGroups.map(function(group, gi) {
+       var label = (currentDraftMode === DRAFT_MODES.ORDER)
+         ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi])
+         : ('Group ' + (gi + 1));
+       return '<div class="result-section" style="margin-bottom: 20px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
+                '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">' + label + '</h3>' +
+                '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
+                  group.map(s6ItemCard).join('') +
+                '</div>' +
               '</div>';
      }).join('');
-     
+
+     // S6 has no separate aspect-pair pool.
+     document.getElementById('resultTraitsPool').innerHTML = '';
+
+     // Bot priority across all items.
+     document.getElementById('resultDraftBot').innerHTML = s6BotPriority.map(s6ItemCard).join('');
+     document.getElementById('resultDraftBotTraits').innerHTML = '';
+
      document.getElementById('resultDraftOrder').innerHTML = teams.map(function(team, index) {
        return '<div class="kouple-card">' + (index + 1) + '. ' + team + '</div>';
      }).join('');
-     
-     // Season 5.0: Excluded display simplified for pair mode
-     document.getElementById('resultExcluded').innerHTML =
-       '<div style="padding: 20px; text-align: center; color: #666; font-style: italic;">' +
-       'Excluded hero tracking not applicable in pair-based drafting mode' +
-       '</div>';
-    
-    // Season 5.0: Excluded aspects section removed from UI (all aspects always available)
-    // No longer displaying excluded aspects
+
+     // Excluded heroes (meaningful in Single Universe).
+     if (currentUniverseMode === UNIVERSE_MODES.SINGLE && s6Excluded.length > 0) {
+       document.getElementById('resultExcluded').innerHTML = s6Excluded.map(function(hero) {
+         return '<div class="hero-card">' + hero + '</div>';
+       }).join('');
+     } else {
+       document.getElementById('resultExcluded').innerHTML =
+         '<div style="padding: 20px; text-align: center; color: #666; font-style: italic;">' +
+         (currentUniverseMode === UNIVERSE_MODES.SINGLE ? 'No heroes excluded.' : 'Not applicable in Multiverse (draft with replacement).') +
+         '</div>';
+     }
 
      document.getElementById('results').style.display = 'block';
      document.getElementById('footerNote').style.display = 'block';

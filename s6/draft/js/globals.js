@@ -41,6 +41,22 @@ var aspectsList = [
   'Protection'
 ];
 
+// ===== SEASON 6.0: HERO+ASPECT DRAFT VARIABLES =====
+
+// The four draft groups, each an array of item objects
+// { hero, aspect, aspects, displayName, tier }. Populated by generateS6DraftPool.
+var draftGroups = [];
+
+// Bot AI priority: all pool items sorted by tier (lower tier index = higher priority).
+var s6BotPriority = [];
+
+// Heroes available but not present in the generated pool (meaningful in Single Universe).
+var s6Excluded = [];
+
+// Current draft mode / universe mode used for the active pool.
+var currentDraftMode = DEFAULT_DRAFT_MODE;
+var currentUniverseMode = DEFAULT_UNIVERSE_MODE;
+
 // ===== DRAFT STATE VARIABLES =====
 
 // Draft simulator state
