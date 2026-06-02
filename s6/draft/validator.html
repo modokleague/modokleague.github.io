@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Pool Validator - MODOK League S6</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; background: #f0f2f5; color: #212121; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 20px; }
+    header { margin-bottom: 20px; }
+    header h1 { font-size: 22px; font-weight: 700; }
+    header .subtitle { color: #666; font-size: 13px; margin-top: 4px; }
+    h2 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    .panel { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 16px 20px; margin-bottom: 16px; }
+    .settings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #555; margin-bottom: 4px; }
+    .field input[type="number"], .field select { width: 100%; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    .field-checkbox { display: flex; align-items: center; gap: 8px; padding-top: 20px; }
+    .field-checkbox label { font-size: 13px; font-weight: 600; color: #333; cursor: pointer; }
+    .field-checkbox input { width: 16px; height: 16px; cursor: pointer; }
+    #run-btn { background: #1565c0; color: white; border: none; padding: 9px 22px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    #run-btn:hover { background: #0d47a1; }
+    #run-btn:disabled { background: #90a4ae; cursor: not-allowed; }
+    #status-area { font-size: 13px; color: #555; margin-bottom: 12px; min-height: 18px; font-style: italic; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+    .summary-item { background: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 4px; padding: 10px 12px; }
+    .summary-item .s-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.04em; }
+    .summary-item .s-value { font-size: 22px; font-weight: 700; margin-top: 2px; color: #1565c0; }
+    .run-meta { font-size: 12px; color: #777; }
+    .run-meta strong { color: #444; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: #eeeeee; padding: 6px 10px; text-align: left; border: 1px solid #d0d0d0; white-space: nowrap; }
+    td { padding: 5px 10px; border: 1px solid #d8d8d8; }
+    tbody tr:nth-child(even) td { background: #fafafa; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .muted { color: #999; font-size: 12px; font-style: italic; }
+    .section-note { font-size: 12px; color: #777; margin-bottom: 8px; line-height: 1.5; }
+    .ok { color: #2e7d32; font-weight: 700; }
+    .bad { color: #c62828; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Draft Pool Validator</h1>
+      <p class="subtitle">Statistical validation for MODOK League S6 (hero+aspect) draft pool generation</p>
+    </header>
+
+    <div class="panel">
+      <h2>Settings</h2>
+      <div class="settings-grid">
+        <div class="field">
+          <label for="cfg-iterations">Iterations</label>
+          <input type="number" id="cfg-iterations" value="1000" min="100" max="20000" step="100">
+        </div>
+        <div class="field">
+          <label for="cfg-teams">Kouples</label>
+          <input type="number" id="cfg-teams" value="8" min="2" max="14">
+        </div>
+        <div class="field">
+          <label for="cfg-extras">Extras / group</label>
+          <input type="number" id="cfg-extras" value="3" min="0" max="20">
+        </div>
+        <div class="field">
+          <label for="cfg-mode">Draft Mode</label>
+          <select id="cfg-mode">
+            <option value="chaos">Chaos</option>
+            <option value="order">Order</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cfg-universe">Universe</label>
+          <select id="cfg-universe">
+            <option value="multiverse">Multiverse</option>
+            <option value="single">Single Universe</option>
+          </select>
+        </div>
+        <div class="field-checkbox">
+          <input type="checkbox" id="cfg-require" checked>
+          <label for="cfg-require">Require Heroes</label>
+        </div>
+      </div>
+      <button id="run-btn" onclick="runValidation()">Run Validation</button>
+    </div>
+
+    <div id="status-area"></div>
+    <div id="results-area"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/globals.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/winrates.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/pool.js"></script>
+  <script>
+  'use strict';
+
+  function pct(v, d) { if (d === undefined) { d = 2; } return v.toFixed(d) + '%'; }
+  function flat(groups) { return [].concat.apply([], groups); }
+  function comboKey(item) { return item.hero + '|' + item.aspects.slice().sort().join(','); }
+
+  function runValidation() {
+    var iterations = parseInt(document.getElementById('cfg-iterations').value) || 1000;
+    var teams      = parseInt(document.getElementById('cfg-teams').value) || 8;
+    var extras     = parseInt(document.getElementById('cfg-extras').value);
+    if (isNaN(extras)) { extras = 3; }
+    var mode       = document.getElementById('cfg-mode').value;
+    var universe   = document.getElementById('cfg-universe').value;
+    var requireHeroes = document.getElementById('cfg-require').checked;
+
+    var btn = document.getElementById('run-btn');
+    btn.disabled = true;
+    document.getElementById('status-area').textContent = 'Running ' + iterations + ' iterations...';
+    document.getElementById('results-area').innerHTML = '';
+
+    setTimeout(function() {
+      try {
+        var result = doRun({ iterations: iterations, teams: teams, extras: extras,
+          mode: mode, universe: universe, requireHeroes: requireHeroes });
+        renderResults(result);
+        document.getElementById('status-area').textContent =
+          'Done - ' + iterations.toLocaleString() + ' iterations in ' + result.elapsed + ' ms.';
+      } catch (err) {
+        document.getElementById('status-area').textContent = 'Error: ' + err.message;
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+      }
+    }, 20);
+  }
+
+  function doRun(cfg) {
+    var itemsPerGroup = cfg.teams + cfg.extras;
+    var requiredList = cfg.requireHeroes
+      ? REQUIRED_HEROES.filter(function(h) { return draftOrder.indexOf(h) !== -1; })
+      : [];
+
+    var heroAppearances = {};   // total item count per hero across all runs
+    var heroPresentRuns = {};   // runs in which the hero appears at least once
+    var aspectCounts = {};      // primary-aspect count across all items
+    var reqPresentRuns = {};    // runs in which each required hero is present
+    draftOrder.forEach(function(h) { heroAppearances[h] = 0; heroPresentRuns[h] = 0; });
+    MAIN_ASPECTS.forEach(function(a) { aspectCounts[a] = 0; });
+    requiredList.forEach(function(h) { reqPresentRuns[h] = 0; });
+
+    var errorCount = 0, comboViolations = 0, totalItems = 0, completedRuns = 0;
+    var firstError = null;
+    var start = Date.now();
+
+    for (var iter = 0; iter < cfg.iterations; iter++) {
+      var rng = new Random(iter + 1);
+      var res = generateS6DraftPool({
+        mode: cfg.mode, universe: cfg.universe, itemsPerGroup: itemsPerGroup,
+        heroPool: draftOrder.slice(), requiredHeroes: requiredList
+      }, rng);
+
+      if (res.error) { errorCount++; if (!firstError) { firstError = res.error; } continue; }
+      completedRuns++;
+
+      var items = flat(res.groups);
+      totalItems += items.length;
+
+      var seenThisRun = {};
+      var combos = {};
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        heroAppearances[it.hero]++;
+        aspectCounts[it.aspect] = (aspectCounts[it.aspect] || 0) + 1;
+        if (!seenThisRun[it.hero]) { seenThisRun[it.hero] = true; heroPresentRuns[it.hero]++; }
+        var ck = comboKey(it);
+        if (combos[ck]) { comboViolations++; }
+        combos[ck] = true;
+      }
+      requiredList.forEach(function(h) { if (seenThisRun[h]) { reqPresentRuns[h]++; } });
+    }
+
+    return {
+      cfg: cfg, itemsPerGroup: itemsPerGroup, requiredList: requiredList,
+      heroAppearances: heroAppearances, heroPresentRuns: heroPresentRuns,
+      aspectCounts: aspectCounts, reqPresentRuns: reqPresentRuns,
+      errorCount: errorCount, firstError: firstError, comboViolations: comboViolations,
+      totalItems: totalItems, completedRuns: completedRuns, elapsed: Date.now() - start
+    };
+  }
+
+  function renderResults(data) {
+    var html = '';
+    html += renderSummary(data);
+    html += renderIntegrity(data);
+    html += renderAspectBalance(data);
+    if (data.requiredList.length) { html += renderRequired(data); }
+    html += renderHeroTable(data);
+    document.getElementById('results-area').innerHTML = html;
+  }
+
+  function renderSummary(data) {
+    var c = data.cfg;
+    var totalSlots = c.teams === undefined ? 0 : 4 * data.itemsPerGroup;
+    var items = [
+      { label: 'Iterations', value: c.iterations.toLocaleString() },
+      { label: 'Completed runs', value: data.completedRuns.toLocaleString() },
+      { label: 'Items / run', value: (4 * data.itemsPerGroup).toString() },
+      { label: 'Elapsed', value: data.elapsed + ' ms' }
+    ];
+    var grid = items.map(function(it) {
+      return '<div class="summary-item"><div class="s-label">' + it.label +
+        '</div><div class="s-value">' + it.value + '</div></div>';
+    }).join('');
+    return '<div class="panel"><h2>Run Summary</h2><div class="summary-grid">' + grid + '</div>' +
+      '<div class="run-meta">' +
+        'Mode: <strong>' + c.mode + '</strong> &nbsp;|&nbsp; ' +
+        'Universe: <strong>' + c.universe + '</strong> &nbsp;|&nbsp; ' +
+        'Kouples: <strong>' + c.teams + '</strong> &nbsp;|&nbsp; ' +
+        'Extras/group: <strong>' + c.extras + '</strong> &nbsp;|&nbsp; ' +
+        'Items/group: <strong>' + data.itemsPerGroup + '</strong> &nbsp;|&nbsp; ' +
+        'Require heroes: <strong>' + (c.requireHeroes ? 'ON' : 'OFF') + '</strong>' +
+      '</div></div>';
+  }
+
+  function renderIntegrity(data) {
+    var errOk = data.errorCount === 0;
+    var comboOk = data.comboViolations === 0;
+    var rows =
+      '<tr><td>Feasibility errors (runs that could not generate)</td>' +
+        '<td class="num ' + (errOk ? 'ok' : 'bad') + '">' + data.errorCount.toLocaleString() +
+        (data.firstError ? ' <span class="muted">(' + data.firstError + ')</span>' : '') + '</td></tr>' +
+      '<tr><td>Exact-duplicate hero+aspect combos within a run</td>' +
+        '<td class="num ' + (comboOk ? 'ok' : 'bad') + '">' + data.comboViolations.toLocaleString() + '</td></tr>';
+    return '<div class="panel"><h2>Integrity Checks</h2>' +
+      '<p class="section-note">Both should be 0 for valid settings. Feasibility errors mean the pool size exceeded what the chosen mode/universe can supply.</p>' +
+      '<table><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function renderAspectBalance(data) {
+    var total = 0;
+    MAIN_ASPECTS.forEach(function(a) { total += (data.aspectCounts[a] || 0); });
+    var rows = MAIN_ASPECTS.map(function(a) {
+      var n = data.aspectCounts[a] || 0;
+      var obs = total > 0 ? (n / total) * 100 : 0;
+      var absDev = Math.abs(obs - 25);
+      var bg = absDev < 1 ? '#c8e6c9' : (absDev < 2 ? '#fff9c4' : '#ffcdd2');
+      return '<tr><td><strong>' + a + '</strong></td>' +
+        '<td class="num">' + n.toLocaleString() + '</td>' +
+        '<td class="num" style="background:' + bg + '">' + pct(obs, 2) + '</td>' +
+        '<td class="num">25.00%</td></tr>';
+    }).join('');
+    var note = (data.cfg.mode === 'order')
+      ? 'Order mode binds one aspect per group, so each aspect should be exactly 25% of items (Spider-Woman aside).'
+      : 'Chaos mode rolls a uniform random aspect per item, so each should be near 25%.';
+    return '<div class="panel"><h2>Aspect Balance (primary aspect of each item)</h2>' +
+      '<p class="section-note">' + note + ' Color: &lt;1pp green, 1-2pp yellow, &gt;2pp red.</p>' +
+      '<table><thead><tr><th>Aspect</th><th class="num">Items</th><th class="num">% of items</th><th class="num">Expected</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function renderRequired(data) {
+    var rows = data.requiredList.map(function(h) {
+      var present = data.reqPresentRuns[h] || 0;
+      var p = data.completedRuns > 0 ? (present / data.completedRuns) * 100 : 0;
+      var ok = p > 99.999;
+      return '<tr><td>' + h + '</td>' +
+        '<td class="num">' + present.toLocaleString() + ' / ' + data.completedRuns.toLocaleString() + '</td>' +
+        '<td class="num ' + (ok ? 'ok' : 'bad') + '">' + pct(p, 2) + '</td></tr>';
+    }).join('');
+    return '<div class="panel"><h2>Required Heroes Presence</h2>' +
+      '<p class="section-note">Each required hero should appear in 100% of completed runs.</p>' +
+      '<table><thead><tr><th>Hero</th><th class="num">Runs present</th><th class="num">% of runs</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function renderHeroTable(data) {
+    var reqSet = {};
+    data.requiredList.forEach(function(h) { reqSet[h] = true; });
+    var rows = draftOrder.map(function(h) {
+      return {
+        hero: h,
+        appearances: data.heroAppearances[h] || 0,
+        avgPerRun: data.completedRuns > 0 ? (data.heroAppearances[h] || 0) / data.completedRuns : 0,
+        presentPct: data.completedRuns > 0 ? ((data.heroPresentRuns[h] || 0) / data.completedRuns) * 100 : 0,
+        req: reqSet[h] === true
+      };
+    }).sort(function(a, b) { return b.appearances - a.appearances; });
+
+    var tbody = rows.map(function(r) {
+      return '<tr><td>' + r.hero + (r.req ? ' <em style="color:#888;font-size:11px">(req)</em>' : '') + '</td>' +
+        '<td class="num bold">' + r.appearances.toLocaleString() + '</td>' +
+        '<td class="num">' + r.avgPerRun.toFixed(3) + '</td>' +
+        '<td class="num">' + pct(r.presentPct, 1) + '</td></tr>';
+    }).join('');
+
+    return '<div class="panel"><h2>Hero Appearance Frequency</h2>' +
+      '<p class="section-note">Total appearances across all completed runs, average appearances per run, and the share of runs in which the hero appears at least once. Sorted by total appearances.</p>' +
+      '<table><thead><tr><th>Hero</th><th class="num">Appearances</th><th class="num">Avg / run</th><th class="num">% of runs present</th></tr></thead>' +
+      '<tbody>' + tbody + '</tbody></table></div>';
+  }
+  </script>
+</body>
+</html>

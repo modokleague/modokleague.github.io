@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>MODOK League S6.0 Draft-o-matic</title>
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+ <div class="container">
+   <div class="header">
+     <h1>Draft-o-matic</h1>
+     <p id="toolVersionDisplay">MODOK League Season 6.0</p>
+   </div>
+
+   <div class="hero-lists">
+     <div class="hero-section">
+       <h3>Available Heroes</h3>
+       <small style="display: block; margin-top: -10px; margin-bottom: 10px; color: #666;">
+         These heroes are available for the draft pool. (Click on a hero to move it to the banned list.)
+       </small>
+       <div class="hero-grid" id="allHeroes"></div>
+     </div>
+
+     <div class="hero-section">
+       <h3>Banned Heroes</h3>
+       <small id="bannedNote" style="display: block; margin-top: -10px; margin-bottom: 10px; color: #666;">No banned heroes in this draft</small>
+       <div class="hero-grid" id="bannedHeroes"></div>
+     </div>
+   </div>
+
+   <div class="controls">
+     <!-- Season 6.0: Draft mode + universe toggles (front of the options) -->
+     <div class="control-group">
+       <label for="draftMode">Draft Mode</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Chaos: each group mixes random aspects. Order: one group per aspect.</small>
+       <select id="draftMode">
+         <option value="chaos" selected>Chaos</option>
+         <option value="order">Order</option>
+       </select>
+     </div>
+
+     <div class="control-group">
+       <label for="universeMode">Universe</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Multiverse: draft with replacement (duplicates allowed). Single Universe: at most one copy of each hero across the whole pool.</small>
+       <select id="universeMode">
+         <option value="multiverse" selected>Multiverse</option>
+         <option value="single">Single Universe</option>
+       </select>
+     </div>
+
+     <div class="control-group">
+       <label for="draftPoolGroups">Number of Draft Groups</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Season 6.0: 4 groups of hero+aspect picks (one pick per group, 4 rounds)</small>
+       <select id="draftPoolGroups">
+         <option value="4" selected>4 groups</option>
+        </select>
+     </div>
+
+     <div class="control-group">
+       <label for="teamsInput">Number of Kouples</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Range: 6-14 kouples</small>
+       <input type="number" id="teamsInput" min="6" max="14" value="10">
+     </div>
+
+     <div class="control-group">
+       <label for="extrasInput">Extra Choices per Draft Pool Group</label>
+       <small id="extrasSubLabel" style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Beyond the mininum number needed for drafting (Maximum: <span id="maxExtras">45</span>)</small>
+       <input type="number" id="extrasInput" min="0" max="45" value="3">
+     </div>
+
+
+     <div class="control-group">
+       <label for="teamListInput">Kouple Names (Optional)</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One kouple per line. <strong>First will be your kouple</strong> in the draft simulator. Remaining names replace default kouple names.</small>
+       <textarea id="teamListInput" placeholder="My Kouple Name&#10;Kouple Beta&#10;Kouple Gamma&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
+     </div>
+
+     <div class="control-group">
+       <label for="additionalHeroesInput">Additional Heroes (Optional)</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One hero per line. Adds heroes to the draft pool to keep the randomizer current. New heroes appear randomly in the top 50-70% of bot priority, chosen separately for each aspect.</small>
+       <textarea id="additionalHeroesInput" oninput="syncAdditionalHeroes()" placeholder="Daredevil&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
+     </div>
+
+     <div class="control-group">
+       <label>
+         <input type="checkbox" id="requireHeroesCheckbox" checked style="margin-right: 8px;">
+         Enable Required Heroes
+       </label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Ensures these heroes are included in the draft pool</small>
+       <textarea id="requiredHeroesDisplay" readonly placeholder="None for Season 6" style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: none; min-height: 60px; font-family: inherit; background-color: #f9f9f9; color: #666;"></textarea>
+     </div>
+
+     <div class="control-group">
+       <label for="seedInput">Seed for Randomization (Optional)</label>
+       <input type="text" id="seedInput" placeholder="For reproducible results">
+     </div>
+   </div>
+
+   <div style="text-align: center;">
+     <button class="btn" id="goButton">Generate Draft Pool</button>
+   </div>
+
+   <div class="results" id="results" style="display: none;">
+     <div class="result-section">
+       <h3>Draft Pool</h3>
+       <div class="hero-grid" id="resultPool"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>Draft Bot Priority</h3>
+       <div class="hero-grid" id="resultDraftBot"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>Draft Order</h3>
+       <div class="draft-order" id="resultDraftOrder"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>Excluded Heroes</h3>
+       <div class="hero-grid" id="resultExcluded"></div>
+     </div>
+
+     <div class="result-section">
+       <h3 id="draftDescription">Each kouple drafts 2 heroes and 2 aspect pairs over 4 rounds</h3>
+       <div id="draftRulesText" style="margin-top: 15px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.9rem; line-height: 1.6;"></div>
+       <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+         <div>
+           <label for="botSurpriseSlider" style="font-weight: 600; font-size: 1rem; display: block; margin-bottom: 8px;">
+             Chance for a Random Pick (ignore tier list): <span id="botSurpriseValue">10%</span>
+           </label>
+           <input type="range" id="botSurpriseSlider" min="0" max="100" value="10" oninput="updateBotSettings()" style="width: 100%;">
+           <div style="display: flex; justify-content: space-between; font-size: 0.8em; color: #666; margin-top: 5px;">
+             <span>0% (Strategic)</span>
+             <span>50%</span>
+             <span>100% (Chaos)</span>
+           </div>
+         </div>
+         <div>
+           <label for="botRePickSlider" style="font-weight: 600; font-size: 1rem; display: block; margin-bottom: 8px;">
+             Chance to Re-pick a Duplicate Aspect: <span id="botRePickValue">50%</span>
+           </label>
+           <input type="range" id="botRePickSlider" min="0" max="95" value="50" oninput="updateBotSettings()" style="width: 100%;">
+           <div style="display: flex; justify-content: space-between; font-size: 0.8em; color: #666; margin-top: 5px;">
+             <span>0% (Allow dupes)</span>
+             <span>50%</span>
+             <span>95% (Avoid)</span>
+           </div>
+         </div>
+       </div>
+       <div id="botStrategyDescription" style="margin-top: 15px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.9rem; line-height: 1.6;"></div>
+     </div>
+
+     <div class="result-section" style="padding: 20px; border-radius: 10px; background: rgba(74, 144, 226, 0.1); backdrop-filter: blur(5px); display: flex; gap: 15px;">
+       <button class="btn" onclick="exportDraftPool()">Export Draft Pool</button>
+       <button class="btn" onclick="startDraftSimulator()" style="background: linear-gradient(145deg, #48dbfb, #0fb4e5);">Start Draft Simulator</button>
+     </div>
+   </div>
+
+   <div id="draftSimulator" style="display: none; margin-top: 30px;">
+     <div class="result-section">
+       <h3>Current Draft Status</h3>
+       <div id="draftStatus" style="padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 1rem; line-height: 1.8;"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>All Teams</h3>
+       <div id="allTeamsDisplay" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>Available Choices</h3>
+       <div id="availableItemsDisplay" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"></div>
+     </div>
+
+     <div class="result-section">
+       <h3>Bot Priority (win-rate order)</h3>
+       <div class="hero-grid" id="botPriorityDisplay"></div>
+     </div>
+   </div>
+
+   <div class="footer-note" id="footerNote" style="display: none;">
+     <p>Seed used: <span id="displayedSeed"></span> | <a href="#" onclick="copyToClipboard(document.getElementById('displayedSeed').textContent); return false;">Copy Seed</a></p>
+   </div>
+
+   <details id="draftLogPanel" style="margin-top: 30px;">
+     <summary style="cursor: pointer; font-weight: 600; font-size: 1.1rem; padding: 10px; color: #2c2c54;">Draft Log (picks attempted, re-rolled, made)</summary>
+     <div id="draftLog" style="margin-top: 10px; max-height: 320px; overflow-y: auto; padding: 12px; background: rgba(0,0,0,0.05); border-radius: 8px; font-family: monospace; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap;"></div>
+   </details>
+ </div>
+
+ <!-- JavaScript Files - Load in dependency order -->
+ <script src="js/config.js"></script>
+ <script src="js/globals.js"></script>
+ <script src="js/data.js"></script>
+ <script src="js/winrates.js"></script>
+ <script src="js/utils.js"></script>
+ <script src="js/helpers.js"></script>
+ <script src="js/pool.js"></script>
+ <script src="js/legacy.js"></script>
+
+ <script>
+   // Helper function to copy text to clipboard
+   function copyToClipboard(text) {
+     var textarea = document.createElement('textarea');
+     textarea.value = text;
+     document.body.appendChild(textarea);
+     textarea.select();
+     document.execCommand('copy');
+     document.body.removeChild(textarea);
+     alert('Seed copied to clipboard!');
+   }
+ </script>
+</body>
+</html>
