@@ -371,7 +371,7 @@
      allHeroes = allItems.map(function(item) { return item.hero; });
 
      // Bot priority: items sorted by tier (lower draftOrder index = higher priority).
-     s6BotPriority = allItems.slice().sort(s6TierCompare);
+     s6BotPriority = allItems.slice().sort(s6PriorityCompare);
 
     // Get custom teams
      var customTeamList = document.getElementById('teamListInput').value.trim();
@@ -571,7 +571,7 @@
      if (Math.random() < (botSurprisePercentage / 100)) {
        return candidates[Math.floor(Math.random() * candidates.length)];
      }
-     var sorted = candidates.slice().sort(s6TierCompare);
+     var sorted = candidates.slice().sort(s6PriorityCompare);
      var top = sorted.slice(0, Math.min(5, sorted.length));
      var weights = [];
      for (var i = 0; i < top.length; i++) { weights.push(Math.pow(1.5, top.length - 1 - i)); }
@@ -671,12 +671,12 @@
      return c ? c.main : '#666';
    }
 
-   // Sort by tier (lower draftOrder index = higher priority). Same hero shares a tier,
-   // so ties fall to the per-item random key: same-hero/different-aspect order is random.
-   function s6TierCompare(a, b) {
-     var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-     var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-     if (ta !== tb) { return ta - tb; }
+   // Bot priority: rank by hero+aspect community win rate (higher = better). Spider-Woman's
+   // combos tie at her overall and break on the average of her two aspects; exact ties fall
+   // to the per-item random key.
+   function s6PriorityCompare(a, b) {
+     if (b.winRate !== a.winRate) { return b.winRate - a.winRate; }
+     if (b.winRateTie !== a.winRateTie) { return b.winRateTie - a.winRateTie; }
      return (a.tieBreak || 0) - (b.tieBreak || 0);
    }
 
@@ -790,7 +790,7 @@
      for (var g = 0; g < draftGroups.length; g++) {
        for (var i = 0; i < draftGroups[g].length; i++) { all.push(draftGroups[g][i]); }
      }
-     all.sort(s6TierCompare);
+     all.sort(s6PriorityCompare);
      el.innerHTML = all.map(function(item){
        if (item.drafted) {
          return '<div class="hero-card" style="opacity:0.35; padding:10px 14px;">' + item.displayName +

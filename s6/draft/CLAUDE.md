@@ -62,16 +62,23 @@ Current `REQUIRED_HEROES`: `['Wonder Man', 'Hercules', 'Tigra', 'Hulkling', 'Fal
 1. `config.js`
 2. `globals.js`
 3. `data.js` (sets draftOrder, REQUIRED_HEROES, teamNamePools)
-4. `utils.js`
-5. `helpers.js`
-6. `tiers.js` (tier data feeds bot priority; pairing logic retired in Phase 4)
-7. `pairing.js` (S5-only, to be removed in Phase 4)
-8. `pool.js`
-9. `legacy.js` (reads data.js globals; must not re-declare them)
+4. `winrates.js` (HERO_WINRATES + MCT_NAME_MAP; community win rates that drive bot priority)
+5. `utils.js`
+6. `helpers.js`
+7. `pool.js`
+8. `legacy.js` (reads data.js globals; must not re-declare them)
+
+(`pairing.js` and `tiers.js` were deleted in Phase 4.)
 
 ---
 
-## Carried-over notes pending S6 rework
+## Bot draft priority (win-rate based)
 
-- `validator.html` is currently the S5 statistical validator (aspect-pair distribution, tier pairing). It will be re-pointed at S6 generation in Phase 1 and the S5-specific aspect-pair probability sections replaced.
-- `pairing.js` and the S5 pair UI controls (pairing strategy, adjacent sextile, double-aspect weight) are S5-specific and slated for removal.
+`s6MakeItem` (pool.js) stamps each item with `winRate` (the hero+aspect community win
+rate from `HERO_WINRATES`) and `winRateTie`. `s6PriorityCompare` (legacy.js) ranks by
+`winRate` desc, then `winRateTie` desc, then a random per-item key. Special cases:
+- **Adam Warlock:** uses his overall win rate (he should take no aspect; draft change still earmarked).
+- **Spider-Woman:** all combos rank at her overall, tie-broken by the average of her two aspects' win rates.
+
+Win-rate data source and the MCT name mapping are documented in `js/winrates.js` and the
+`mct-winrate-api` memory; the ordered tier list is `s6-tier-list.csv` in the Dropbox planning folder.

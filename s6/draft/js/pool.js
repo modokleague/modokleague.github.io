@@ -55,6 +55,24 @@ function s6MakeItem(hero, aspect, rng, group) {
     aspects.push(s6SecondAspect(aspect, rng));
     aspects.sort(); // store and present Spider-Woman's two aspects alphabetically
   }
+  // Bot draft priority: hero+aspect community win rate (higher = better). Special cases:
+  //   Adam Warlock takes no aspect -> use his overall win rate.
+  //   Spider-Woman's combos are all ranked at her overall, tie-broken by the average of
+  //   her two aspects' win rates.
+  var wr = (typeof HERO_WINRATES !== 'undefined') ? HERO_WINRATES[hero] : null;
+  var winRate = 0, winRateTie = 0;
+  if (wr) {
+    if (hero === 'Adam Warlock') {
+      winRate = wr.overall; winRateTie = wr.overall;
+    } else if (hero === 'Spider-Woman') {
+      winRate = wr.overall;
+      var a0 = wr[aspects[0]], a1 = wr[aspects[1]];
+      winRateTie = (a0 != null && a1 != null) ? (a0 + a1) / 2 : wr.overall;
+    } else {
+      winRate = (wr[aspect] != null) ? wr[aspect] : wr.overall;
+      winRateTie = winRate;
+    }
+  }
   return {
     hero: hero,
     aspect: aspect,
@@ -62,8 +80,9 @@ function s6MakeItem(hero, aspect, rng, group) {
     displayName: hero + ' - ' + aspects.join(' / '),
     tier: (typeof draftOrder !== 'undefined') ? draftOrder.indexOf(hero) : -1,
     group: (typeof group === 'number') ? group : -1,
-    // Random tie-break key: orders same-hero/different-aspect items randomly
-    // (seed-stable) wherever items are sorted by tier.
+    winRate: winRate,       // combo win rate (bot priority, higher = better)
+    winRateTie: winRateTie, // secondary key (Spider-Woman: avg of her two aspects)
+    // Final random tie-break (seed-stable) for exact ties.
     tieBreak: (rng && rng.next) ? rng.next() : 0
   };
 }
