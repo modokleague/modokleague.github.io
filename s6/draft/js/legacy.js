@@ -239,33 +239,43 @@
      }
    }
 
-   // Initialize display
-   try {
-     // Check if elements exist and populate them
-     var allHeroesElement = document.getElementById('allHeroes');
-     var bannedHeroesElement = document.getElementById('bannedHeroes');
-
-     if (allHeroesElement && marvelHeroes && marvelHeroes.length > 0) {
-       allHeroesElement.innerHTML = marvelHeroes.map(function(hero) {
-         return '<div class="hero-card">' + hero + '</div>';
+   // Render the Available and Banned hero lists. Click a hero to toggle its ban.
+   function renderHeroLists() {
+     var allEl = document.getElementById('allHeroes');
+     var banEl = document.getElementById('bannedHeroes');
+     var noteEl = document.getElementById('bannedNote');
+     if (allEl && marvelHeroes) {
+       var avail = marvelHeroes.filter(function(h) { return !isHeroBanned(h); });
+       allEl.innerHTML = avail.map(function(hero) {
+         return '<div class="hero-card" style="cursor:pointer;" title="Click to ban" onclick="banHero(this)">' + hero + '</div>';
        }).join('');
      }
-
-     var bannedNoteElement = document.getElementById('bannedNote');
-     if (bannedHeroesElement) {
-       if (bannedHeroes && bannedHeroes.length > 0) {
-         bannedHeroesElement.innerHTML = bannedHeroes.map(function(hero) {
-           return '<div class="hero-card">' + hero + '</div>';
-         }).join('');
-         if (bannedNoteElement) { bannedNoteElement.style.display = 'none'; }
-       } else {
-         bannedHeroesElement.innerHTML = '';
-         if (bannedNoteElement) { bannedNoteElement.style.display = 'block'; }
-       }
+     if (banEl) {
+       var bans = bannedHeroes.slice().sort();
+       banEl.innerHTML = bans.map(function(hero) {
+         return '<div class="hero-card" style="cursor:pointer;" title="Click to unban" onclick="unbanHero(this)">' + hero + '</div>';
+       }).join('');
+       if (noteEl) { noteEl.style.display = bans.length ? 'none' : 'block'; }
      }
-   } catch (error) {
-     // Silent error handling - preserve initialization flow
    }
+
+   function banHero(el) {
+     var name = el.textContent;
+     if (bannedHeroes.indexOf(name) === -1) { bannedHeroes.push(name); }
+     renderHeroLists();
+     if (typeof updateMaxExtras === 'function') { updateMaxExtras(); }
+   }
+
+   function unbanHero(el) {
+     var name = el.textContent;
+     var i = bannedHeroes.indexOf(name);
+     if (i !== -1) { bannedHeroes.splice(i, 1); }
+     renderHeroLists();
+     if (typeof updateMaxExtras === 'function') { updateMaxExtras(); }
+   }
+
+   // Initialize hero lists
+   try { renderHeroLists(); } catch (error) { /* preserve initialization flow */ }
 
    // Update bot settings display (S6: only the random-pick chance slider)
    function updateBotSettings() {
@@ -300,7 +310,8 @@
        var extrasInput = document.getElementById('extrasInput');
 
        // Tightest constraint is Single Universe: 4 * (teams + extras) <= available heroes.
-       var maxExtras = Math.max(0, Math.floor(marvelHeroes.length / 4) - numberOfTeams);
+       var availableCount = marvelHeroes.filter(function(h) { return !isHeroBanned(h); }).length;
+       var maxExtras = Math.max(0, Math.floor(availableCount / 4) - numberOfTeams);
        var defaultExtras = 3;
 
        var maxExtrasEl = document.getElementById('maxExtras');
@@ -348,8 +359,8 @@
      currentUniverseMode = document.getElementById('universeMode')
        ? document.getElementById('universeMode').value : DEFAULT_UNIVERSE_MODE;
 
-     // marvelHeroes is already filtered for outright-banned heroes.
-     var heroPool = marvelHeroes.slice();
+     // Exclude currently-banned heroes from the pool (bans can be toggled in the UI).
+     var heroPool = marvelHeroes.filter(function(h) { return !isHeroBanned(h); });
 
      // Required heroes (only when the feature is enabled).
      var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
