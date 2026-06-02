@@ -26,6 +26,37 @@
 
 var S6_GROUP_COUNT = 4;
 
+// ---- Win-rate placeholders for "additional" heroes (no community data) ----
+var s6KnownSortedWR = null;   // cached descending list of known combo win rates
+var s6BonusWinRates = {};     // additional hero -> { aspect: winRate } for the current pool
+
+function s6KnownWinRates() {
+  if (s6KnownSortedWR) { return s6KnownSortedWR; }
+  var vals = [];
+  if (typeof HERO_WINRATES !== 'undefined') {
+    for (var h in HERO_WINRATES) {
+      if (!HERO_WINRATES.hasOwnProperty(h)) { continue; }
+      for (var i = 0; i < MAIN_ASPECTS.length; i++) {
+        var v = HERO_WINRATES[h][MAIN_ASPECTS[i]];
+        if (v != null) { vals.push(v); }
+      }
+    }
+  }
+  vals.sort(function(a, b) { return b - a; });
+  s6KnownSortedWR = vals;
+  return vals;
+}
+
+// Win rate at percentile p of the known distribution (p = 0 best ... 1 worst).
+function s6PercentileWinRate(p) {
+  var vals = s6KnownWinRates();
+  if (!vals.length) { return 0; }
+  var idx = Math.floor(p * (vals.length - 1));
+  if (idx < 0) { idx = 0; }
+  if (idx >= vals.length) { idx = vals.length - 1; }
+  return vals[idx];
+}
+
 // Uniform random pick of one of the four main aspects.
 function s6RandomAspect(rng) {
   var i = Math.floor(rng.next() * MAIN_ASPECTS.length);
@@ -77,6 +108,10 @@ function s6MakeItem(hero, aspect, rng, group) {
       winRate = (wr[aspect] != null) ? wr[aspect] : wr.overall;
       winRateTie = winRate;
     }
+  } else if (typeof s6BonusWinRates !== 'undefined' && s6BonusWinRates[hero]) {
+    // Additional hero (no community data): per-aspect placeholder in the top 50-70%.
+    winRate = s6BonusWinRates[hero][aspect] || 0;
+    winRateTie = winRate;
   }
   return {
     hero: hero,
@@ -145,6 +180,19 @@ function generateS6DraftPool(options, rng) {
   // with a different aspect combination but never the identical pair.
   var usedCombos = {};
   function comboKey(item) { return item.hero + '|' + item.aspects.slice().sort().join(','); }
+
+  // Additional heroes (no community data): assign each a per-aspect placeholder win rate
+  // in the top 50-70% of the known distribution, rolled independently per aspect.
+  s6BonusWinRates = {};
+  heroPool.forEach(function(h) {
+    if (typeof HERO_WINRATES === 'undefined' || !HERO_WINRATES[h]) {
+      var b = {};
+      for (var i = 0; i < MAIN_ASPECTS.length; i++) {
+        b[MAIN_ASPECTS[i]] = s6PercentileWinRate(0.5 + rng.next() * 0.2);
+      }
+      s6BonusWinRates[h] = b;
+    }
+  });
 
   // Build the four groups.
   var groups = [];

@@ -40,6 +40,9 @@
    // Banned heroes
    var bannedHeroes = [];
 
+   // Additional heroes added by the user (kept current with new releases)
+   var additionalHeroes = [];
+
   // Banned traits
   var bannedTraits = [];
 
@@ -239,13 +242,29 @@
      }
    }
 
+   // Full hero universe: the base pool plus any user-added heroes.
+   function s6HeroUniverse() {
+     var u = marvelHeroes.slice();
+     additionalHeroes.forEach(function(h) { if (u.indexOf(h) === -1) { u.push(h); } });
+     return u;
+   }
+
+   // Read the Additional Heroes textarea and refresh the lists.
+   function syncAdditionalHeroes() {
+     var elx = document.getElementById('additionalHeroesInput');
+     var raw = elx ? elx.value : '';
+     additionalHeroes = raw ? raw.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; }) : [];
+     renderHeroLists();
+     if (typeof updateMaxExtras === 'function') { updateMaxExtras(); }
+   }
+
    // Render the Available and Banned hero lists. Click a hero to toggle its ban.
    function renderHeroLists() {
      var allEl = document.getElementById('allHeroes');
      var banEl = document.getElementById('bannedHeroes');
      var noteEl = document.getElementById('bannedNote');
-     if (allEl && marvelHeroes) {
-       var avail = marvelHeroes.filter(function(h) { return !isHeroBanned(h); });
+     if (allEl) {
+       var avail = s6HeroUniverse().filter(function(h) { return !isHeroBanned(h); }).sort();
        allEl.innerHTML = avail.map(function(hero) {
          return '<div class="hero-card" style="cursor:pointer;" title="Click to ban" onclick="banHero(this)">' + hero + '</div>';
        }).join('');
@@ -310,7 +329,7 @@
        var extrasInput = document.getElementById('extrasInput');
 
        // Tightest constraint is Single Universe: 4 * (teams + extras) <= available heroes.
-       var availableCount = marvelHeroes.filter(function(h) { return !isHeroBanned(h); }).length;
+       var availableCount = s6HeroUniverse().filter(function(h) { return !isHeroBanned(h); }).length;
        var maxExtras = Math.max(0, Math.floor(availableCount / 4) - numberOfTeams);
        var defaultExtras = 3;
 
@@ -359,8 +378,8 @@
      currentUniverseMode = document.getElementById('universeMode')
        ? document.getElementById('universeMode').value : DEFAULT_UNIVERSE_MODE;
 
-     // Exclude currently-banned heroes from the pool (bans can be toggled in the UI).
-     var heroPool = marvelHeroes.filter(function(h) { return !isHeroBanned(h); });
+     // Pool = base heroes plus any user-added heroes, minus banned ones.
+     var heroPool = s6HeroUniverse().filter(function(h) { return !isHeroBanned(h); });
 
      // Required heroes (only when the feature is enabled).
      var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;

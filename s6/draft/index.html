@@ -17,7 +17,7 @@
      <div class="hero-section">
        <h3>Available Heroes</h3>
        <small style="display: block; margin-top: -10px; margin-bottom: 10px; color: #666;">
-         These heroes are available for the draft pool
+         These heroes are available for the draft pool. (Click on a hero to move it to the banned list.)
        </small>
        <div class="hero-grid" id="allHeroes"></div>
      </div>
@@ -30,15 +30,7 @@
    </div>
 
    <div class="controls">
-     <div class="control-group">
-       <label for="draftPoolGroups">Number of Draft Groups</label>
-       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Season 6.0: 4 groups of hero+aspect picks (one pick per group, 4 rounds)</small>
-       <select id="draftPoolGroups">
-         <option value="4" selected>4 groups</option>
-        </select>
-     </div>
-
-     <!-- Season 6.0: Draft mode + universe toggles -->
+     <!-- Season 6.0: Draft mode + universe toggles (front of the options) -->
      <div class="control-group">
        <label for="draftMode">Draft Mode</label>
        <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Chaos: each group mixes random aspects. Order: one group per aspect.</small>
@@ -56,7 +48,14 @@
          <option value="single">Single Universe</option>
        </select>
      </div>
-     <!-- End Season 6.0 toggles -->
+
+     <div class="control-group">
+       <label for="draftPoolGroups">Number of Draft Groups</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">Season 6.0: 4 groups of hero+aspect picks (one pick per group, 4 rounds)</small>
+       <select id="draftPoolGroups">
+         <option value="4" selected>4 groups</option>
+        </select>
+     </div>
 
      <div class="control-group">
        <label for="teamsInput">Number of Kouples</label>
@@ -75,6 +74,12 @@
        <label for="teamListInput">Kouple Names (Optional)</label>
        <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One kouple per line. <strong>First will be your kouple</strong> in the draft simulator. Remaining names replace default kouple names.</small>
        <textarea id="teamListInput" placeholder="My Kouple Name&#10;Kouple Beta&#10;Kouple Gamma&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
+     </div>
+
+     <div class="control-group">
+       <label for="additionalHeroesInput">Additional Heroes (Optional)</label>
+       <small style="color: #666; font-size: 0.85em; margin-bottom: 8px; display: block;">One hero per line. Adds heroes to the draft pool to keep the randomizer current. New heroes appear randomly in the top 50-70% of bot priority, chosen separately for each aspect.</small>
+       <textarea id="additionalHeroesInput" oninput="syncAdditionalHeroes()" placeholder="Daredevil&#10;..." style="padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 80px; font-family: inherit;"></textarea>
      </div>
 
      <div class="control-group">
