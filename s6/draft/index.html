@@ -119,7 +119,7 @@
      <div class="result-section">
        <h3 id="draftDescription">Each kouple drafts 2 heroes and 2 aspect pairs over 4 rounds</h3>
        <div id="draftRulesText" style="margin-top: 15px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.9rem; line-height: 1.6;"></div>
-       <div style="margin-top: 20px;">
+       <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
          <div>
            <label for="botSurpriseSlider" style="font-weight: 600; font-size: 1rem; display: block; margin-bottom: 8px;">
              Chance for a Random Pick (ignore tier list): <span id="botSurpriseValue">10%</span>
@@ -129,6 +129,17 @@
              <span>0% (Strategic)</span>
              <span>50%</span>
              <span>100% (Chaos)</span>
+           </div>
+         </div>
+         <div>
+           <label for="botRePickSlider" style="font-weight: 600; font-size: 1rem; display: block; margin-bottom: 8px;">
+             Chance to Re-pick a Duplicate Aspect: <span id="botRePickValue">50%</span>
+           </label>
+           <input type="range" id="botRePickSlider" min="0" max="95" value="50" oninput="updateBotSettings()" style="width: 100%;">
+           <div style="display: flex; justify-content: space-between; font-size: 0.8em; color: #666; margin-top: 5px;">
+             <span>0% (Allow dupes)</span>
+             <span>50%</span>
+             <span>95% (Avoid)</span>
            </div>
          </div>
        </div>

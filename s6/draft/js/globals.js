@@ -71,8 +71,9 @@ var isPlayerTurn = false;
 
 // ===== BOT AI SETTINGS =====
 
-// Bot randomness: affects whether bots follow strict round preferences (Hero in R1&3, Aspects in R2&4)
-var botRandomnessPercentage = 15; // Default 15% chance to ignore round preferences
+// Bot surprise: chance a bot makes a completely random pick instead of tier priority
+var botSurprisePercentage = 10; // Default 10%
 
-// Bot surprise: affects whether bots follow tier list priorities or make random picks
-var botSurprisePercentage = 10; // Default 10% chance to ignore tier lists
+// Bot re-pick: chance a bot re-rolls when it lands on an aspect it already drafted from.
+// Re-triggers on each re-roll. Capped at 95% so it can never be guaranteed.
+var rePickPercentage = 50; // Default 50%

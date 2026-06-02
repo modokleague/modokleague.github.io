@@ -265,25 +265,23 @@
      return safeExecute(function() {
        var surpriseSlider = document.getElementById('botSurpriseSlider');
        var surpriseValue = document.getElementById('botSurpriseValue');
+       var rePickSlider = document.getElementById('botRePickSlider');
+       var rePickValue = document.getElementById('botRePickValue');
        var description = document.getElementById('botStrategyDescription');
-       if (!surpriseSlider) { return; }
 
-       botSurprisePercentage = parseInt(surpriseSlider.value);
-       if (surpriseValue) { surpriseValue.textContent = botSurprisePercentage + '%'; }
-
-       var surpriseText;
-       if (botSurprisePercentage === 0) {
-         surpriseText = 'always use tier-list priority';
-       } else if (botSurprisePercentage <= 25) {
-         surpriseText = botSurprisePercentage + '% chance of a completely random pick';
-       } else if (botSurprisePercentage <= 50) {
-         surpriseText = botSurprisePercentage + '% chance of a random pick (mixed strategy)';
-       } else {
-         surpriseText = botSurprisePercentage + '% chance of a random pick (mostly chaos)';
+       if (surpriseSlider) {
+         botSurprisePercentage = parseInt(surpriseSlider.value);
+         if (surpriseValue) { surpriseValue.textContent = botSurprisePercentage + '%'; }
+       }
+       if (rePickSlider) {
+         rePickPercentage = Math.min(95, parseInt(rePickSlider.value) || 0);
+         if (rePickValue) { rePickValue.textContent = rePickPercentage + '%'; }
        }
 
        if (description) {
-         description.textContent = 'Bots draft one item per group, preferring higher-tier heroes, with a ' + surpriseText + '.';
+         description.textContent = 'Bots draft one item per group, preferring higher-tier heroes. ' +
+           botSurprisePercentage + '% chance of a completely random pick; ' +
+           rePickPercentage + '% chance to re-pick when they land on an aspect they already drafted.';
        }
      }, null, [], 'updateBotSettings');
    }
@@ -571,30 +569,48 @@
    }
 
    // Bot turn: tier-weighted priority among candidates, with a random-pick chance.
+   // One bot selection: a completely random pick (by chance) or a tier-weighted pick
+   // (lower draftOrder index = higher priority; weight the top 5).
+   function s6BotSelect(candidates) {
+     if (Math.random() < (botSurprisePercentage / 100)) {
+       return candidates[Math.floor(Math.random() * candidates.length)];
+     }
+     var sorted = candidates.slice().sort(function(a, b) {
+       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+       return ta - tb;
+     });
+     var top = sorted.slice(0, Math.min(5, sorted.length));
+     var weights = [];
+     for (var i = 0; i < top.length; i++) { weights.push(Math.pow(1.5, top.length - 1 - i)); }
+     var total = weights.reduce(function(s, w){ return s + w; }, 0);
+     var r = Math.random() * total, cum = 0;
+     for (var j = 0; j < top.length; j++) { cum += weights[j]; if (r <= cum) { return top[j]; } }
+     return top[0];
+   }
+
+   // Aspects a team has already drafted (union across its picks; two for Spider-Woman).
+   function s6TeamAspects(team) {
+     var set = {};
+     (teamPicks[team] || []).forEach(function(it){ it.aspects.forEach(function(a){ set[a] = true; }); });
+     return set;
+   }
+
    function processS6Turn() {
      if (isPlayerTurn || currentRound > maxRounds) { return; }
      var team = draftOrderTeams[currentTurnIndex];
      var candidates = s6CandidateItems(team);
      if (candidates.length === 0) { advanceS6Turn(); return; }
 
-     var pick = null;
-     if (Math.random() < (botSurprisePercentage / 100)) {
-       // Completely random pick from the remaining available groups.
-       pick = candidates[Math.floor(Math.random() * candidates.length)];
-     } else {
-       // Tier-weighted: lower draftOrder index = higher priority; weight the top 5.
-       var sorted = candidates.slice().sort(function(a, b) {
-         var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-         var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-         return ta - tb;
-       });
-       var top = sorted.slice(0, Math.min(5, sorted.length));
-       var weights = [];
-       for (var i = 0; i < top.length; i++) { weights.push(Math.pow(1.5, top.length - 1 - i)); }
-       var total = weights.reduce(function(s, w){ return s + w; }, 0);
-       var r = Math.random() * total, cum = 0;
-       for (var j = 0; j < top.length; j++) { cum += weights[j]; if (r <= cum) { pick = top[j]; break; } }
-       if (!pick) { pick = top[0]; }
+     var alreadyHas = s6TeamAspects(team);
+     var pick = s6BotSelect(candidates);
+     // If the pick's aspect duplicates one the team already drafted, re-pick with the
+     // configured chance. Re-triggers on each re-roll; capped iterations as a safety net.
+     var tries = 0;
+     while (tries++ < 25 &&
+            pick.aspects.some(function(a){ return alreadyHas[a]; }) &&
+            Math.random() < (rePickPercentage / 100)) {
+       pick = s6BotSelect(candidates);
      }
 
      s6AssignItem(team, pick);
