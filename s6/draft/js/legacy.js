@@ -509,1508 +509,151 @@
    }
    });
 
-   // Helper function to get highest available Leadership aspect
-   function getHighestAvailableLeadership() {
-     var availableLeadership = allTraits.filter(function(aspect) {
-       var aspectType = getAspectType(aspect);
-       return aspectType === 'Leadership' && !draftedTraits.includes(aspect);
-     });
-     
-     if (availableLeadership.length === 0) return null;
-     
-     // Sort alphabetically and return the first available trait
-     availableLeadership.sort();
-     
-     return availableLeadership[0];
-   }
+   /* ========================================
+      SEASON 6.0 - Draft Simulator + Bot AI
+      Hero+aspect items, four groups, one pick per group, snake order.
+      ======================================== */
 
-   // Helper function to get highest available aspect of specified type
-   function getHighestAvailableAspect(aspectType) {
-     var availableInstances = allTraits.filter(function(aspect) {
-       var currentType = getAspectType(aspect);
-       return currentType === aspectType && !draftedTraits.includes(aspect);
-     });
-     
-     if (availableInstances.length === 0) return null;
-     
-     availableInstances.sort();
-     
-     return availableInstances[0];
-   }
-
-   // Get highest available aspect of specified type within specific group
-   function getHighestAvailableAspectInGroup(aspectType, groupNumber) {
-     // Get the appropriate group array
-     var groupAspects = groupNumber === 1 ? traitsGroup1 : traitsGroup2;
-     
-     // Filter to only aspects of the specified type within this group that aren't drafted
-     var availableInstances = groupAspects.filter(function(aspect) {
-       var currentType = getAspectType(aspect);
-       return currentType === aspectType && !draftedTraits.includes(aspect);
-     });
-     
-     if (availableInstances.length === 0) {
-       return null;
-     }
-     
-     // Sort by number in descending order and return the highest
-     availableInstances.sort();
-     
-     return availableInstances[0];
-   }
-
-   // Get selectable aspects in group (highest numbered of each type only)
-   function getSelectableAspectsInGroup(groupNumber) {
-     // Get the appropriate group array - Add support for group 3
-     var groupAspects = groupNumber === 1 ? traitsGroup1 : (groupNumber === 2 ? traitsGroup2 : traitsGroup3);
-     
-     // Group aspects by type
-     var aspectsByType = {};
-     groupAspects.forEach(function(aspect) {
-       var aspectType = getAspectType(aspect);
-       if (!aspectsByType[aspectType]) {
-         aspectsByType[aspectType] = [];
+   // Reset every item in the pool to undrafted.
+   function s6ResetPool() {
+     for (var g = 0; g < draftGroups.length; g++) {
+       for (var i = 0; i < draftGroups[g].length; i++) {
+         draftGroups[g][i].drafted = false;
+         draftGroups[g][i].draftedBy = null;
        }
-       aspectsByType[aspectType].push(aspect);
-     });
-     
-     // Get highest numbered (non-drafted) aspect of each type
-     var selectableAspects = [];
-     Object.keys(aspectsByType).forEach(function(aspectType) {
-       var typeAspects = aspectsByType[aspectType];
-       
-       // Filter out drafted aspects
-       var availableTypeAspects = typeAspects.filter(function(aspect) {
-         return !draftedTraits.includes(aspect);
-       });
-       
-       if (availableTypeAspects.length > 0) {
-         // Sort by number in descending order and take the highest
-         availableTypeAspects.sort();
-         
-         selectableAspects.push(availableTypeAspects[0]);
-       }
-     });
-     
-     return selectableAspects;
-   }
-
-   // Season 5.0: Determine current round type (hero pair or aspect pair)
-  function getCurrentRoundType() {
-    var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-
-    if (draftPoolGroups === '4') {
-      // Season 5.0: Rounds 1 & 3 = hero pairs, Rounds 2 & 4 = aspect pairs
-      if (currentRound === 1 || currentRound === 3) {
-        return 'heroPair';
-      } else if (currentRound === 2 || currentRound === 4) {
-        return 'aspectPair';
-      }
-    } else if (draftPoolGroups === '6') {
-      // Legacy 6-group mode: Rounds 1, 3, 5 = heroes, Rounds 2, 4, 6 = aspects
-      if (currentRound === 1 || currentRound === 3 || currentRound === 5) {
-        return 'hero';
-      } else {
-        return 'aspect';
-      }
-    }
-    return null;
-  }
-
-  function canTeamDraft(teamName, draftType, groupNumber) {
-     var picks = teamPicks[teamName] || [];
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-
-     // Season 5.0: Handle pair-based drafting
-     if (draftPoolGroups === '4') {
-       var heroPairs = picks.filter(function(pick) {
-         return pick && typeof pick === 'object' && pick.hero1; // Check if it's a hero pair object
-       });
-       var aspectPairs = picks.filter(function(pick) {
-         return pick && typeof pick === 'object' && pick.aspect1; // Check if it's an aspect pair object
-       });
-
-       var groupsUsed = teamGroupsUsed[teamName] || { heroPairGroups: [], aspectPairGroups: [] };
-
-       if (draftType === 'heroPair') {
-         // Check total hero pairs
-         if (heroPairs.length >= 2) return false;
-
-         // If groupNumber specified, check if this specific group has been used
-         if (groupNumber !== undefined && groupsUsed.heroPairGroups.includes(groupNumber)) {
-           return false;
-         }
-
-         return true;
-       } else if (draftType === 'aspectPair') {
-         // Check total aspect pairs
-         if (aspectPairs.length >= 2) return false;
-
-         // If groupNumber specified, check if this specific group has been used
-         if (groupNumber !== undefined && groupsUsed.aspectPairGroups.includes(groupNumber)) {
-           return false;
-         }
-
-         return true;
-       }
-       return false;
-     }
-
-     // Legacy 6-group mode logic
-     var heroes = picks.filter(function(pick) {
-       return allHeroes.includes(pick);
-     });
-     var aspects = picks.filter(function(pick) {
-       return allTraits.includes(pick);
-     });
-
-     if (draftType === 'hero') {
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       // Support 3 heroes in 6-group mode
-       var maxHeroes = draftPoolGroups === '6' ? 3 : 2;
-       
-       if (heroes.length >= maxHeroes) {
-         return false; // Already have max heroes (2 for 4-group, 3 for 6-group)
-       }
-       
-       // Check hero group restrictions in 4-group mode
-        if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
-         var group1Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 1; });
-         var group2Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 2; });
-         
-         // If team already has a hero from both groups, they can't draft more heroes
-         if (group1Heroes.length >= 1 && group2Heroes.length >= 1) {
-           return false;
-         }
-       } else if (draftPoolGroups === '6' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroGroup3.length > 0) {
-         var group1Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 1; });
-         var group2Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 2; });
-         var group3Heroes = heroes.filter(function(hero) { return getHeroGroup(hero) === 3; });
-         
-         // Each team can only have one hero from each of the 3 groups
-         if ((group1Heroes.length >= 1 && group2Heroes.length >= 1 && group3Heroes.length >= 1) ||
-             group1Heroes.length >= 2 || group2Heroes.length >= 2 || group3Heroes.length >= 2) {
-           return false;
-         }
-       }
-       
-       return true;
-     } else if (draftType === 'aspect') {
-       // Support 3 aspects maximum in 6-group mode
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       var maxAspects = draftPoolGroups === '6' ? 3 : 2;
-       
-       if (aspects.length >= maxAspects) {
-         return false; // Already have max aspects (2 for most modes, 3 for 6-group mode)
-       }
-       
-       // Check aspect group restrictions in 4-group mode
-        // Add 6-group mode support for 3 aspect groups
-       if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0) {
-         var group1Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 1; });
-         var group2Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 2; });
-         var group3Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 3; });
-         
-         // If team already has an aspect from all 3 groups, they can't draft more aspects
-         if (group1Aspects.length >= 1 && group2Aspects.length >= 1 && group3Aspects.length >= 1) {
-           return false;
-         }
-       } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0) {
-         var group1Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 1; });
-         var group2Aspects = aspects.filter(function(aspect) { return getAspectGroup(aspect) === 2; });
-         
-         // If team already has an aspect from both groups, they can't draft more aspects
-         if (group1Aspects.length >= 1 && group2Aspects.length >= 1) {
-           return false;
-         }
-       }
-       
-       return true;
-     }
-     return false;
-   }
-   
-   // Check if team can draft from specific hero group
-   function canTeamDraftFromGroup(teamName, groupNumber) {
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     if (draftPoolGroups === '4' && (heroGroup1.length === 0 || heroGroup2.length === 0)) {
-       return true; // No restrictions if groups aren't set up
-     } else if (draftPoolGroups === '6' && (heroGroup1.length === 0 || heroGroup2.length === 0 || heroGroup3.length === 0)) {
-       return true; // No restrictions if groups aren't set up
-     } else if (draftPoolGroups !== '4' && draftPoolGroups !== '6') {
-       return true; // No restrictions if not 4-group or 6-group mode
-     }
-
-     // Season 5.0 (4-group mode): Use teamGroupsUsed tracking
-     if (draftPoolGroups === '4') {
-       var groupsUsed = teamGroupsUsed[teamName] || { heroPairGroups: [], aspectPairGroups: [] };
-       return !groupsUsed.heroPairGroups.includes(groupNumber);
-     }
-
-     // Legacy (6-group mode): Use old filtering logic
-     var picks = teamPicks[teamName] || [];
-     var heroes = picks.filter(function(pick) {
-       return allHeroes.includes(pick);
-     });
-
-     var groupHeroes = heroes.filter(function(hero) {
-       return getHeroGroup(hero) === groupNumber;
-     });
-
-     return groupHeroes.length === 0; // Can draft if no heroes from this group yet
-   }
-
-   // Check if team can draft from specific aspect group
-   function canTeamDraftFromAspectGroup(teamName, groupNumber) {
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     // Add 6-group mode support
-     if (draftPoolGroups === '6') {
-       if (traitsGroup1.length === 0 || traitsGroup2.length === 0 || traitsGroup3.length === 0) {
-         return true; // No restrictions if groups aren't set up
-       }
-     } else if (draftPoolGroups !== '4' || traitsGroup1.length === 0 || traitsGroup2.length === 0) {
-       return true; // No restrictions if not 4-group mode or if groups aren't set up
-     }
-
-     // Season 5.0 (4-group mode): Use teamGroupsUsed tracking
-     if (draftPoolGroups === '4') {
-       var groupsUsed = teamGroupsUsed[teamName] || { heroPairGroups: [], aspectPairGroups: [] };
-       return !groupsUsed.aspectPairGroups.includes(groupNumber);
-     }
-
-     // Legacy (6-group mode): Use old filtering logic
-     var picks = teamPicks[teamName] || [];
-     var aspects = picks.filter(function(pick) {
-       return allTraits.includes(pick);
-     });
-
-     var groupAspects = aspects.filter(function(aspect) {
-       return getAspectGroup(aspect) === groupNumber;
-     });
-
-     return groupAspects.length === 0; // Can draft if no aspects from this group yet
-   }
-   
-   function getConstraintMessage(teamName) {
-     var picks = teamPicks[teamName] || [];
-     // Season 5.0: Detect pair objects instead of filtering by allHeroes/allTraits
-     var heroes = picks.filter(function(pick) {
-       return (pick && typeof pick === 'object' && pick.hero1) || allHeroes.includes(pick);
-     });
-     var aspects = picks.filter(function(pick) {
-       return (pick && typeof pick === 'object' && pick.aspect1) || allTraits.includes(pick);
-     });
-     
-     // Dynamic hero limits based on draft mode
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     // Support 3 heroes and 3 aspects in 6-group mode
-     var maxHeroes = draftPoolGroups === '6' ? 3 : 2;
-     var maxAspects = draftPoolGroups === '6' ? 3 : 2;
-     var heroesLeft = maxHeroes - heroes.length;
-     var aspectsLeft = maxAspects - aspects.length;
-     var heroGroupInfo = '';
-     var aspectGroupInfo = '';
-     
-     if (draftPoolGroups === '6' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroGroup3.length > 0 && heroesLeft > 0) {
-       var heroGroup1Available = canTeamDraftFromGroup(teamName, 1);
-       var heroGroup2Available = canTeamDraftFromGroup(teamName, 2);
-       var heroGroup3Available = canTeamDraftFromGroup(teamName, 3);
-       
-       var availableGroups = [];
-       if (heroGroup1Available) availableGroups.push('1');
-       if (heroGroup2Available) availableGroups.push('2');
-       if (heroGroup3Available) availableGroups.push('3');
-       
-       if (availableGroups.length === 0) {
-         heroGroupInfo = ' - no groups available';
-       } else if (availableGroups.length === 3) {
-         heroGroupInfo = ' from Groups ' + availableGroups.join(',');
-       } else {
-         heroGroupInfo = ' from Groups ' + availableGroups.join(',');
-       }
-     } else if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroesLeft > 0) {
-       var heroGroup1Available = canTeamDraftFromGroup(teamName, 1);
-       var heroGroup2Available = canTeamDraftFromGroup(teamName, 2);
-       
-       var availableGroups = [];
-       if (heroGroup1Available) availableGroups.push('1');
-       if (heroGroup2Available) availableGroups.push('2');
-       
-       if (availableGroups.length === 0) {
-         heroGroupInfo = ' - no groups available';
-       } else {
-         heroGroupInfo = ' from Groups ' + availableGroups.join(',');
-       }
-     }
-     
-     // Add aspect group restriction info
-     // Add 6-group mode support for 3 aspect groups
-     if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0 && aspectsLeft > 0) {
-       var traitsGroup1Available = canTeamDraftFromAspectGroup(teamName, 1);
-       var traitsGroup2Available = canTeamDraftFromAspectGroup(teamName, 2);
-       var traitsGroup3Available = canTeamDraftFromAspectGroup(teamName, 3);
-       
-       var availableAspectGroups = [];
-       if (traitsGroup1Available) availableAspectGroups.push('1');
-       if (traitsGroup2Available) availableAspectGroups.push('2');
-       if (traitsGroup3Available) availableAspectGroups.push('3');
-       
-       if (availableAspectGroups.length === 0) {
-         aspectGroupInfo = ' - no groups available';
-       } else {
-         aspectGroupInfo = ' from Groups ' + availableAspectGroups.join(',');
-       }
-     } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && aspectsLeft > 0) {
-       var traitsGroup1Available = canTeamDraftFromAspectGroup(teamName, 1);
-       var traitsGroup2Available = canTeamDraftFromAspectGroup(teamName, 2);
-       
-       var availableAspectGroups = [];
-       if (traitsGroup1Available) availableAspectGroups.push('1');
-       if (traitsGroup2Available) availableAspectGroups.push('2');
-       
-       if (availableAspectGroups.length === 0) {
-         aspectGroupInfo = ' - no groups available';
-       } else {
-         aspectGroupInfo = ' from Groups ' + availableAspectGroups.join(',');
-       }
-     }
-     
-     if (heroesLeft === 0) {
-       return "You must pick a trait (no heroes remaining)" + aspectGroupInfo;
-     } else if (aspectsLeft === 0) {
-       return "You must pick a hero (no traits remaining)" + heroGroupInfo;
-     } else {
-       return "You can pick either a hero (" + heroesLeft + " left" + heroGroupInfo + ") or trait (" + aspectsLeft + " left" + aspectGroupInfo + ")";
      }
    }
 
-   // Export function
-   function exportDraftPool() {
-     return safeExecute(function() {
-       var heroCards = document.getElementById('resultPool').children;
-       var aspectCards = document.getElementById('resultTraitsPool').querySelectorAll('.hero-card');
-       var teamCards = document.getElementById('resultDraftOrder').children;
-       var excludedCards = document.getElementById('resultExcluded').children;
-       // Season 5.0: Excluded aspects section removed (all aspects always available)
-       var draftBotCards = document.getElementById('resultDraftBot').children;
-       var draftBotAspectCards = document.getElementById('resultDraftBotTraits').children;
-       
-       if (heroCards.length === 0) {
-         alert('Please generate a draft pool first!');
-         return;
-       }
-       
-       var numberOfTeams = document.getElementById('teamsInput').value;
-       var numberOfExtras = document.getElementById('extrasInput').value;
-       var seedUsed = document.getElementById('seedInput').value || 'Random';
-       var customTeamList = document.getElementById('teamListInput').value.trim();
-       var customTeams = customTeamList ? customTeamList.split('\n').map(function(name) {
-         return name.trim();
-       }).filter(function(name) {
-         return name.length > 0;
-       }) : [];
-       var userTeam = customTeams.length > 0 ? customTeams[0] : 'None';
-       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
-        
-       var exportText = '';
-       exportText += '='.repeat(50) + '\n';
-       exportText += '    MODOK LEAGUE SEASON 4.5 - DRAFT POOL\n';
-       exportText += '='.repeat(50) + '\n';
-       exportText += 'Generated: ' + new Date().toLocaleString() + '\n';
-       exportText += 'Version: ' + TOOL_VERSION + '\n';
-       exportText += 'Kouples: ' + numberOfTeams + '\n';
-       exportText += 'Extras: ' + numberOfExtras + '\n';
-       exportText += 'Seed: ' + seedUsed + '\n';
-       exportText += 'Bot Ignore Round Preferences: ' + botRandomnessPercentage + '%\n';
-       exportText += 'Bot Surprise Pick: ' + botSurprisePercentage + '%\n';
-        exportText += 'User Kouple: ' + userTeam + '\n';
-       if (customTeamList) {
-         exportText += 'Custom Kouples Used: Yes\n';
-       }
-       exportText += '\n';
-       
-       // Fix hero pool export for 4-group mode
-       if (draftPoolGroups === '6' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroGroup3.length > 0) {
-         var totalHeroes = heroGroup1.length + heroGroup2.length + heroGroup3.length;
-         exportText += 'HERO POOL (' + totalHeroes + ' heroes)\n';
-         exportText += '-'.repeat(30) + '\n';
-         exportText += 'Hero Group 1\n';
-         for (var i = 0; i < heroGroup1.length; i++) {
-           exportText += 'G1 ' + heroGroup1[i] + '\n';
-         }
-         exportText += '\n';
-         exportText += 'Hero Group 2\n';
-         for (var i = 0; i < heroGroup2.length; i++) {
-           exportText += 'G2 ' + heroGroup2[i] + '\n';
-         }
-         exportText += '\n';
-         exportText += 'Hero Group 3\n';
-         for (var i = 0; i < heroGroup3.length; i++) {
-           exportText += 'G3 ' + heroGroup3[i] + '\n';
-         }
-       } else if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
-         var totalHeroes = heroGroup1.length + heroGroup2.length;
-         exportText += 'HERO POOL (' + totalHeroes + ' heroes)\n';
-         exportText += '-'.repeat(30) + '\n';
-         exportText += 'Hero Group 1\n';
-         for (var i = 0; i < heroGroup1.length; i++) {
-           exportText += 'G1 ' + heroGroup1[i] + '\n';
-         }
-         exportText += '\n';
-         exportText += 'Hero Group 2\n';
-         for (var i = 0; i < heroGroup2.length; i++) {
-           exportText += 'G2 ' + heroGroup2[i] + '\n';
-         }
-       }
-       exportText += '\n';
-       
-       // Fix aspect pool export for 4-group mode
-       // Add 6-group mode
-       if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0) {
-         var totalTraits = traitsGroup1.length + traitsGroup2.length + traitsGroup3.length;
-         exportText += 'TRAITS POOL (' + totalTraits + ' traits)\n';
-         exportText += '-'.repeat(30) + '\n';
-         
-         // Traits Group 1
-         exportText += 'Traits Group 1 (' + traitsGroup1.length + ' traits)\n';
-         for (var i = 0; i < traitsGroup1.length; i++) {
-           exportText += 'G4 ' + traitsGroup1[i] + '\n';
-         }
-         exportText += '\n';
-         
-         // Traits Group 2
-         exportText += 'Traits Group 2 (' + traitsGroup2.length + ' traits)\n';
-         for (var i = 0; i < traitsGroup2.length; i++) {
-           exportText += 'G5 ' + traitsGroup2[i] + '\n';
-         }
-         exportText += '\n';
-         
-         // Traits Group 3
-         exportText += 'Traits Group 3 (' + traitsGroup3.length + ' traits)\n';
-         for (var i = 0; i < traitsGroup3.length; i++) {
-           exportText += 'G6 ' + traitsGroup3[i] + '\n';
-         }
-       } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0) {
-         var totalTraits = traitsGroup1.length + traitsGroup2.length;
-         exportText += 'TRAITS POOL (' + totalTraits + ' traits)\n';
-         exportText += '-'.repeat(30) + '\n';
-         
-         // Traits Group 1
-         exportText += 'Traits Group 1 (' + traitsGroup1.length + ' traits)\n';
-         for (var i = 0; i < traitsGroup1.length; i++) {
-           exportText += 'G3 ' + traitsGroup1[i] + '\n';
-         }
-         exportText += '\n';
-         
-         // Traits Group 2
-         exportText += 'Traits Group 2 (' + traitsGroup2.length + ' traits)\n';
-         for (var i = 0; i < traitsGroup2.length; i++) {
-           exportText += 'G4 ' + traitsGroup2[i] + '\n';
-         }
-       }
-       exportText += '\n';
-       
-       exportText += 'KOUPLE DRAFT ORDER\n';
-       exportText += '-'.repeat(30) + '\n';
-       for (var i = 0; i < teamCards.length; i++) {
-         var teamText = teamCards[i].textContent;
-         var teamName = teamText.split('. ')[1];
-         exportText += teamName + '\n';
-       }
-       exportText += '\n';
-       
-       exportText += 'DRAFT BOT PRIORITY (Heroes in Pool)\n';
-       exportText += '-'.repeat(30) + '\n';
-       for (var i = 0; i < draftBotCards.length; i++) {
-         var heroName = draftBotCards[i].textContent;
-         var heroGroup = getHeroGroup(heroName);
-         var groupPrefix = heroGroup > 0 ? 'G' + heroGroup + ' ' : 'G1 ';
-         exportText += groupPrefix + heroName + '\n';
-       }
-       exportText += '\n';
-       
-       exportText += 'DRAFT BOT PRIORITY (Traits)\n';
-       exportText += '-'.repeat(30) + '\n';
-       for (var i = 0; i < traitsPriorityList.length; i++) {
-         var aspectName = traitsPriorityList[i];
-         var aspectGroup = getAspectGroup(aspectName);
-         // Dynamic aspect group numbering
-         // Add 6-group mode support for aspect group numbering
-         var aspectOffset = draftPoolGroups === '6' ? 3 : 2;
-         var fallbackGroup = draftPoolGroups === '6' ? 'G4 ' : 'G3 ';
-         var groupPrefix = aspectGroup > 0 ? 'G' + (aspectGroup + aspectOffset) + ' ' : fallbackGroup;
-         // Extract character name for cleaner export display
-         var characterMatch = aspectName.match(/^\(([^)]+)\)/);
-         var displayName = characterMatch ? characterMatch[1] : aspectName;
-         exportText += groupPrefix + displayName + '\n';
-       }
-       exportText += '\n';
-       
-       if (excludedCards.length > 0) {
-         exportText += 'EXCLUDED HEROES (' + excludedCards.length + ' heroes)\n';
-         exportText += '-'.repeat(30) + '\n';
-         for (var i = 0; i < excludedCards.length; i++) {
-           exportText += excludedCards[i].textContent + '\n';
-         }
-         exportText += '\n';
-       }
-
-       // Season 5.0: Excluded aspects section removed (all aspects always available in pair mode)
-
-       exportText += '='.repeat(50) + '\n';
-       exportText += 'Generated with Draft-o-matic ' + TOOL_VERSION + '\n';
-       exportText += 'MODOK League Season 4.5\n';
-       exportText += '='.repeat(50);
-       
-       var blob = new Blob([exportText], { type: 'text/plain' });
-       var url = window.URL.createObjectURL(blob);
-       var a = document.createElement('a');
-       a.style.display = 'none';
-       a.href = url;
-       a.download = 'MODOK_S4_Draft_Pool_' + new Date().toISOString().split('T')[0] + '.txt';
-       document.body.appendChild(a);
-       a.click();
-       window.URL.revokeObjectURL(url);
-       document.body.removeChild(a);
-     }, null, [], 'exportDraftPool');
+   // Resolve the player's kouple from custom team input, else the first team.
+   function s6ResolvePlayerTeam() {
+     var raw = document.getElementById('teamListInput').value.trim();
+     var custom = raw ? raw.split('\n').map(function(n){ return n.trim(); }).filter(function(n){ return n.length > 0; }) : [];
+     if (custom.length > 0) { return custom[0]; }
+     return draftOrderTeams.length > 0 ? draftOrderTeams[0] : '';
    }
 
-   // Draft simulator functions
    function startDraftSimulator() {
-     return safeExecute(function() {
-       // Season 5.0: Set max rounds based on draft mode
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       if (draftPoolGroups === '6') {
-         maxRounds = 6;  // Legacy 6-group mode
-       } else {
-         maxRounds = 4;  // Season 5.0: 4 rounds (hero pair, aspect pair, hero pair, aspect pair)
-       }
-       
-       // Get custom team names to determine user team
-       var customTeamList = document.getElementById('teamListInput').value.trim();
-       var customTeams = customTeamList ? customTeamList.split('\n').map(function(name) {
-         return name.trim();
-       }).filter(function(name) {
-         return name.length > 0;
-       }) : [];
-       var userTeamName = customTeams.length > 0 ? customTeams[0] : '';
-       
-       var heroCards = document.getElementById('resultPool').children;
-       var aspectCards = document.getElementById('resultTraitsPool').querySelectorAll('.hero-card');
-       var teamCards = document.getElementById('resultDraftOrder').children;
-       
-       var playerTeam = userTeamName;
-       if (!playerTeam) {
-         var aTeamPool = ['Aaron Davis', 'Abigail Brand', 'Adrian Toomes', 'Amora', 'Arnim Zola'];
-         
-         for (var i = 0; i < teamCards.length; i++) {
-           var teamText = teamCards[i].textContent;
-           var teamName = teamText.split('. ')[1];
-           
-           if (aTeamPool.includes(teamName)) {
-             playerTeam = teamName;
-             break;
-           }
-         }
-         
-         if (!playerTeam && teamCards.length > 0) {
-           var firstTeamText = teamCards[0].textContent;
-           playerTeam = firstTeamText.split('. ')[1];
-         }
-       }
-       
-       // Season 5.0: Initialize pair arrays for drafting
-       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
-       if (draftPoolGroups === '6') {
-         // Legacy 6-group mode uses individuals
-         allHeroes = [];
-         draftedHeroes = [];
-         draftedTraits = [];
-         allHeroes = heroGroup1.concat(heroGroup2).concat(heroGroup3);
+     try {
+       maxRounds = 4;
 
-         // Fix Spider-Woman variant issue: replace Spider-Woman with variant if it exists
-         var spiderWomanVariant = null;
-         for (var i = 0; i < allHeroes.length; i++) {
-           if (allHeroes[i].startsWith('Spider-Woman - ')) {
-             spiderWomanVariant = allHeroes[i];
-             break;
-           }
-         }
-         if (spiderWomanVariant) {
-           var spiderWomanIndex = allHeroes.indexOf('Spider-Woman');
-           if (spiderWomanIndex !== -1) {
-             allHeroes[spiderWomanIndex] = spiderWomanVariant;
-           }
-         }
-       } else if (draftPoolGroups === '4') {
-         // Season 5.0: Use pairs instead of individuals
-         allHeroPairsAvailable = heroPairGroup1.concat(heroPairGroup2);
-         allAspectPairsAvailable = aspectPairGroup1.concat(aspectPairGroup2);
-         draftedHeroPairs = [];
-         draftedAspectPairs = [];
-       }
-      
-      playerTeamName = playerTeam;
+       var teamCards = document.getElementById('resultDraftOrder').children;
        draftOrderTeams = [];
+       for (var i = 0; i < teamCards.length; i++) {
+         var t = teamCards[i].textContent.split('. ')[1];
+         if (t) { draftOrderTeams.push(t); }
+       }
+       if (draftOrderTeams.length === 0) { alert('Generate a draft pool first.'); return; }
+       if (!draftGroups || draftGroups.length === 0) { alert('Generate a draft pool first.'); return; }
+
+       playerTeamName = s6ResolvePlayerTeam();
+
+       s6ResetPool();
        teamPicks = {};
        teamGroupsUsed = {};
-       for (var i = 0; i < teamCards.length; i++) {
-         var teamText = teamCards[i].textContent;
-         var teamName = teamText.split('. ')[1];
-         draftOrderTeams.push(teamName);
-         teamPicks[teamName] = [];
-         teamGroupsUsed[teamName] = {
-           heroPairGroups: [],
-           aspectPairGroups: []
-         };
-       }
+       draftOrderTeams.forEach(function(t){ teamPicks[t] = []; teamGroupsUsed[t] = []; });
 
        currentTurnIndex = 0;
        currentRound = 1;
-       isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
-       
-       // Initialize displays
+       isPlayerTurn = (draftOrderTeams[0] === playerTeamName);
+
+       var sim = document.getElementById('draftSimulator');
+       if (sim) { sim.style.display = 'block'; sim.scrollIntoView({ behavior: 'smooth' }); }
+
+       updateDraftStatus();
        updateAllTeamsDisplay();
        updateAvailableItemsDisplay();
        updateBotPriorityDisplay();
-       updateBotTraitsPriorityDisplay();
-       
-       // Update the display elements
-       var playerDisplay = document.getElementById('playerTeamDisplay');
-       var heroDisplay = document.getElementById('heroCountDisplay');
-       var traitsDisplay = document.getElementById('traitsCountDisplay');
-       var teamDisplay = document.getElementById('teamCountDisplay');
 
-       if (playerDisplay) playerDisplay.textContent = playerTeam || 'Unknown Kouple';
-       if (draftPoolGroups === '4') {
-         // Season 5.0: Show pair counts
-         if (heroDisplay) heroDisplay.textContent = allHeroPairsAvailable.length + ' pairs';
-         if (traitsDisplay) traitsDisplay.textContent = allAspectPairsAvailable.length + ' pairs';
-       } else {
-         // Legacy: Show individual counts
-         if (heroDisplay) heroDisplay.textContent = allHeroes.length;
-         if (traitsDisplay) traitsDisplay.textContent = allTraits.length;
-       }
-       if (teamDisplay) teamDisplay.textContent = teamCards.length;
-       
-       // Show team draft order
-       var draftDisplay = document.getElementById('draftOrderDisplay');
-       if (draftDisplay) {
-         var draftOrderHtml = '';
-         for (var i = 0; i < teamCards.length; i++) {
-           var teamText = teamCards[i].textContent;
-           var teamName = teamText.split('. ')[1];
-           var isPlayerTeam = (teamName === playerTeam);
-           
-           draftOrderHtml += '<div style="padding: 8px; background: ' + (isPlayerTeam ? 'rgba(255, 107, 107, 0.2)' : 'rgba(255,255,255,0.3)') + '; border-radius: 6px; text-align: center; font-weight: ' + (isPlayerTeam ? 'bold' : 'normal') + '; border: ' + (isPlayerTeam ? '2px solid #ff6b6b' : '1px solid #ddd') + ';">' + teamText + '</div>';
-         }
-         draftDisplay.innerHTML = draftOrderHtml;
-       }
-       
-       // Show draft simulator
-       var draftSimulatorElement = document.getElementById('draftSimulator');
-       if (draftSimulatorElement) {
-         draftSimulatorElement.style.display = 'block';
-         draftSimulatorElement.scrollIntoView({ behavior: 'smooth' });
-       }
-       
-       // Start the draft
-       updateDraftStatus();
-       updateAvailableItemsDisplay();
-       updateBotPriorityDisplay();
-       updateBotTraitsPriorityDisplay();
-       
-       // If the first turn is a bot turn, start the bot picking process
-       if (!isPlayerTurn) {
-         setTimeout(processNextTurn, 1250);
-       }
-     }, null, [], 'startDraftSimulator');
+       if (!isPlayerTurn) { setTimeout(processS6Turn, 1000); }
+     } catch (e) {
+       alert('Error starting draft simulator: ' + e.message);
+     }
    }
 
-   // Update draft status message
-   function updateDraftStatus() {
-     var draftStatus = document.getElementById('draftStatus');
-     if (!draftStatus) return;
-     
-     // Check if draft is complete
-     if (currentRound > maxRounds || currentTurnIndex < 0) {
-       draftStatus.innerHTML = '<p style="color: #28a745; font-size: 1.2rem; font-weight: bold;">🎉 Draft Complete!</p>';
-       return;
+   // Group indices the team has not yet drafted from.
+   function s6UnusedGroups(team) {
+     var used = teamGroupsUsed[team] || [];
+     var out = [];
+     for (var g = 0; g < draftGroups.length; g++) {
+       if (used.indexOf(g) === -1) { out.push(g); }
      }
-     
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-     
-     if (isPlayerTurn) {
-       var playerText = '🎯 Your Turn (Round ' + currentRound + ' of ' + maxRounds + ') - Choose wisely!';
-       var constraintText = getConstraintMessage(playerTeamName);
-       draftStatus.innerHTML = '<p style="color: #2c2c54; font-size: 1.2rem; font-weight: bold;">' + playerText + '</p>' +
-         (constraintText ? '<p style="color: #666; font-size: 0.9rem; margin-top: 8px;">' + constraintText + '</p>' : '');
+     return out;
+   }
+
+   // Undrafted items the team may still pick (only in its unused groups).
+   function s6CandidateItems(team) {
+     var unused = s6UnusedGroups(team);
+     var items = [];
+     for (var k = 0; k < unused.length; k++) {
+       var g = unused[k];
+       for (var i = 0; i < draftGroups[g].length; i++) {
+         if (!draftGroups[g][i].drafted) { items.push(draftGroups[g][i]); }
+       }
+     }
+     return items;
+   }
+
+   // Record a pick.
+   function s6AssignItem(team, item) {
+     item.drafted = true;
+     item.draftedBy = team;
+     teamPicks[team].push(item);
+     teamGroupsUsed[team].push(item.group);
+   }
+
+   // Player clicks an available item.
+   function draftS6Item(groupIndex, itemIndex) {
+     if (!isPlayerTurn || currentRound > maxRounds) { return; }
+     var item = draftGroups[groupIndex] && draftGroups[groupIndex][itemIndex];
+     if (!item || item.drafted) { return; }
+     if ((teamGroupsUsed[playerTeamName] || []).indexOf(groupIndex) !== -1) { return; }
+     s6AssignItem(playerTeamName, item);
+     advanceS6Turn();
+   }
+
+   // Bot turn: tier-weighted priority among candidates, with a random-pick chance.
+   function processS6Turn() {
+     if (isPlayerTurn || currentRound > maxRounds) { return; }
+     var team = draftOrderTeams[currentTurnIndex];
+     var candidates = s6CandidateItems(team);
+     if (candidates.length === 0) { advanceS6Turn(); return; }
+
+     var pick = null;
+     if (Math.random() < (botSurprisePercentage / 100)) {
+       // Completely random pick from the remaining available groups.
+       pick = candidates[Math.floor(Math.random() * candidates.length)];
      } else {
-       var botText = '⏳ ' + currentTeam + ' is picking (Round ' + currentRound + ' of ' + maxRounds + ')...';
-       draftStatus.innerHTML = '<p style="color: #8A2BE2; font-size: 1.2rem; font-weight: bold;">' + botText + '</p>';
-     }
-   }
-
-   // Update all teams picks display
-   function updateAllTeamsDisplay() {
-     var allTeamsDisplay = document.getElementById('allTeamsDisplay');
-     if (!allTeamsDisplay) return;
-     
-     var teamsHtml = '';
-     for (var i = 0; i < draftOrderTeams.length; i++) {
-       var teamName = draftOrderTeams[i];
-       var isPlayer = (teamName === playerTeamName);
-       var isDraftComplete = (currentRound > maxRounds || currentTurnIndex < 0);
-       var isCurrentTurn = !isDraftComplete && (i === currentTurnIndex);
-       var picks = teamPicks[teamName] || [];
-       
-       var bgColor = isPlayer ? 'rgba(255, 140, 0, 0.2)' : 'rgba(255,255,255,0.3)';
-       var borderColor = isPlayer ? '#ff8c00' : (isCurrentTurn ? '#8A2BE2' : '#ddd');
-       var borderWidth = isCurrentTurn ? '3px' : '2px';
-       
-       var roundText = isCurrentTurn ? ' (Round ' + currentRound + ')' : '';
-       var currentTurnText = isCurrentTurn ? '← Current Turn' + roundText : '';
-       
-       teamsHtml += '<div style="margin-bottom: 15px; padding: 15px; background: ' + bgColor + '; border-radius: 8px; border: ' + borderWidth + ' solid ' + borderColor + ';">';
-       teamsHtml += '<h5 style="margin-bottom: 10px; color: #2c2c54; font-weight: 600;">';
-       teamsHtml += (i + 1) + '. ' + teamName + ' ' + (isPlayer ? '(You)' : '') + ' ' + currentTurnText;
-       teamsHtml += '</h5>';
-       teamsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 6px;">';
-       
-       if (picks.length > 0) {
-         for (var j = 0; j < picks.length; j++) {
-           var pick = picks[j];
-
-           // Season 5.0: Check if pick is a pair object
-           if (pick && typeof pick === 'object' && pick.displayName) {
-             var isPairObject = true;
-             var isHeroPair = pick.hero1 !== undefined;
-             var isAspectPair = pick.aspect1 !== undefined;
-
-             if (isHeroPair) {
-               var heroCardStyle = isPlayer ?
-                 'border: 2px solid #ff8c00; background: linear-gradient(145deg, #fff8dc, #ffeaa7);' :
-                 'border: 1px solid #808080; background: linear-gradient(145deg, #f8f8f8, #e8e8e8);';
-               teamsHtml += '<div class="hero-card" style="' + heroCardStyle + ' font-size: 0.85rem; padding: 10px 14px;">' + pick.displayName + '</div>';
-             } else if (isAspectPair) {
-               var pairStyle = getAspectPairStyle(pick);
-               var borderStyle = isPlayer ? 'border: 2px solid #ff8c00;' : 'border: 1px solid #808080;';
-               var aspectPairStyle = borderStyle + ' background: ' + pairStyle + '; color: white;';
-               teamsHtml += '<div class="hero-card" style="' + aspectPairStyle + ' font-size: 0.85rem; padding: 10px 14px;">' + pick.displayName + '</div>';
-             }
-           } else {
-             // Legacy mode: individual hero/trait picks
-             var pickName = pick;
-             var isHero = allHeroes.includes(pickName);
-
-             if (isHero) {
-               var heroCardStyle = isPlayer ?
-                 'border: 2px solid #ff8c00; background: linear-gradient(145deg, #fff8dc, #ffeaa7);' :
-                 'border: 1px solid #808080; background: linear-gradient(145deg, #f8f8f8, #e8e8e8);';
-               teamsHtml += '<div class="hero-card" style="' + heroCardStyle + ' font-size: 0.85rem;">' + pickName + '</div>';
-             } else {
-               var aspectType = getAspectType(pickName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-
-               var borderStyle = isPlayer ? '2px solid #ff8c00' : '1px solid #808080';
-               teamsHtml += '<div class="hero-card" style="' + traitStyle + ' border: ' + borderStyle + '; font-size: 0.85rem;">' + pickName + '</div>';
-             }
-           }
-         }
-       } else {
-         teamsHtml += '<p style="color: #666; font-style: italic; font-size: 0.9rem;">No picks yet</p>';
-       }
-       
-       teamsHtml += '</div></div>';
-     }
-     
-     allTeamsDisplay.innerHTML = teamsHtml;
-   }
-
-   // Season 5.0: Update available pairs display
-   function updateAvailablePairsDisplay() {
-     var container = document.getElementById('availableItemsDisplay');
-     if (!container) return;
-
-     var html = '';
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-
-     // Determine what to show based on whose turn it is
-     if (isPlayerTurn) {
-       // User turn: Show ALL pair types (both hero and aspect pairs)
-       // User can choose freely subject to group constraints
-       html += '<h3 style="margin-bottom: 20px; color: #2c2c54;">Choose Your Pick:</h3>';
-
-       // Hero Pairs
-       html += generateHeroPairGroupHTML(currentTeam, 1);
-       html += generateHeroPairGroupHTML(currentTeam, 2);
-
-       // Aspect Pairs
-       html += generateAspectPairGroupHTML(currentTeam, 1);
-       html += generateAspectPairGroupHTML(currentTeam, 2);
-
-     } else {
-       // Bot turn: Show only the preferred type for this round
-       var roundType = getCurrentRoundType();
-
-       if (roundType === 'heroPair') {
-         html += generateHeroPairGroupHTML(currentTeam, 1);
-         html += generateHeroPairGroupHTML(currentTeam, 2);
-       } else {
-         html += generateAspectPairGroupHTML(currentTeam, 1);
-         html += generateAspectPairGroupHTML(currentTeam, 2);
-       }
+       // Tier-weighted: lower draftOrder index = higher priority; weight the top 5.
+       var sorted = candidates.slice().sort(function(a, b) {
+         var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+         var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+         return ta - tb;
+       });
+       var top = sorted.slice(0, Math.min(5, sorted.length));
+       var weights = [];
+       for (var i = 0; i < top.length; i++) { weights.push(Math.pow(1.5, top.length - 1 - i)); }
+       var total = weights.reduce(function(s, w){ return s + w; }, 0);
+       var r = Math.random() * total, cum = 0;
+       for (var j = 0; j < top.length; j++) { cum += weights[j]; if (r <= cum) { pick = top[j]; break; } }
+       if (!pick) { pick = top[0]; }
      }
 
-     container.innerHTML = html;
-   }
-
-   // Helper: Generate HTML for a hero pair group
-   function generateHeroPairGroupHTML(teamName, groupNumber) {
-     var group = groupNumber === 1 ? heroPairGroup1 : heroPairGroup2;
-     var groupsUsed = teamGroupsUsed[teamName] || { heroPairGroups: [], aspectPairGroups: [] };
-     var groupUsed = groupsUsed.heroPairGroups.includes(groupNumber);
-
-     var html = '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); margin-bottom: 20px;">';
-     html += '<h4 style="margin-bottom: 10px;">Hero Pair Group ' + groupNumber + '</h4>';
-
-     if (groupUsed) {
-       html += '<p style="color: #28a745; font-size: 0.85rem; margin-bottom: 8px; font-weight: 600;">✓ Already picked from this group</p>';
-     }
-
-     html += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-
-     for (var i = 0; i < group.length; i++) {
-       var pair = group[i];
-       var isDrafted = draftedHeroPairs.some(function(p) { return p.displayName === pair.displayName; });
-       var canDraft = isPlayerTurn && !isDrafted && canTeamDraft(teamName, 'heroPair', groupNumber);
-
-       var style = isDrafted ?
-         'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed; padding: 12px 16px;' :
-         (canDraft ? 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer; padding: 12px 16px;' :
-           'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed; padding: 12px 16px;');
-
-       var onclick = canDraft ? 'onclick="draftPair(' + i + ', ' + groupNumber + ', \'heroPair\')"' : '';
-       var title = !canDraft && !isDrafted && groupUsed ? 'title="Already picked from this group"' : '';
-
-       html += '<div class="hero-card" style="' + style + '" ' + onclick + ' ' + title + '>' + pair.displayName + '</div>';
-     }
-
-     html += '</div></div>';
-     return html;
-   }
-
-   // Helper: Generate HTML for an aspect pair group
-   function generateAspectPairGroupHTML(teamName, groupNumber) {
-     var group = groupNumber === 1 ? aspectPairGroup1 : aspectPairGroup2;
-     var groupsUsed = teamGroupsUsed[teamName] || { heroPairGroups: [], aspectPairGroups: [] };
-     var groupUsed = groupsUsed.aspectPairGroups.includes(groupNumber);
-
-     var html = '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); margin-bottom: 20px;">';
-     html += '<h4 style="margin-bottom: 10px;">Aspect Pair Group ' + groupNumber + '</h4>';
-
-     if (groupUsed) {
-       html += '<p style="color: #28a745; font-size: 0.85rem; margin-bottom: 8px; font-weight: 600;">✓ Already picked from this group</p>';
-     }
-
-     html += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-
-     for (var i = 0; i < group.length; i++) {
-       var pair = group[i];
-       var isDrafted = draftedAspectPairs.some(function(p) { return p.displayName === pair.displayName; });
-       var canDraft = isPlayerTurn && !isDrafted && canTeamDraft(teamName, 'aspectPair', groupNumber);
-
-       var pairStyle = getAspectPairStyle(pair);
-       var style = isDrafted ?
-         'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed; padding: 12px 16px;' :
-         (canDraft ? 'border: 2px solid #90EE90; background: ' + pairStyle + '; color: white; cursor: pointer; padding: 12px 16px;' :
-           'border: 2px solid #ddd; background: ' + pairStyle + '; color: white; cursor: not-allowed; padding: 12px 16px; opacity: 0.6;');
-
-       var onclick = canDraft ? 'onclick="draftPair(' + i + ', ' + groupNumber + ', \'aspectPair\')"' : '';
-       var title = !canDraft && !isDrafted && groupUsed ? 'title="Already picked from this group"' : '';
-
-       html += '<div class="hero-card" style="' + style + '" ' + onclick + ' ' + title + '>' + pair.displayName + '</div>';
-     }
-
-     html += '</div></div>';
-     return html;
-   }
-
-   // Update available items display
-   function updateAvailableItemsDisplay() {
-      return safeExecute(function() {
-       // Season 5.0: Use new pair display for 4-group mode
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       if (draftPoolGroups === '4') {
-         updateAvailablePairsDisplay();
-         return;
-       }
-
-       // Legacy 6-group mode display
-       var availableHeroesDisplay = document.getElementById('availableHeroesDisplay');
-       var availableTraitsDisplay = document.getElementById('availableTraitsDisplay');
-        
-       if (availableHeroesDisplay) {
-         var canDraftHero = isPlayerTurn ? canTeamDraft(playerTeamName, 'hero') : true;
-         var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-         
-         if (allHeroes.length > 0) {
-           var heroesHtml = '';
-           
-           // Show heroes in groups when in 4-group mode
-                if (draftPoolGroups === '6' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroGroup3.length > 0) {
-             // Hero Group 1
-             heroesHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 1</h4>';
-             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < heroGroup1.length; i++) {
-               var heroName = heroGroup1[i];
-               var isDrafted = draftedHeroes.includes(heroName);
-               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 1);
-               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
-               
-               var style;
-               if (isDrafted) {
-                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
-               } else {
-                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
-               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
-             }
-             
-             heroesHtml += '</div></div>';
-             
-             // Hero Group 2
-             heroesHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 2</h4>';
-             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < heroGroup2.length; i++) {
-               var heroName = heroGroup2[i];
-               var isDrafted = draftedHeroes.includes(heroName);
-               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 2);
-               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
-               
-               var style;
-               if (isDrafted) {
-                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
-               } else {
-                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
-               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
-             }
-             
-             heroesHtml += '</div></div>';
-             
-             // Hero Group 3
-             heroesHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 3</h4>';
-             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < heroGroup3.length; i++) {
-               var heroName = heroGroup3[i];
-               var isDrafted = draftedHeroes.includes(heroName);
-               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 3);
-               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
-               
-               var style;
-               if (isDrafted) {
-                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
-               } else {
-                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
-               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
-             }
-             
-             heroesHtml += '</div></div>';
-             
-           } else if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
-             // Hero Group 1
-             heroesHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 1</h4>';
-             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < heroGroup1.length; i++) {
-               var heroName = heroGroup1[i];
-               var isDrafted = draftedHeroes.includes(heroName);
-               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 1);
-               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
-               
-               var style;
-               if (isDrafted) {
-                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
-               } else {
-                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
-               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
-             }
-             
-             heroesHtml += '</div></div>';
-             
-             // Hero Group 2
-             heroesHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             heroesHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Hero Group 2</h4>';
-             heroesHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < heroGroup2.length; i++) {
-               var heroName = heroGroup2[i];
-               var isDrafted = draftedHeroes.includes(heroName);
-               var groupAvailable = canTeamDraftFromGroup(playerTeamName, 2);
-               var isClickable = canDraftHero && isPlayerTurn && !isDrafted && groupAvailable;
-               
-               var style;
-               if (isDrafted) {
-                 style = 'border: 2px solid #ccc; background: #f0f0f0; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); cursor: pointer;';
-               } else {
-                 style = 'border: 2px solid #ddd; background: linear-gradient(145deg, #f8f8f8, #f0f0f0); color: #666; cursor: not-allowed;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + heroName.replace(/'/g, "\\'") + '\')"' : '';
-               heroesHtml += '<div class="hero-card" data-item="' + heroName + '" style="' + style + '" ' + onclick + '>' + heroName + '</div>';
-             }
-             
-             heroesHtml += '</div></div>';
-             
-           }
-           
-           availableHeroesDisplay.innerHTML = heroesHtml;
-         } else {
-           availableHeroesDisplay.innerHTML = '<p style="color: #666; text-align: center;">No heroes available</p>';
-         }
-       }
-       
-       if (availableTraitsDisplay) {
-         var canDraftAspect = isPlayerTurn ? canTeamDraft(playerTeamName, 'aspect') : true;
-         var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-         
-         if (allTraits.length > 0) {
-           var aspectsHtml = '';
-           
-           // Show aspects in groups when in 4-group mode
-           // Add 6-group mode support for 3 aspect groups
-           if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0) {
-             // Get selectable aspects for each group
-             var selectableGroup1 = getSelectableAspectsInGroup(1);
-             var selectableGroup2 = getSelectableAspectsInGroup(2);
-             var selectableGroup3 = getSelectableAspectsInGroup(3);
-             
-             // Traits Group 1
-             aspectsHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Traits Group 1</h4>';
-             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < traitsGroup1.length; i++) {
-               var aspectName = traitsGroup1[i];
-               var isDrafted = draftedTraits.includes(aspectName);
-               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 1);
-               var isSelectable = selectableGroup1.includes(aspectName);
-               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
-               
-               var aspectType = getAspectType(aspectName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               
-               if (isDrafted) {
-                 traitStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 traitStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
-               } else {
-                 traitStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
-               var checkmark = '';
-               
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspectName);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               
-               aspectsHtml += '<div class="hero-card trait-card-multiline" data-item="' + aspectName + '" style="' + traitStyle + '" ' + onclick + '>' + multiLineContent + '</div>';
-             }
-             
-             aspectsHtml += '</div></div>';
-             
-             // Traits Group 2
-             aspectsHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Traits Group 2</h4>';
-             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < traitsGroup2.length; i++) {
-               var aspectName = traitsGroup2[i];
-               var isDrafted = draftedTraits.includes(aspectName);
-               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 2);
-               var isSelectable = selectableGroup2.includes(aspectName);
-               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
-               
-               var aspectType = getAspectType(aspectName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               
-               if (isDrafted) {
-                 traitStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 traitStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
-               } else {
-                 traitStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
-               var checkmark = '';
-               
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspectName);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               
-               aspectsHtml += '<div class="hero-card trait-card-multiline" data-item="' + aspectName + '" style="' + traitStyle + '" ' + onclick + '>' + multiLineContent + '</div>';
-             }
-             
-             aspectsHtml += '</div></div>';
-             
-             // Traits Group 3
-             aspectsHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Traits Group 3</h4>';
-             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < traitsGroup3.length; i++) {
-               var aspectName = traitsGroup3[i];
-               var isDrafted = draftedTraits.includes(aspectName);
-               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 3);
-               var isSelectable = selectableGroup3.includes(aspectName);
-               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
-               
-               var aspectType = getAspectType(aspectName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               
-               if (isDrafted) {
-                 traitStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 traitStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
-               } else {
-                 traitStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
-               var checkmark = '';
-               
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspectName);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               
-               aspectsHtml += '<div class="hero-card trait-card-multiline" data-item="' + aspectName + '" style="' + traitStyle + '" ' + onclick + '>' + multiLineContent + '</div>';
-             }
-             
-             aspectsHtml += '</div></div>';
-             
-           } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0) {
-             // Get selectable aspects for each group
-             var selectableGroup1 = getSelectableAspectsInGroup(1);
-             var selectableGroup2 = getSelectableAspectsInGroup(2);
-             
-             // Traits Group 1
-             aspectsHtml += '<div style="margin-bottom: 25px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Traits Group 1</h4>';
-             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < traitsGroup1.length; i++) {
-               var aspectName = traitsGroup1[i];
-               var isDrafted = draftedTraits.includes(aspectName);
-               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 1);
-               var isSelectable = selectableGroup1.includes(aspectName);
-               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
-               
-               var aspectType = getAspectType(aspectName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               
-               if (isDrafted) {
-                 traitStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 traitStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
-               } else {
-                 traitStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
-               var checkmark = '';
-               
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspectName);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               
-               aspectsHtml += '<div class="hero-card trait-card-multiline" data-item="' + aspectName + '" style="' + traitStyle + '" ' + onclick + '>' + multiLineContent + '</div>';
-             }
-             
-             aspectsHtml += '</div></div>';
-             
-             // Traits Group 2
-             aspectsHtml += '<div style="padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">';
-             aspectsHtml += '<h4 style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: #2c2c54;">Traits Group 2</h4>';
-             aspectsHtml += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
-             
-             for (var i = 0; i < traitsGroup2.length; i++) {
-               var aspectName = traitsGroup2[i];
-               var isDrafted = draftedTraits.includes(aspectName);
-               var groupAvailable = canTeamDraftFromAspectGroup(playerTeamName, 2);
-               var isSelectable = selectableGroup2.includes(aspectName);
-               var isClickable = canDraftAspect && isPlayerTurn && !isDrafted && groupAvailable && isSelectable;
-               
-               var aspectType = getAspectType(aspectName);
-               var traitStyle = '';
-               // All traits use consistent blue styling
-               traitStyle = 'background: linear-gradient(145deg, #e8f4fd, #b8e6ff); border-color: #48dbfb; color: #0984e3;';
-               
-               if (isDrafted) {
-                 traitStyle = 'background: #f0f0f0; border: 2px solid #ccc; color: #888; opacity: 0.6; cursor: not-allowed;';
-               } else if (isClickable) {
-                 traitStyle += ' cursor: pointer; border-width: 2px; border-style: solid;';
-               } else {
-                 traitStyle += ' opacity: 0.7; cursor: not-allowed; border-width: 2px; border-style: solid;';
-               }
-               
-               var onclick = isClickable ? 'onclick="draftItem(\'' + aspectName.replace(/'/g, "\\'") + '\')"' : '';
-               var checkmark = '';
-               
-               // Parse trait into 3 components for multi-line display
-               var traitParts = parseTraitForDisplay(aspectName);
-               var multiLineContent = 
-                 '<div class="trait-line trait-character">' + traitParts.character + '</div>' +
-                 '<div class="trait-line trait-hero">' + traitParts.hero + '</div>' +
-                 '<div class="trait-line trait-ae">' + traitParts.alterEgo + '</div>';
-               
-               aspectsHtml += '<div class="hero-card trait-card-multiline" data-item="' + aspectName + '" style="' + traitStyle + '" ' + onclick + '>' + multiLineContent + '</div>';
-             }
-             
-             aspectsHtml += '</div></div>';
-             
-           }
-           
-           availableTraitsDisplay.innerHTML = aspectsHtml;
-         } else {
-           availableTraitsDisplay.innerHTML = '<p style="color: #666; text-align: center;">No traits available</p>';
-         }
-       }
-     }, null, [], 'updateAvailableItemsDisplay');
-   }
-
-  // Update bot priority display
-  // Season 5.0: Show ALL hero pairs in priority order, grey out drafted ones
-  function updateBotPriorityDisplay() {
-    var botPriorityDisplay = document.getElementById('botPriorityDisplay');
-    if (!botPriorityDisplay) return;
-
-    // Show all hero pairs from priority list
-    var botHtml = '';
-    for (var i = 0; i < heroPairPriorityList.length; i++) {
-      var pair = heroPairPriorityList[i];
-      var displayName = pair.displayName;
-
-      // Check if this pair has been drafted (check draftedHeroPairs, not draftedHeroes)
-      var isDrafted = draftedHeroPairs.some(function(draftedPair) {
-        return draftedPair.hero1 === pair.hero1 || draftedPair.hero1 === pair.hero2 ||
-               draftedPair.hero2 === pair.hero1 || draftedPair.hero2 === pair.hero2;
-      });
-
-      // Style: grey out drafted pairs, light green for available pairs
-      var style;
-      if (isDrafted) {
-        style = 'border: 2px solid #ccc; background: #e0e0e0; color: #999; font-size: 0.85rem; cursor: default; padding: 12px 16px; opacity: 0.5;';
-      } else {
-        // Use light green gradient matching available items in draft simulator
-        style = 'border: 2px solid #90EE90; background: linear-gradient(145deg, #f0fff0, #e8f5e8); color: #2c2c54; font-size: 0.85rem; cursor: default; padding: 12px 16px;';
-      }
-
-      botHtml += '<div class="hero-card" style="' + style + '">' + displayName + '</div>';
-    }
-    botPriorityDisplay.innerHTML = botHtml;
-  }
-
-   // Update bot aspect priority display
-   // Season 5.0: Show ALL aspect pairs in priority order, grey out drafted ones
-   function updateBotTraitsPriorityDisplay() {
-     var botTraitsPriorityDisplay = document.getElementById('botTraitsPriorityDisplay');
-     if (!botTraitsPriorityDisplay) return;
-
-     // Show all aspect pairs from priority list
-     var aspectsHtml = '';
-     for (var i = 0; i < aspectPairPriorityList.length; i++) {
-       var pair = aspectPairPriorityList[i];
-       var displayName = pair.displayName;
-
-       // Check if this pair has been drafted
-       var isDrafted = draftedAspectPairs.some(function(p) { return p.displayName === displayName; });
-
-       // Style: grey out drafted pairs, use colors for available pairs
-       if (isDrafted) {
-         // Greyed out style
-         aspectsHtml += '<div class="hero-card" style="background: #e0e0e0; color: #999; padding: 12px 16px; font-size: 0.85rem; cursor: default; opacity: 0.5;">' +
-           displayName +
-           '</div>';
-       } else {
-         // Normal colored style
-         var pairStyle = getAspectPairStyle(pair);
-         aspectsHtml += '<div class="hero-card" style="background: ' + pairStyle + '; color: white; padding: 12px 16px; font-size: 0.85rem; cursor: default;">' +
-           displayName +
-           '</div>';
-       }
-     }
-     botTraitsPriorityDisplay.innerHTML = aspectsHtml;
-   }
-
-   // Draft item function
-   // Season 5.0: Draft a pair (hero pair or aspect pair)
-   function draftPair(pairIndex, groupNumber, pairType) {
-     if (!isPlayerTurn) return;
-
-     var pair;
-     if (pairType === 'heroPair') {
-       pair = groupNumber === 1 ? heroPairGroup1[pairIndex] : heroPairGroup2[pairIndex];
-     } else if (pairType === 'aspectPair') {
-       pair = groupNumber === 1 ? aspectPairGroup1[pairIndex] : aspectPairGroup2[pairIndex];
-     }
-
-     if (!pair) return;
-
-     // Check if already drafted
-     var alreadyDrafted = false;
-     if (pairType === 'heroPair') {
-       alreadyDrafted = draftedHeroPairs.some(function(p) { return p.displayName === pair.displayName; });
-     } else {
-       alreadyDrafted = draftedAspectPairs.some(function(p) { return p.displayName === pair.displayName; });
-     }
-     if (alreadyDrafted) return;
-
-     // Check if team can draft this type from this group
-     if (!canTeamDraft(playerTeamName, pairType, groupNumber)) return;
-
-     // Draft the pair
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-     teamPicks[currentTeam].push(pair);
-
-     // Track which group was used
-     if (pairType === 'heroPair') {
-       draftedHeroPairs.push(pair);
-       teamGroupsUsed[currentTeam].heroPairGroups.push(groupNumber);
-     } else {
-       draftedAspectPairs.push(pair);
-       teamGroupsUsed[currentTeam].aspectPairGroups.push(groupNumber);
-     }
-
-     // Update displays
+     s6AssignItem(team, pick);
      updateAllTeamsDisplay();
      updateAvailableItemsDisplay();
      updateBotPriorityDisplay();
-     updateBotTraitsPriorityDisplay();
-
-     advanceTurn();
+     advanceS6Turn();
    }
 
-   function draftItem(itemName) {
-     if (!isPlayerTurn) return;
-     
-     var isHero = allHeroes.includes(itemName);
-     var isAspect = allTraits.includes(itemName);
-     
-     var actualItemToDraft = itemName;
-     
-     if (isAspect) {
-       var aspectType = getAspectType(itemName);
-       
-       // Fix aspect selection to respect clicked group
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       if ((draftPoolGroups === '4' || draftPoolGroups === '6') && traitsGroup1.length > 0 && traitsGroup2.length > 0 && (draftPoolGroups !== '6' || traitsGroup3.length > 0)) {
-         // In group-restricted modes, use the exact clicked aspect (it's already been validated as selectable)
-         actualItemToDraft = itemName;
-       }
-     }
-     
-     var alreadyDrafted = draftedHeroes.includes(actualItemToDraft) || draftedTraits.includes(actualItemToDraft);
-     if (alreadyDrafted) return;
-     
-     var draftType = isHero ? 'hero' : 'aspect';
-     if (!canTeamDraft(playerTeamName, draftType)) return;
-     
-     // Add group restriction validation
-     // Add 6-group mode support
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     if ((draftPoolGroups === '4' || draftPoolGroups === '6')) {
-       if (isHero) {
-         var heroGroup = getHeroGroup(actualItemToDraft);
-         if (heroGroup > 0 && !canTeamDraftFromGroup(playerTeamName, heroGroup)) {
-           return; // Cannot draft from this hero group
-         }
-       } else if (isAspect) {
-         var aspectGroup = getAspectGroup(actualItemToDraft);
-         if (aspectGroup > 0 && !canTeamDraftFromAspectGroup(playerTeamName, aspectGroup)) {
-           return; // Cannot draft from this aspect group
-         }
-       }
-     }
-     
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-     
-     teamPicks[currentTeam].push(actualItemToDraft);
-     if (isHero) {
-       draftedHeroes.push(actualItemToDraft);
-     } else {
-       draftedTraits.push(actualItemToDraft);
-     }
-     
-     updateAllTeamsDisplay();
-     updateAvailableItemsDisplay();
-     updateBotPriorityDisplay();
-     updateBotTraitsPriorityDisplay();
-     
-     advanceTurn();
-   }
-   
-   // Advance to next turn (snake draft format - supports 4 or 6 rounds)
-   function advanceTurn() {
-     
-     if (currentRound === 1 || currentRound === 3 || currentRound === 5) {
+   // Snake advance over four rounds (R1/R3 forward, R2/R4 backward).
+   function advanceS6Turn() {
+     if (currentRound === 1 || currentRound === 3) {
        currentTurnIndex++;
        if (currentTurnIndex >= draftOrderTeams.length) {
          currentRound++;
          currentTurnIndex = draftOrderTeams.length - 1;
        }
-     } else if (currentRound === 2 || currentRound === 4 || currentRound === 6) {
+     } else {
        currentTurnIndex--;
        if (currentTurnIndex < 0) {
          if (currentRound < maxRounds) {
@@ -2018,521 +661,141 @@
            currentTurnIndex = 0;
          } else {
            currentRound = maxRounds + 1;
+           isPlayerTurn = false;
            updateDraftStatus();
            updateAllTeamsDisplay();
+           updateAvailableItemsDisplay();
+           updateBotPriorityDisplay();
            return;
          }
        }
      }
-     
+
      isPlayerTurn = (draftOrderTeams[currentTurnIndex] === playerTeamName);
-     
      updateDraftStatus();
      updateAllTeamsDisplay();
      updateAvailableItemsDisplay();
      updateBotPriorityDisplay();
-     updateBotTraitsPriorityDisplay();
-     
-     // Extend delay for re-pick visibility
-     if (!isPlayerTurn) {
-       var delay = (window.lastRePickData && window.lastRePickData.triggered) ? 2500 : 1250;
-       setTimeout(processNextTurn, delay);
+
+     if (!isPlayerTurn && currentRound <= maxRounds) {
+       setTimeout(processS6Turn, 1000);
      }
    }
-   
-   // Season 5.0: Process bot turn for pair drafting
-   function processBotPairPick() {
-     if (isPlayerTurn) return;
-     if (currentRound > maxRounds) return;
 
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-     var aiPick = null;
+   // ===== Display helpers =====
 
-     // Determine preferred round type based on current round
-     var preferredRoundType = (currentRound === 1 || currentRound === 3) ? 'heroPair' : 'aspectPair';
-
-     // Apply randomness - chance to ignore round preferences
-     var randomChance = Math.random();
-     if (randomChance < (botRandomnessPercentage / 100)) {
-       // Ignore round preference - flip to opposite type
-       preferredRoundType = (preferredRoundType === 'heroPair') ? 'aspectPair' : 'heroPair';
-     }
-
-     // Check what the team has already drafted
-     var currentTeamPicks = teamPicks[currentTeam] || [];
-     var heroPairsPicked = currentTeamPicks.filter(function(pick) {
-       return pick.hero1 !== undefined; // Has hero1 property = hero pair
-     }).length;
-     var aspectPairsPicked = currentTeamPicks.filter(function(pick) {
-       return pick.aspect1 !== undefined; // Has aspect1 property = aspect pair
-     }).length;
-
-     // Determine what we can draft (max 2 of each type)
-     var canPickHeroPair = heroPairsPicked < 2;
-     var canPickAspectPair = aspectPairsPicked < 2;
-
-     // If preferred type is not available, switch to the other type
-     var roundType = preferredRoundType;
-     if (roundType === 'heroPair' && !canPickHeroPair) {
-       roundType = 'aspectPair';
-     } else if (roundType === 'aspectPair' && !canPickAspectPair) {
-       roundType = 'heroPair';
-     }
-
-     if (roundType === 'heroPair') {
-       // Bot selects a hero pair
-       // Filter pairs that are not drafted AND from groups bot hasn't used
-       var availablePairs = allHeroPairsAvailable.filter(function(pair) {
-         // Check if already drafted
-         var notDrafted = !draftedHeroPairs.some(function(p) { return p.displayName === pair.displayName; });
-
-         // Determine which group this pair is from
-         var groupNumber = heroPairGroup1.some(function(p) { return p.displayName === pair.displayName; }) ? 1 : 2;
-
-         // Check if bot can draft from this group
-         var canDraftFromGroup = canTeamDraft(currentTeam, 'heroPair', groupNumber);
-
-         return notDrafted && canDraftFromGroup;
-       });
-
-       if (availablePairs.length === 0) {
-         advanceTurn();
-         return;
-       }
-
-       // Check for surprise pick
-       var surpriseChance = Math.random();
-       if (surpriseChance < (botSurprisePercentage / 100)) {
-         // Random pick
-         var randomIndex = Math.floor(Math.random() * availablePairs.length);
-         aiPick = availablePairs[randomIndex];
-       } else {
-         // Strategic pick from priority list (also filter by group restrictions)
-         var availablePriority = heroPairPriorityList.filter(function(pair) {
-           var notDrafted = !draftedHeroPairs.some(function(p) { return p.displayName === pair.displayName; });
-           var groupNumber = heroPairGroup1.some(function(p) { return p.displayName === pair.displayName; }) ? 1 : 2;
-           var canDraftFromGroup = canTeamDraft(currentTeam, 'heroPair', groupNumber);
-           return notDrafted && canDraftFromGroup;
-         });
-
-         if (availablePriority.length > 0) {
-           aiPick = availablePriority[0]; // Pick highest priority available
-         } else {
-           aiPick = availablePairs[0]; // Fallback to first available
-         }
-       }
-
-       if (aiPick) {
-         // Determine which group this pair is from
-         var groupNumber = heroPairGroup1.some(function(p) { return p.displayName === aiPick.displayName; }) ? 1 : 2;
-
-         teamPicks[currentTeam].push(aiPick);
-         draftedHeroPairs.push(aiPick);
-         teamGroupsUsed[currentTeam].heroPairGroups.push(groupNumber);
-       }
-
-     } else if (roundType === 'aspectPair') {
-       // Bot selects an aspect pair
-       // Filter pairs that are not drafted AND from groups bot hasn't used
-       var availablePairs = allAspectPairsAvailable.filter(function(pair) {
-         // Check if already drafted
-         var notDrafted = !draftedAspectPairs.some(function(p) { return p.displayName === pair.displayName; });
-
-         // Determine which group this pair is from
-         var groupNumber = aspectPairGroup1.some(function(p) { return p.displayName === pair.displayName; }) ? 1 : 2;
-
-         // Check if bot can draft from this group
-         var canDraftFromGroup = canTeamDraft(currentTeam, 'aspectPair', groupNumber);
-
-         return notDrafted && canDraftFromGroup;
-       });
-
-       if (availablePairs.length === 0) {
-         advanceTurn();
-         return;
-       }
-
-       // Check for surprise pick
-       var surpriseChance = Math.random();
-       if (surpriseChance < (botSurprisePercentage / 100)) {
-         // Random pick
-         var randomIndex = Math.floor(Math.random() * availablePairs.length);
-         aiPick = availablePairs[randomIndex];
-       } else {
-         // Strategic pick from priority list (also filter by group restrictions)
-         var availablePriority = aspectPairPriorityList.filter(function(pair) {
-           var notDrafted = !draftedAspectPairs.some(function(p) { return p.displayName === pair.displayName; });
-           var groupNumber = aspectPairGroup1.some(function(p) { return p.displayName === pair.displayName; }) ? 1 : 2;
-           var canDraftFromGroup = canTeamDraft(currentTeam, 'aspectPair', groupNumber);
-           return notDrafted && canDraftFromGroup;
-         });
-
-         if (availablePriority.length > 0) {
-           aiPick = availablePriority[0]; // Pick highest priority available
-         } else {
-           aiPick = availablePairs[0]; // Fallback to first available
-         }
-       }
-
-       if (aiPick) {
-         // Determine which group this pair is from
-         var groupNumber = aspectPairGroup1.some(function(p) { return p.displayName === aiPick.displayName; }) ? 1 : 2;
-
-         teamPicks[currentTeam].push(aiPick);
-         draftedAspectPairs.push(aiPick);
-         teamGroupsUsed[currentTeam].aspectPairGroups.push(groupNumber);
-       }
-     }
-
-     // Update displays and advance
-     updateAllTeamsDisplay();
-     updateAvailableItemsDisplay();
-     updateBotPriorityDisplay();
-     updateBotTraitsPriorityDisplay();
-     advanceTurn();
+   function s6Color(aspect) {
+     var c = (typeof ASPECT_COLORS !== 'undefined') && ASPECT_COLORS[aspect];
+     return c ? c.main : '#666';
    }
 
-   // Process AI turn with enhanced bot strategy
-   function processNextTurn() {
-     // Season 5.0: Use pair-based bot for 4-group mode
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     if (draftPoolGroups === '4') {
-       processBotPairPick();
+   function s6Card(item, extra) {
+     return '<div class="hero-card" style="background:' + s6Color(item.aspect) + '; color:#fff; padding:10px 14px;">' +
+            item.displayName + (extra || '') + '</div>';
+   }
+
+   function updateDraftStatus() {
+     var el = document.getElementById('draftStatus');
+     if (!el) { return; }
+     if (currentRound > maxRounds) {
+       el.innerHTML = '<p style="color:#28a745; font-size:1.2rem; font-weight:bold;">&#127881; Draft Complete!</p>';
        return;
      }
-
-     // Legacy 6-group mode bot logic
-     if (isPlayerTurn) return;
-     if (currentRound > maxRounds) return;
-
-     var currentTeam = draftOrderTeams[currentTurnIndex];
-     var aiPick = null;
-     
-     // Track re-pick behavior for user feedback
-     var rePickTriggered = false;
-     var originalPickType = '';
-     var finalPickType = '';
-     
-     var currentTeamPicks = teamPicks[currentTeam] || [];
-     var currentHeroes = currentTeamPicks.filter(function(pick) {
-       return allHeroes.includes(pick);
-     });
-     var currentAspects = currentTeamPicks.filter(function(pick) {
-       return allTraits.includes(pick);
-     });
-     
-      // Support H-A-H-A-H-A pattern for 6-group mode
-     var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-     var preferredType;
-     
-     if (draftPoolGroups === '6') {
-       // 6-group mode: H-T-H-T-H-T pattern (Hero in R1, R3, R5; Traits in R2, R4, R6)
-       preferredType = (currentRound === 1 || currentRound === 3 || currentRound === 5) ? 'hero' : 'aspect';
-     } else {
-       // Original logic for 4-group mode: H-T-H-T pattern (Hero in R1, R3; Traits in R2, R4)
-       preferredType = (currentRound === 1 || currentRound === 3) ? 'hero' : 'aspect';
-     }
-     
-     // Use customizable bot randomness percentage
-     var randomChance = Math.random();
-     if (randomChance < (botRandomnessPercentage / 100)) {
-       preferredType = (preferredType === 'hero') ? 'aspect' : 'hero';
-     }
-     
-     // Support 3 heroes and 3 aspects in 6-group mode
-     var maxHeroes = draftPoolGroups === '6' ? 3 : 2;
-     var maxAspects = draftPoolGroups === '6' ? 3 : 2;
-     var canPickHero = currentHeroes.length < maxHeroes;
-     var canPickAspect = currentAspects.length < maxAspects;
-     
-     if (preferredType === 'hero' && !canPickHero) {
-       preferredType = 'aspect';
-     } else if (preferredType === 'aspect' && !canPickAspect) {
-       preferredType = 'hero';
-     }
-     
-     if ((preferredType === 'hero' && !canPickHero) || (preferredType === 'aspect' && !canPickAspect)) {
-       advanceTurn();
-       return;
-     }
-     
-     if (preferredType === 'hero') {
-       var availableHeroes = allHeroes.filter(function(hero) {
-         return !draftedHeroes.includes(hero);
+     var team = draftOrderTeams[currentTurnIndex];
+     if (isPlayerTurn) {
+       var unused = s6UnusedGroups(playerTeamName).map(function(g){
+         return (currentDraftMode === DRAFT_MODES.ORDER) ? MAIN_ASPECTS[g] : ('Group ' + (g + 1));
        });
-       
-       // Apply group restrictions for bots in 4-group mode
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       if (draftPoolGroups === '6' && heroGroup1.length > 0 && heroGroup2.length > 0 && heroGroup3.length > 0) {
-         var currentTeamHeroes = currentHeroes;
-         if (currentTeamHeroes.length > 0) {
-           // Filter out heroes from already-used groups
-           var usedGroups = currentTeamHeroes.map(function(hero) {
-             return getHeroGroup(hero);
-           });
-           availableHeroes = availableHeroes.filter(function(hero) {
-             return !usedGroups.includes(getHeroGroup(hero));
-           });
-         }
-         // First hero pick can be from any group (no additional filtering needed)
-       } else if (draftPoolGroups === '4' && heroGroup1.length > 0 && heroGroup2.length > 0) {
-         var currentTeamHeroes = currentHeroes;
-         if (currentTeamHeroes.length === 1) {
-           // Second hero pick - must be from opposite group
-           var firstHeroGroup = getHeroGroup(currentTeamHeroes[0]);
-           var allowedGroup = firstHeroGroup === 1 ? 2 : 1;
-           availableHeroes = availableHeroes.filter(function(hero) {
-             return getHeroGroup(hero) === allowedGroup;
-           });
-         }
-         // First hero pick can be from any group (no additional filtering needed)
-       }
-       
-       if (availableHeroes.length === 0) {
-         advanceTurn();
-         return;
-       }
-       
-       // Check for surprise pick first
-       var surpriseChance = Math.random();
-       if (surpriseChance < (botSurprisePercentage / 100)) {
-         // Surprise pick: completely random from all available heroes
-         var randomIndex = Math.floor(Math.random() * availableHeroes.length);
-         aiPick = availableHeroes[randomIndex];
-       } else {
-         // Normal pick: weighted selection from top 5 tier list heroes
-         var availablePriorityHeroes = filteredDraftOrder.filter(function(hero) {
-           // Handle Spider-Woman variant matching
-           if (hero === 'Spider-Woman') {
-             return availableHeroes.some(function(h) {
-               return h === 'Spider-Woman' || h.startsWith('Spider-Woman - ');
-             });
-           }
-           return availableHeroes.includes(hero);
-         }).map(function(hero) {
-           // Replace Spider-Woman with the actual variant in the pool
-           if (hero === 'Spider-Woman') {
-             var spiderWomanVariant = availableHeroes.find(function(h) {
-               return h.startsWith('Spider-Woman - ');
-             });
-             return spiderWomanVariant || hero;
-           }
-           return hero;
-         });
-         
-         if (availablePriorityHeroes.length > 0) {
-           var topChoices = availablePriorityHeroes.slice(0, Math.min(5, availablePriorityHeroes.length));
-           
-           var weights = [];
-           for (var i = 0; i < topChoices.length; i++) {
-             weights.push(Math.pow(1.5, topChoices.length - 1 - i));
-           }
-           
-           var totalWeight = weights.reduce(function(sum, weight) {
-             return sum + weight;
-           }, 0);
-           var random = Math.random() * totalWeight;
-           var cumulativeWeight = 0;
-           
-           for (var i = 0; i < topChoices.length; i++) {
-             cumulativeWeight += weights[i];
-             if (random <= cumulativeWeight) {
-               aiPick = topChoices[i];
-               break;
-             }
-           }
-         } else {
-           // No tier list heroes available, pick randomly
-           var randomIndex = Math.floor(Math.random() * availableHeroes.length);
-           aiPick = availableHeroes[randomIndex];
-         }
-       }
-       
-       if (aiPick) {
-         draftedHeroes.push(aiPick);
-       }
-       
+       el.innerHTML = '<p style="color:#2c2c54; font-size:1.2rem; font-weight:bold;">&#127919; Your Turn (Round ' + currentRound + ' of ' + maxRounds + ')</p>' +
+         '<p style="color:#666; font-size:0.9rem; margin-top:8px;">Pick one item from an unused group. Remaining: ' + unused.join(', ') + '</p>';
      } else {
-       var availableAspects = allTraits.filter(function(aspect) {
-         return !draftedTraits.includes(aspect);
-       });
-       
-       // Apply aspect group restrictions for bots in 4-group mode
-        // Add 6-group mode support for bot 3-aspect group restrictions
-       var draftPoolGroups = document.getElementById('draftPoolGroups') ? document.getElementById('draftPoolGroups').value : DEFAULT_DRAFT_GROUPS;
-       if (draftPoolGroups === '6' && traitsGroup1.length > 0 && traitsGroup2.length > 0 && traitsGroup3.length > 0) {
-         var currentTeamAspects = currentAspects;
-         if (currentTeamAspects.length > 0) {
-           // Filter out aspects from already-used groups
-           var usedGroups = currentTeamAspects.map(function(aspect) {
-             return getAspectGroup(aspect);
-           });
-           availableAspects = availableAspects.filter(function(aspect) {
-             return !usedGroups.includes(getAspectGroup(aspect));
-           });
-         }
-         // No used groups yet - can pick from any group
-       } else if (draftPoolGroups === '4' && traitsGroup1.length > 0 && traitsGroup2.length > 0) {
-         var currentTeamAspects = currentAspects;
-         if (currentTeamAspects.length === 1) {
-           // Second aspect pick - must be from opposite group
-           var firstAspectGroup = getAspectGroup(currentTeamAspects[0]);
-           var allowedGroup = firstAspectGroup === 1 ? 2 : 1;
-           availableAspects = availableAspects.filter(function(aspect) {
-             return getAspectGroup(aspect) === allowedGroup;
-           });
-         }
-         // First aspect pick can be from any group (no additional filtering needed)
-       }
-       
-       if (availableAspects.length === 0) {
-         advanceTurn();
-         return;
-       }
-       
-       // Check for surprise pick first
-       var surpriseChance = Math.random();
-       if (surpriseChance < (botSurprisePercentage / 100)) {
-         // Surprise pick: completely random from all available aspects
-         var randomIndex = Math.floor(Math.random() * availableAspects.length);
-         var randomAspect = availableAspects[randomIndex];
-         var aspectType = getAspectType(randomAspect);
-         aiPick = getHighestAvailableAspect(aspectType);
-       } else {
-         // Leadership priority logic
-         var availableLeadership = getHighestAvailableLeadership();
-         if (availableLeadership) {
-           // Take highest available Leadership
-           aiPick = availableLeadership;
-         } else {
-           // Normal pick: weighted selection from top 5 priority aspects
-           var availablePriorityAspects = traitsPriorityList.filter(function(aspect) {
-             return availableAspects.includes(aspect);
-           });
-           
-           if (availablePriorityAspects.length > 0) {
-             var topChoices = availablePriorityAspects.slice(0, Math.min(5, availablePriorityAspects.length));
-             
-             var weights = [];
-             for (var i = 0; i < topChoices.length; i++) {
-               weights.push(Math.pow(1.5, topChoices.length - 1 - i));
-             }
-             
-             var totalWeight = weights.reduce(function(sum, weight) {
-               return sum + weight;
-             }, 0);
-             var random = Math.random() * totalWeight;
-             var cumulativeWeight = 0;
-             
-             for (var i = 0; i < topChoices.length; i++) {
-               cumulativeWeight += weights[i];
-               if (random <= cumulativeWeight) {
-                 var selectedAspect = topChoices[i];
-                 var aspectType = getAspectType(selectedAspect);
-                 aiPick = getHighestAvailableAspect(aspectType);
-                 break;
-               }
-             }
-           } else {
-             // No priority aspects available, pick randomly
-             var randomIndex = Math.floor(Math.random() * availableAspects.length);
-             var randomAspect = availableAspects[randomIndex];
-             var aspectType = getAspectType(randomAspect);
-             aiPick = getHighestAvailableAspect(aspectType);
-           }
-         }
-       }
-       
-       // Mild discouragement for duplicate aspect types on second pick
-       if (currentAspects.length === 1 && aiPick && getAspectType(aiPick) === getAspectType(currentAspects[0])) {
-         // Track re-pick data for user feedback
-         rePickTriggered = true;
-         originalPickType = getAspectType(aiPick);
-         
-         // Re-run aspect selection logic once to encourage variety
-         var rePickChance = Math.random();
-         if (rePickChance < (botSurprisePercentage / 100)) {
-           // Re-pick: Surprise pick - completely random from all available aspects
-           var randomIndex = Math.floor(Math.random() * availableAspects.length);
-           var randomAspect = availableAspects[randomIndex];
-           var aspectType = getAspectType(randomAspect);
-           aiPick = getHighestAvailableAspect(aspectType);
-         } else {
-           // Re-pick: Leadership priority logic
-           var availableLeadership = getHighestAvailableLeadership();
-           if (availableLeadership && availableAspects.includes(availableLeadership)) {
-             // Take highest available Leadership if still available
-             aiPick = availableLeadership;
-           } else {
-             // Re-pick: Normal weighted selection from top 5 priority aspects
-             var availablePriorityAspects = traitsPriorityList.filter(function(aspect) {
-               return availableAspects.includes(aspect);
-             });
-             
-             if (availablePriorityAspects.length > 0) {
-               var topChoices = availablePriorityAspects.slice(0, Math.min(5, availablePriorityAspects.length));
-               
-               var weights = [];
-               for (var i = 0; i < topChoices.length; i++) {
-                 weights.push(Math.pow(1.5, topChoices.length - 1 - i));
-               }
-               
-               var totalWeight = weights.reduce(function(sum, weight) {
-                 return sum + weight;
-               }, 0);
-               var random = Math.random() * totalWeight;
-               var cumulativeWeight = 0;
-               
-               for (var i = 0; i < topChoices.length; i++) {
-                 cumulativeWeight += weights[i];
-                 if (random <= cumulativeWeight) {
-                   var selectedAspect = topChoices[i];
-                   var aspectType = getAspectType(selectedAspect);
-                   aiPick = getHighestAvailableAspect(aspectType);
-                   break;
-                 }
-               }
-             } else {
-               // Re-pick: No priority aspects available, pick randomly
-               var randomIndex = Math.floor(Math.random() * availableAspects.length);
-               var randomAspect = availableAspects[randomIndex];
-               var aspectType = getAspectType(randomAspect);
-               aiPick = getHighestAvailableAspect(aspectType);
-             }
-           }
-         }
-         // Store final pick type for feedback
-         finalPickType = getAspectType(aiPick);
-         // Accept whatever the re-pick produces, even if still same type
-       }
-       
-       if (aiPick) {
-         draftedTraits.push(aiPick);
-       }
+       el.innerHTML = '<p style="color:#8A2BE2; font-size:1.2rem; font-weight:bold;">&#8987; ' + team + ' is picking (Round ' + currentRound + ' of ' + maxRounds + ')...</p>';
      }
-     
-     if (aiPick) {
-       teamPicks[currentTeam].push(aiPick);
-       
-       // Store re-pick data globally for status display
-       window.lastRePickData = {
-         triggered: rePickTriggered,
-         originalType: originalPickType,
-         finalType: finalPickType,
-         team: currentTeam
-       };
-       
-       // Force status update after storing re-pick data
-       if (rePickTriggered) {
-         updateDraftStatus(); // Force immediate status update
+   }
+
+   function updateAllTeamsDisplay() {
+     var el = document.getElementById('allTeamsDisplay');
+     if (!el) { return; }
+     el.innerHTML = draftOrderTeams.map(function(team) {
+       var isPlayer = (team === playerTeamName);
+       var picks = (teamPicks[team] || []).map(function(it){
+         return s6Card(it, ' <span style="opacity:0.85; font-size:0.8em;">(G' + (it.group + 1) + ')</span>');
+       }).join('');
+       return '<div style="padding:14px; border-radius:10px; background:rgba(255,255,255,0.1); border:' +
+              (isPlayer ? '2px solid #ff6b6b' : '1px solid #ddd') + ';">' +
+              '<h4 style="margin-bottom:8px; color:#2c2c54;">' + team + (isPlayer ? ' (You)' : '') + '</h4>' +
+              '<div class="hero-grid" style="display:flex; flex-wrap:wrap; gap:6px;">' +
+              (picks || '<span style="color:#999; font-style:italic;">No picks yet</span>') + '</div>' +
+              '</div>';
+     }).join('');
+   }
+
+   function updateAvailableItemsDisplay() {
+     var el = document.getElementById('availableItemsDisplay');
+     if (!el) { return; }
+     var playerUsed = teamGroupsUsed[playerTeamName] || [];
+     el.innerHTML = draftGroups.map(function(group, gi) {
+       var groupUsedByPlayer = playerUsed.indexOf(gi) !== -1;
+       var label = (currentDraftMode === DRAFT_MODES.ORDER) ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi]) : ('Group ' + (gi + 1));
+       var cards = group.map(function(item, ii) {
+         if (item.drafted) {
+           return '<div class="hero-card" style="opacity:0.35; padding:10px 14px;">' + item.displayName +
+                  ' <span style="font-size:0.8em;">- ' + item.draftedBy + '</span></div>';
+         }
+         var clickable = isPlayerTurn && !groupUsedByPlayer && currentRound <= maxRounds;
+         var style = 'background:' + s6Color(item.aspect) + '; color:#fff; padding:10px 14px;' + (clickable ? ' cursor:pointer;' : ' opacity:0.7;');
+         var onclick = clickable ? (' onclick="draftS6Item(' + gi + ',' + ii + ')"') : '';
+         return '<div class="hero-card" style="' + style + '"' + onclick + '>' + item.displayName + '</div>';
+       }).join('');
+       var note = groupUsedByPlayer ? ' <span style="font-size:0.8em; color:#999;">(you have drafted from this group)</span>' : '';
+       return '<div style="padding:14px; border-radius:10px; background:rgba(255,255,255,0.1);">' +
+              '<h4 style="margin-bottom:8px; color:#2c2c54;">' + label + note + '</h4>' +
+              '<div class="hero-grid" style="display:flex; flex-wrap:wrap; gap:6px;">' + cards + '</div>' +
+              '</div>';
+     }).join('');
+   }
+
+   function updateBotPriorityDisplay() {
+     var el = document.getElementById('botPriorityDisplay');
+     if (el) {
+       var remaining = [];
+       for (var g = 0; g < draftGroups.length; g++) {
+         for (var i = 0; i < draftGroups[g].length; i++) {
+           if (!draftGroups[g][i].drafted) { remaining.push(draftGroups[g][i]); }
+         }
        }
-       
-       updateAllTeamsDisplay();
-       updateAvailableItemsDisplay();
-       updateBotPriorityDisplay();
-       updateBotTraitsPriorityDisplay();
-       
-       advanceTurn();
+       remaining.sort(function(a, b){
+         var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+         var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+         if (ta !== tb) { return ta - tb; }
+         return a.displayName.localeCompare(b.displayName);
+       });
+       el.innerHTML = remaining.slice(0, 20).map(function(it){ return s6Card(it); }).join('');
+     }
+     var t = document.getElementById('botTraitsPriorityDisplay');
+     if (t) { t.innerHTML = ''; }
+   }
+
+   // Export the generated pool as text to the clipboard.
+   function exportDraftPool() {
+     try {
+       var lines = ['MODOK League Season 6.0 Draft Pool', ''];
+       draftGroups.forEach(function(group, gi) {
+         var label = (currentDraftMode === DRAFT_MODES.ORDER) ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi]) : ('Group ' + (gi + 1));
+         lines.push('== ' + label + ' ==');
+         group.forEach(function(item){ lines.push('  ' + item.displayName); });
+         lines.push('');
+       });
+       var text = lines.join('\n');
+       var ta = document.createElement('textarea');
+       ta.value = text;
+       document.body.appendChild(ta);
+       ta.select();
+       document.execCommand('copy');
+       document.body.removeChild(ta);
+       alert('Draft pool copied to clipboard.');
+     } catch (e) {
+       alert('Error exporting draft pool: ' + e.message);
      }
    }
    

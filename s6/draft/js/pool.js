@@ -130,7 +130,7 @@ function s6RandomHero(heroPool, rng) {
 }
 
 // Build a draftable item. Spider-Woman gets a distinct second aspect.
-function s6MakeItem(hero, aspect, rng) {
+function s6MakeItem(hero, aspect, rng, group) {
   var aspects = [aspect];
   if (hero === 'Spider-Woman') {
     aspects.push(s6SecondAspect(aspect, rng));
@@ -140,7 +140,8 @@ function s6MakeItem(hero, aspect, rng) {
     aspect: aspect,
     aspects: aspects,
     displayName: hero + ' - ' + aspects.join(' / '),
-    tier: (typeof draftOrder !== 'undefined') ? draftOrder.indexOf(hero) : -1
+    tier: (typeof draftOrder !== 'undefined') ? draftOrder.indexOf(hero) : -1,
+    group: (typeof group === 'number') ? group : -1
   };
 }
 
@@ -195,7 +196,7 @@ function generateS6DraftPool(options, rng) {
         if (single && usedHeroes[hero]) { continue; }
         break;
       }
-      var item = s6MakeItem(hero, aspect, rng);
+      var item = s6MakeItem(hero, aspect, rng, g);
       group.push(item);
       bump(hero, 1);
     }
@@ -218,7 +219,7 @@ function generateS6DraftPool(options, rng) {
     }
     var aspect = (mode === DRAFT_MODES.ORDER) ? MAIN_ASPECTS[gi] : s6RandomAspect(rng);
     bump(target.hero, -1);
-    groups[gi][idx] = s6MakeItem(R, aspect, rng);
+    groups[gi][idx] = s6MakeItem(R, aspect, rng, gi);
     bump(R, 1);
   });
 
