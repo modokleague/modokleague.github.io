@@ -36,7 +36,7 @@ var draftOrder = [
 // Current: Wonder Man (T3), Hercules (T4), Tigra (T5), Hulkling (T5), Falcon (T5), Winter Soldier (T5)
 // Updated: replaced Black Panther (Shuri) and Silk with Wonder Man and Hercules (S5 new additions)
 
-var REQUIRED_HEROES = ['Wonder Man', 'Hercules', 'Tigra', 'Hulkling', 'Falcon', 'Winter Soldier'];
+var REQUIRED_HEROES = [];
 
 // ===== TEAM NAME POOLS =====
 // Alphabetized pools of villain/character names for team naming
