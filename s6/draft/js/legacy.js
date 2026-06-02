@@ -383,9 +383,10 @@
 
      // Required heroes (only when the feature is enabled).
      var requireHeroesEnabled = document.getElementById('requireHeroesCheckbox').checked;
-     var requiredHeroesList = requireHeroesEnabled
-       ? REQUIRED_HEROES.filter(function(hero) { return heroPool.indexOf(hero) !== -1; })
-       : [];
+     var required = requireHeroesEnabled ? REQUIRED_HEROES.slice() : [];
+     // Additional heroes are always treated as required so they appear in the pool.
+     additionalHeroes.forEach(function(h) { if (required.indexOf(h) === -1) { required.push(h); } });
+     var requiredHeroesList = required.filter(function(hero) { return heroPool.indexOf(hero) !== -1; });
 
      var s6Result = generateS6DraftPool({
        mode: currentDraftMode,
