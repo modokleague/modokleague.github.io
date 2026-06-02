@@ -482,6 +482,12 @@
      var raw = document.getElementById('teamListInput').value.trim();
      var custom = raw ? raw.split('\n').map(function(n){ return n.trim(); }).filter(function(n){ return n.length > 0; }) : [];
      if (custom.length > 0) { return custom[0]; }
+     // No custom names: the player is the "A" kouple (its name came from the A-group pool),
+     // regardless of where it landed in the randomized draft order.
+     var aPool = (typeof teamNamePools !== 'undefined' && teamNamePools[0]) ? teamNamePools[0] : [];
+     for (var i = 0; i < draftOrderTeams.length; i++) {
+       if (aPool.indexOf(draftOrderTeams[i]) !== -1) { return draftOrderTeams[i]; }
+     }
      return draftOrderTeams.length > 0 ? draftOrderTeams[0] : '';
    }
 
