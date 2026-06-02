@@ -43,6 +43,9 @@
    // Additional heroes added by the user (kept current with new releases)
    var additionalHeroes = [];
 
+   // Snapshot of the last generation's settings + draft order, for Export Draft Pool.
+   var lastDraftMeta = null;
+
   // Banned traits
   var bannedTraits = [];
 
@@ -362,8 +365,10 @@
    // Generate pool button event listener
    document.getElementById('goButton').addEventListener('click', function() {
    try {
-     var seedInput = document.getElementById('seedInput').value;
-     var rng = new Random(seedInput || Math.random());
+     var seedRaw = document.getElementById('seedInput').value.trim();
+     var seedProvided = seedRaw.length > 0;
+     var seedUsed = seedProvided ? seedRaw : ('auto-' + Math.floor(Math.random() * 1e9));
+     var rng = new Random(seedUsed);
      
      var numberOfTeams = parseInt(document.getElementById('teamsInput').value);
      var numberOfExtras = parseInt(document.getElementById('extrasInput').value) || 6;
@@ -468,21 +473,32 @@
        return '<div class="kouple-card">' + (index + 1) + '. ' + team + '</div>';
      }).join('');
 
-     // Excluded heroes (meaningful in Single Universe).
-     if (currentUniverseMode === UNIVERSE_MODES.SINGLE && s6Excluded.length > 0) {
-       document.getElementById('resultExcluded').innerHTML = s6Excluded.map(function(hero) {
+     // Excluded heroes (available heroes that did not land in any group) - shown in both modes,
+     // so the user can always see which heroes are not in the draft pool groups.
+     var exEl = document.getElementById('resultExcluded');
+     if (s6Excluded.length > 0) {
+       exEl.innerHTML = s6Excluded.map(function(hero) {
          return '<div class="hero-card">' + hero + '</div>';
        }).join('');
      } else {
-       document.getElementById('resultExcluded').innerHTML =
-         '<div style="padding: 20px; text-align: center; color: #666; font-style: italic;">' +
-         (currentUniverseMode === UNIVERSE_MODES.SINGLE ? 'No heroes excluded.' : 'Not applicable in Multiverse (draft with replacement).') +
-         '</div>';
+       exEl.innerHTML = '<div style="padding: 20px; text-align: center; color: #666; font-style: italic;">All available heroes appear in the draft pool.</div>';
      }
+
+     // Snapshot settings + draft order for Export Draft Pool.
+     lastDraftMeta = {
+       mode: currentDraftMode, universe: currentUniverseMode,
+       numberOfTeams: numberOfTeams, numberOfExtras: numberOfExtras, itemsPerGroup: itemsPerGroup,
+       requireHeroesEnabled: requireHeroesEnabled,
+       additionalHeroes: additionalHeroes.slice(), bannedHeroes: bannedHeroes.slice(),
+       seedProvided: seedProvided, seed: seedUsed, teams: teams.slice()
+     };
+
+     var ds = document.getElementById('displayedSeed');
+     if (ds) { ds.textContent = seedUsed; }
 
      document.getElementById('results').style.display = 'block';
      document.getElementById('footerNote').style.display = 'block';
-     
+
      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
    } catch (error) {
       alert('Error generating draft pool: ' + error.message);
@@ -851,13 +867,42 @@
    // Export the generated pool as text to the clipboard.
    function exportDraftPool() {
      try {
+       var m = lastDraftMeta || {};
        var lines = ['MODOK League Season 6.0 Draft Pool', ''];
+
+       // Draft pool groups (items alphabetical within each group)
        draftGroups.forEach(function(group, gi) {
-         var label = (currentDraftMode === DRAFT_MODES.ORDER) ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi]) : ('Group ' + (gi + 1));
+         var label = (m.mode === DRAFT_MODES.ORDER || currentDraftMode === DRAFT_MODES.ORDER)
+           ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi]) : ('Group ' + (gi + 1));
          lines.push('== ' + label + ' ==');
-         group.forEach(function(item){ lines.push('  ' + item.displayName); });
+         group.slice().sort(function(a, b){ return a.displayName.localeCompare(b.displayName); })
+           .forEach(function(item){ lines.push('  ' + item.displayName); });
          lines.push('');
        });
+
+       // Draft order
+       lines.push('== Draft Order ==');
+       (m.teams || []).forEach(function(t, i){ lines.push('  ' + (i + 1) + '. ' + t); });
+       lines.push('');
+
+       // Excluded heroes (not in any group)
+       lines.push('== Excluded Heroes (not in any group) ==');
+       if (s6Excluded && s6Excluded.length) { s6Excluded.forEach(function(h){ lines.push('  ' + h); }); }
+       else { lines.push('  (none)'); }
+       lines.push('');
+
+       // User choices / settings
+       lines.push('== Settings ==');
+       lines.push('  Draft mode: ' + (m.mode || currentDraftMode));
+       lines.push('  Universe: ' + (m.universe || currentUniverseMode));
+       lines.push('  Kouples: ' + (m.numberOfTeams != null ? m.numberOfTeams : ''));
+       lines.push('  Extra choices per group: ' + (m.numberOfExtras != null ? m.numberOfExtras : ''));
+       lines.push('  Items per group: ' + (m.itemsPerGroup != null ? m.itemsPerGroup : ''));
+       lines.push('  Required heroes: ' + (m.requireHeroesEnabled ? 'ON' : 'OFF'));
+       lines.push('  Additional heroes: ' + ((m.additionalHeroes && m.additionalHeroes.length) ? m.additionalHeroes.join(', ') : '(none)'));
+       lines.push('  Banned heroes: ' + ((m.bannedHeroes && m.bannedHeroes.length) ? m.bannedHeroes.join(', ') : '(none)'));
+       lines.push('  Seed: ' + (m.seed || '(unknown)') + (m.seed ? (m.seedProvided ? ' (user-provided)' : ' (auto-generated)') : ''));
+
        var text = lines.join('\n');
        var ta = document.createElement('textarea');
        ta.value = text;
@@ -865,7 +910,7 @@
        ta.select();
        document.execCommand('copy');
        document.body.removeChild(ta);
-       alert('Draft pool copied to clipboard.');
+       alert('Draft pool, draft order, excluded heroes, and settings copied to clipboard.');
      } catch (e) {
        alert('Error exporting draft pool: ' + e.message);
      }
