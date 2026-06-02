@@ -411,12 +411,8 @@
      shuffleArray(teams, rng);
 
      // ===== SEASON 6.0: Render the four draft groups =====
-     function s6AspectColor(aspect) {
-       var c = (typeof ASPECT_COLORS !== 'undefined') && ASPECT_COLORS[aspect];
-       return c ? c.main : '#666';
-     }
      function s6ItemCard(item) {
-       return '<div class="hero-card" style="background: ' + s6AspectColor(item.aspect) +
+       return '<div class="hero-card" style="background: ' + s6ItemBg(item) +
               '; color: #fff; padding: 12px 16px;">' + item.displayName + '</div>';
      }
 
@@ -684,8 +680,20 @@
      return c ? c.main : '#666';
    }
 
+   // Card background for an item. One aspect = solid colour; two aspects (Spider-Woman) =
+   // a vertical 50/50 split of the two aspect colours, matching the S5 aspect-pair style.
+   function s6ItemBg(item) {
+     var asps = item.aspects || [item.aspect];
+     if (asps.length >= 2) {
+       var c1 = s6Color(asps[0]);
+       var c2 = s6Color(asps[1]);
+       return 'linear-gradient(90deg, ' + c1 + ' 0%, ' + c1 + ' 50%, ' + c2 + ' 50%, ' + c2 + ' 100%)';
+     }
+     return s6Color(item.aspect);
+   }
+
    function s6Card(item, extra) {
-     return '<div class="hero-card" style="background:' + s6Color(item.aspect) + '; color:#fff; padding:10px 14px;">' +
+     return '<div class="hero-card" style="background:' + s6ItemBg(item) + '; color:#fff; padding:10px 14px;">' +
             item.displayName + (extra || '') + '</div>';
    }
 
@@ -762,7 +770,7 @@
                   ' <span style="font-size:0.8em;">- ' + item.draftedBy + '</span></div>';
          }
          var clickable = isPlayerTurn && !groupUsedByPlayer && currentRound <= maxRounds;
-         var style = 'background:' + s6Color(item.aspect) + '; color:#fff; padding:10px 14px;' + (clickable ? ' cursor:pointer;' : ' opacity:0.7;');
+         var style = 'background:' + s6ItemBg(item) + '; color:#fff; padding:10px 14px;' + (clickable ? ' cursor:pointer;' : ' opacity:0.7;');
          var onclick = clickable ? (' onclick="draftS6Item(' + gi + ',' + ii + ')"') : '';
          return '<div class="hero-card" style="' + style + '"' + onclick + '>' + item.displayName + '</div>';
        }).join('');
