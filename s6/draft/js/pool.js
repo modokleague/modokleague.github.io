@@ -61,7 +61,10 @@ function s6MakeItem(hero, aspect, rng, group) {
     aspects: aspects,
     displayName: hero + ' - ' + aspects.join(' / '),
     tier: (typeof draftOrder !== 'undefined') ? draftOrder.indexOf(hero) : -1,
-    group: (typeof group === 'number') ? group : -1
+    group: (typeof group === 'number') ? group : -1,
+    // Random tie-break key: orders same-hero/different-aspect items randomly
+    // (seed-stable) wherever items are sorted by tier.
+    tieBreak: (rng && rng.next) ? rng.next() : 0
   };
 }
 

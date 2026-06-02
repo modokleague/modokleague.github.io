@@ -371,12 +371,7 @@
      allHeroes = allItems.map(function(item) { return item.hero; });
 
      // Bot priority: items sorted by tier (lower draftOrder index = higher priority).
-     s6BotPriority = allItems.slice().sort(function(a, b) {
-       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-       if (ta !== tb) { return ta - tb; }
-       return a.displayName.localeCompare(b.displayName);
-     });
+     s6BotPriority = allItems.slice().sort(s6TierCompare);
 
     // Get custom teams
      var customTeamList = document.getElementById('teamListInput').value.trim();
@@ -576,11 +571,7 @@
      if (Math.random() < (botSurprisePercentage / 100)) {
        return candidates[Math.floor(Math.random() * candidates.length)];
      }
-     var sorted = candidates.slice().sort(function(a, b) {
-       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-       return ta - tb;
-     });
+     var sorted = candidates.slice().sort(s6TierCompare);
      var top = sorted.slice(0, Math.min(5, sorted.length));
      var weights = [];
      for (var i = 0; i < top.length; i++) { weights.push(Math.pow(1.5, top.length - 1 - i)); }
@@ -678,6 +669,15 @@
    function s6Color(aspect) {
      var c = (typeof ASPECT_COLORS !== 'undefined') && ASPECT_COLORS[aspect];
      return c ? c.main : '#666';
+   }
+
+   // Sort by tier (lower draftOrder index = higher priority). Same hero shares a tier,
+   // so ties fall to the per-item random key: same-hero/different-aspect order is random.
+   function s6TierCompare(a, b) {
+     var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+     var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+     if (ta !== tb) { return ta - tb; }
+     return (a.tieBreak || 0) - (b.tieBreak || 0);
    }
 
    // Card background for an item. One aspect = solid colour; two aspects (Spider-Woman) =
@@ -790,12 +790,7 @@
      for (var g = 0; g < draftGroups.length; g++) {
        for (var i = 0; i < draftGroups[g].length; i++) { all.push(draftGroups[g][i]); }
      }
-     all.sort(function(a, b){
-       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-       if (ta !== tb) { return ta - tb; }
-       return a.displayName.localeCompare(b.displayName);
-     });
+     all.sort(s6TierCompare);
      el.innerHTML = all.map(function(item){
        if (item.drafted) {
          return '<div class="hero-card" style="opacity:0.35; padding:10px 14px;">' + item.displayName +
