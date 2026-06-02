@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Pool Validator — MODOK League S5</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      background: #f0f2f5;
+      color: #212121;
+    }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 20px; }
+
+    header { margin-bottom: 20px; }
+    header h1 { font-size: 22px; font-weight: 700; }
+    header .subtitle { color: #666; font-size: 13px; margin-top: 4px; }
+
+    h2 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #555; }
+
+    /* ---- Settings panel ---- */
+    .panel {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #555;
+      margin-bottom: 4px;
+    }
+    .field input[type="number"],
+    .field select {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .field-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 20px;
+    }
+    .field-checkbox label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      cursor: pointer;
+    }
+    .field-checkbox input { width: 16px; height: 16px; cursor: pointer; }
+
+    #run-btn {
+      background: #1565c0;
+      color: white;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #run-btn:hover { background: #0d47a1; }
+    #run-btn:disabled { background: #90a4ae; cursor: not-allowed; }
+
+    /* ---- Status ---- */
+    #status-area {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 12px;
+      min-height: 18px;
+      font-style: italic;
+    }
+
+    /* ---- Summary grid ---- */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .summary-item {
+      background: #f8f8f8;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 10px 12px;
+    }
+    .summary-item .s-label {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .summary-item .s-value {
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 2px;
+      color: #1565c0;
+    }
+    .run-meta { font-size: 12px; color: #777; }
+    .run-meta strong { color: #444; }
+
+    /* ---- Tables ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      background: #eeeeee;
+      padding: 6px 10px;
+      text-align: left;
+      border: 1px solid #d0d0d0;
+      white-space: nowrap;
+    }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { background: #e0e0e0; }
+    th.sort-asc::after  { content: ' \25B2'; font-size: 10px; }
+    th.sort-desc::after { content: ' \25BC'; font-size: 10px; }
+
+    td {
+      padding: 5px 10px;
+      border: 1px solid #d8d8d8;
+    }
+    tbody tr:nth-child(even) td { background: #fafafa; }
+
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .muted { color: #999; font-size: 12px; font-style: italic; }
+
+    .section-note {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    /* colour key */
+    .color-key { display: flex; gap: 16px; font-size: 12px; margin-bottom: 8px; }
+    .color-key span { display: flex; align-items: center; gap: 5px; }
+    .swatch { width: 12px; height: 12px; border: 1px solid rgba(0,0,0,.15); border-radius: 2px; display: inline-block; }
+  </style>
+</head>
+<body>
+  <!-- Hidden inputs that pairing.js reads from the DOM -->
+  <input type="hidden" id="adjacentProbability" value="10">
+  <input type="hidden" id="doubleAspectWeight"  value="25">
+
+  <div class="container">
+    <header>
+      <h1>Draft Pool Validator</h1>
+      <p class="subtitle">Statistical validation for MODOK League S5 draft pool generation</p>
+    </header>
+
+    <div class="panel">
+      <h2>Settings</h2>
+      <div class="settings-grid">
+        <div class="field">
+          <label for="cfg-iterations">Iterations</label>
+          <input type="number" id="cfg-iterations" value="1000" min="100" max="10000" step="100">
+        </div>
+        <div class="field">
+          <label for="cfg-teams">Teams</label>
+          <input type="number" id="cfg-teams" value="8" min="2" max="12">
+        </div>
+        <div class="field">
+          <label for="cfg-mode">Pairing Mode</label>
+          <select id="cfg-mode">
+            <option value="sextile">Sextile</option>
+            <option value="quartile">Quartile</option>
+            <option value="random">Random</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cfg-adjacent">Adjacent Probability %</label>
+          <input type="number" id="cfg-adjacent" value="10" min="0" max="100">
+        </div>
+        <div class="field">
+          <label for="cfg-double-weight">Double Aspect Weight %</label>
+          <input type="number" id="cfg-double-weight" value="25" min="0" max="100">
+        </div>
+        <div class="field-checkbox">
+          <input type="checkbox" id="cfg-require">
+          <label for="cfg-require">Require Heroes</label>
+        </div>
+      </div>
+      <button id="run-btn" onclick="runValidation()">Run Validation</button>
+    </div>
+
+    <div id="status-area"></div>
+    <div id="results-area"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/globals.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/tiers.js"></script>
+  <script src="js/pairing.js"></script>
+  <script>
+  'use strict';
+
+  // ============================================================
+  // MODULE-LEVEL STATE
+  // ============================================================
+
+  var lastRunData = null;
+
+  // Sort state per table: { col, dir }
+  var sortState = {
+    'hero-table':        { col: 'hero',     dir: 'asc'  },
+    'tier-table':        { col: 'tierPair', dir: 'asc'  },
+    'aspect-pair-table': { col: 'pair',     dir: 'asc'  },
+    'aspect-bal-table':  { col: 'aspect',   dir: 'asc'  }
+  };
+
+  // Column definitions per table: key, label, num (right-align), def (default dir on first click)
+  var COLS = {
+    'hero-table': [
+      { key: 'hero',        label: 'Hero',       num: false, def: 'asc'  },
+      { key: 'appearances', label: 'Appearances', num: true,  def: 'desc' },
+      { key: 'observedPct', label: '% of Runs',  num: true,  def: 'desc' },
+      { key: 'expectedPct', label: 'Expected %', num: true,  def: 'desc' }
+    ],
+    'tier-table': [
+      { key: 'tierPair',  label: 'Tier Pair',  num: false, def: 'asc'  },
+      { key: 'count',     label: 'Count',      num: true,  def: 'desc' },
+      { key: 'obsFrac',   label: '% of Pairs', num: true,  def: 'desc' },
+      { key: 'expFrac',   label: 'Expected %', num: true,  def: 'desc' },
+      { key: 'deviation', label: 'Deviation',  num: true,  def: 'desc' }
+    ],
+    'aspect-pair-table': [
+      { key: 'pair',      label: 'Aspect Pair', num: false, def: 'asc'  },
+      { key: 'type',      label: 'Type',        num: false, def: 'asc'  },
+      { key: 'count',     label: 'Count',       num: true,  def: 'desc' },
+      { key: 'obsFrac',   label: '% of Pairs',  num: true,  def: 'desc' },
+      { key: 'expFrac',   label: 'Expected %',  num: true,  def: 'desc' },
+      { key: 'deviation', label: 'Deviation',   num: true,  def: 'desc' }
+    ],
+    'aspect-bal-table': [
+      { key: 'aspect',      label: 'Aspect',      num: false, def: 'asc'  },
+      { key: 'appearances', label: 'Appearances', num: true,  def: 'desc' },
+      { key: 'obsPct',      label: '% of Slots',  num: true,  def: 'desc' }
+    ]
+  };
+
+  // ============================================================
+  // GENERIC TABLE UTILITIES
+  // ============================================================
+
+  function sortRows(rows, col, dir) {
+    return rows.slice().sort(function(a, b) {
+      var av = a[col], bv = b[col];
+      if (typeof av === 'string') {
+        return dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+      }
+      return dir === 'asc' ? av - bv : bv - av;
+    });
+  }
+
+  // Builds <thead> from COLS[tableId] with sort-indicator classes.
+  function tableHead(tableId) {
+    var state = sortState[tableId];
+    var cols  = COLS[tableId];
+    return '<thead><tr>' + cols.map(function(c) {
+      var cls = 'sortable' + (c.num ? ' num' : '') +
+                (c.key === state.col ? ' sort-' + state.dir : '');
+      return '<th class="' + cls + '" data-col="' + c.key + '" data-def="' + c.def + '">' +
+             c.label + '</th>';
+    }).join('') + '</tr></thead>';
+  }
+
+  // Signed-percentage display for a pre-computed relative deviation.
+  function devStr(deviation, expFrac) {
+    if (expFrac === 0) return deviation === 0 ? '—' : 'N/A';
+    if (!isFinite(deviation)) return 'N/A';
+    return (deviation > 0 ? '+' : '') + (deviation * 100).toFixed(1) + '%';
+  }
+
+  // ============================================================
+  // HERO SELECTION (no DOM, no legacy.js dependency)
+  // ============================================================
+
+  function selectHeroes(n, rng, requireHeroesEnabled) {
+    var pool = draftOrder.slice();
+    var selected;
+
+    if (requireHeroesEnabled) {
+      var req = REQUIRED_HEROES.filter(function(h) {
+        return pool.indexOf(h) !== -1;
+      });
+      var nonReq = pool.filter(function(h) {
+        return req.indexOf(h) === -1;
+      });
+      shuffleArray(nonReq, rng);
+      selected = req.concat(nonReq.slice(0, n - req.length));
+    } else {
+      shuffleArray(pool, rng);
+      selected = pool.slice(0, n);
+    }
+
+    selected.sort(function(a, b) {
+      return draftOrder.indexOf(a) - draftOrder.indexOf(b);
+    });
+
+    return selected;
+  }
+
+  // ============================================================
+  // EXPECTED VALUE FORMULAS
+  // ============================================================
+
+  // Sextile/quartile expected tier-pair fraction.
+  // Simplified model (equal tier sizes). Actual may differ due to
+  // random hero selection creating unequal tiers.
+  function expectedTierPairFrac(tierPair, pairingMode, adjacentProb) {
+    if (pairingMode === 'quartile') {
+      return (tierPair === 'T1-T4' || tierPair === 'T2-T3') ? 0.5 : 0;
+    }
+    if (pairingMode === 'sextile') {
+      if (tierPair === 'T3-T4') return 1 / 3;
+      if (tierPair === 'T1-T6' || tierPair === 'T2-T5') return (1 / 3) * (1 - adjacentProb);
+      if (tierPair === 'T1-T5' || tierPair === 'T2-T6') return (1 / 3) * adjacentProb;
+    }
+    return 0;
+  }
+
+  // Aspect pair probabilities — exact derivation.
+  //
+  // Given aspect1=X, the final aspect2 distribution is:
+  //   P(aspect2=X  | aspect1=X)     = (1/4) * w           [initial double, kept]
+  //   P(aspect2=Y  | aspect1=X,Y≠X) = 1/4 + (1-w)/12     [non-double + rejected-double re-roll]
+  //
+  // Unordered pair fractions:
+  //   P({X,X})                = (1/4)*(1/4)*w  = w/16
+  //   P({X,Y} unordered, X≠Y) = 2*(1/4)*(1/4+(1-w)/12) = (4-w)/24
+
+  function expectedDoubleFrac(w) {
+    return w / 16;
+  }
+
+  function expectedMixedFrac(w) {
+    return (4 - w) / 24;
+  }
+
+  // ============================================================
+  // COLOR CODING
+  // ============================================================
+
+  // Relative deviation thresholds: <5% green, 5-15% yellow, >15% red.
+  function deviationColor(observed, expected) {
+    if (expected === 0) return (observed === 0) ? '#c8e6c9' : '#ffcdd2';
+    var rel = Math.abs(observed - expected) / expected;
+    if (rel < 0.05) return '#c8e6c9';
+    if (rel < 0.15) return '#fff9c4';
+    return '#ffcdd2';
+  }
+
+  // Absolute percentage-point thresholds for hero appearances:
+  // <5pp green, 5-10pp yellow, >10pp red.
+  function heroDeviationColor(observedPct, expectedPct) {
+    var abs = Math.abs(observedPct - expectedPct);
+    if (abs < 5)  return '#c8e6c9';
+    if (abs < 10) return '#fff9c4';
+    return '#ffcdd2';
+  }
+
+  // ============================================================
+  // HELPERS
+  // ============================================================
+
+  function pct(v, decimals) {
+    if (decimals === undefined) decimals = 2;
+    return v.toFixed(decimals) + '%';
+  }
+
+  function sumObj(obj) {
+    return Object.keys(obj).reduce(function(s, k) { return s + obj[k]; }, 0);
+  }
+
+  // ============================================================
+  // MAIN VALIDATION RUNNER
+  // ============================================================
+
+  function runValidation() {
+    var iterations       = parseInt(document.getElementById('cfg-iterations').value);
+    var numberOfTeams    = parseInt(document.getElementById('cfg-teams').value);
+    var pairingMode      = document.getElementById('cfg-mode').value;
+    var adjacentProbPct  = parseInt(document.getElementById('cfg-adjacent').value);
+    var doubleWeightPct  = parseInt(document.getElementById('cfg-double-weight').value);
+    var requireHeroesEnabled = document.getElementById('cfg-require').checked;
+
+    if (isNaN(iterations)    || iterations < 1)  iterations    = 1000;
+    if (isNaN(numberOfTeams) || numberOfTeams < 1) numberOfTeams = 8;
+    if (isNaN(adjacentProbPct))  adjacentProbPct  = 0;
+    if (isNaN(doubleWeightPct))  doubleWeightPct  = 25;
+
+    // Wire up the hidden DOM inputs that pairing.js reads internally.
+    document.getElementById('adjacentProbability').value = adjacentProbPct;
+    document.getElementById('doubleAspectWeight').value  = doubleWeightPct;
+
+    var adjacentProb = adjacentProbPct / 100;
+    var doubleWeight = doubleWeightPct / 100;
+
+    var btn = document.getElementById('run-btn');
+    btn.disabled = true;
+    document.getElementById('status-area').textContent = 'Running ' + iterations + ' iterations…';
+    document.getElementById('results-area').innerHTML  = '';
+
+    // Defer to let the browser render the "Running…" status before blocking.
+    setTimeout(function() {
+      try {
+        var result = doRun({
+          iterations:          iterations,
+          numberOfTeams:       numberOfTeams,
+          pairingMode:         pairingMode,
+          adjacentProb:        adjacentProb,
+          adjacentProbPct:     adjacentProbPct,
+          doubleWeight:        doubleWeight,
+          doubleWeightPct:     doubleWeightPct,
+          requireHeroesEnabled: requireHeroesEnabled
+        });
+        lastRunData = result;
+        renderResults(result);
+        document.getElementById('status-area').textContent =
+          'Done — ' + iterations.toLocaleString() + ' iterations in ' + result.elapsed + 'ms.';
+      } catch (err) {
+        document.getElementById('status-area').textContent = 'Error: ' + err.message;
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+      }
+    }, 20);
+  }
+
+  function doRun(cfg) {
+    var heroAppearances  = {};
+    var tierPairCounts   = {};
+    var totalHeroPairs   = 0;
+    var aspectPairCounts = {};
+    var totalAspectPairs = 0;
+    var aspectAppearances = {};
+
+    draftOrder.forEach(function(h) { heroAppearances[h] = 0; });
+    aspectsList.forEach(function(a) { aspectAppearances[a] = 0; });
+
+    var heroPairsNeeded = 2 * cfg.numberOfTeams;
+    var heroCount       = heroPairsNeeded * 2;
+
+    var start = Date.now();
+
+    for (var iter = 0; iter < cfg.iterations; iter++) {
+      var rng      = new Random(iter);
+      var selected = selectHeroes(heroCount, rng, cfg.requireHeroesEnabled);
+
+      // Hero appearances
+      for (var i = 0; i < selected.length; i++) {
+        heroAppearances[selected[i]]++;
+      }
+
+      // Hero pairs
+      var heroPairs = createHeroPairs(selected, cfg.pairingMode, rng);
+      for (var p = 0; p < heroPairs.length; p++) {
+        var hp = heroPairs[p];
+        if (hp.tier1 !== null && hp.tier2 !== null) {
+          var lo  = Math.min(hp.tier1, hp.tier2);
+          var hi  = Math.max(hp.tier1, hp.tier2);
+          var tKey = 'T' + lo + '-T' + hi;
+          tierPairCounts[tKey] = (tierPairCounts[tKey] || 0) + 1;
+        }
+      }
+      totalHeroPairs += heroPairs.length;
+
+      // Aspect pairs
+      var aspectPairs = createAspectPairs(heroPairsNeeded, rng);
+      for (var a = 0; a < aspectPairs.length; a++) {
+        var ap   = aspectPairs[a];
+        var aKey = ap.aspect1 + ' + ' + ap.aspect2; // already alphabetically normalised
+        aspectPairCounts[aKey] = (aspectPairCounts[aKey] || 0) + 1;
+        aspectAppearances[ap.aspect1]++;
+        aspectAppearances[ap.aspect2]++;
+      }
+      totalAspectPairs += aspectPairs.length;
+    }
+
+    return {
+      iterations:          cfg.iterations,
+      numberOfTeams:       cfg.numberOfTeams,
+      pairingMode:         cfg.pairingMode,
+      adjacentProb:        cfg.adjacentProb,
+      adjacentProbPct:     cfg.adjacentProbPct,
+      doubleWeight:        cfg.doubleWeight,
+      doubleWeightPct:     cfg.doubleWeightPct,
+      requireHeroesEnabled: cfg.requireHeroesEnabled,
+      heroCount:           heroCount,
+      heroPairsNeeded:     heroPairsNeeded,
+      heroAppearances:     heroAppearances,
+      tierPairCounts:      tierPairCounts,
+      totalHeroPairs:      totalHeroPairs,
+      aspectPairCounts:    aspectPairCounts,
+      totalAspectPairs:    totalAspectPairs,
+      aspectAppearances:   aspectAppearances,
+      elapsed:             Date.now() - start
+    };
+  }
+
+  // ============================================================
+  // RENDER ORCHESTRATOR
+  // ============================================================
+
+  function renderResults(data) {
+    var html = '';
+    html += renderSummary(data);
+    html += renderHeroTable(data);
+    if (data.pairingMode !== 'random') html += renderTierPairs(data);
+    html += renderAspectPairs(data);
+    html += renderAspectBalance(data);
+
+    document.getElementById('results-area').innerHTML = html;
+    attachAllSortHandlers();
+  }
+
+  // ============================================================
+  // SECTION 1 — RUN SUMMARY
+  // ============================================================
+
+  function renderSummary(data) {
+    var items = [
+      { label: 'Iterations',         value: data.iterations.toLocaleString() },
+      { label: 'Total Hero Pairs',   value: data.totalHeroPairs.toLocaleString() },
+      { label: 'Total Aspect Pairs', value: data.totalAspectPairs.toLocaleString() },
+      { label: 'Elapsed',            value: data.elapsed + ' ms' }
+    ];
+    var grid = items.map(function(it) {
+      return '<div class="summary-item"><div class="s-label">' + it.label +
+        '</div><div class="s-value">' + it.value + '</div></div>';
+    }).join('');
+
+    return '<div class="panel">' +
+      '<h2>Run Summary</h2>' +
+      '<div class="summary-grid">' + grid + '</div>' +
+      '<div class="run-meta">' +
+        'Mode: <strong>' + data.pairingMode + '</strong> &nbsp;|&nbsp; ' +
+        'Teams: <strong>' + data.numberOfTeams + '</strong> &nbsp;|&nbsp; ' +
+        'Heroes selected per run: <strong>' + data.heroCount + '</strong> &nbsp;|&nbsp; ' +
+        'Pairs per run: <strong>' + data.heroPairsNeeded + '</strong> &nbsp;|&nbsp; ' +
+        'Adjacent prob: <strong>' + data.adjacentProbPct + '%</strong> &nbsp;|&nbsp; ' +
+        'Double weight: <strong>' + data.doubleWeightPct + '%</strong>' +
+        (data.requireHeroesEnabled ? ' &nbsp;|&nbsp; <strong>Require Heroes ON</strong>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // SECTION 2 — HERO APPEARANCE FREQUENCY
+  // ============================================================
+
+  function renderHeroTable(data) {
+    var reqSet = {};
+    if (data.requireHeroesEnabled) {
+      REQUIRED_HEROES.forEach(function(h) {
+        if (draftOrder.indexOf(h) !== -1) reqSet[h] = true;
+      });
+    }
+    var reqCount   = Object.keys(reqSet).length;
+    var nonReqPool = draftOrder.length - reqCount;
+    var nonReqNeed = data.heroCount - reqCount;
+
+    var rows = draftOrder.map(function(h) {
+      var isReq       = reqSet[h] === true;
+      var expectedPct = isReq ? 100 : (nonReqPool > 0 ? (nonReqNeed / nonReqPool) * 100 : 0);
+      var appearances = data.heroAppearances[h] || 0;
+      return {
+        hero:        h,
+        appearances: appearances,
+        observedPct: (appearances / data.iterations) * 100,
+        expectedPct: expectedPct,
+        required:    isReq
+      };
+    });
+
+    var state  = sortState['hero-table'];
+    var sorted = sortRows(rows, state.col, state.dir);
+
+    var note = data.requireHeroesEnabled
+      ? 'Required heroes expected at 100%. Others expected at ' +
+        pct(nonReqPool > 0 ? nonReqNeed / nonReqPool * 100 : 0, 1) + '.'
+      : 'Each hero expected in ' + pct(data.heroCount / draftOrder.length * 100, 1) +
+        ' of runs (' + data.heroCount + ' of ' + draftOrder.length + ' selected per run).';
+
+    var tbody = sorted.map(function(row) {
+      var bg = heroDeviationColor(row.observedPct, row.expectedPct);
+      return '<tr style="background:' + bg + '">' +
+        '<td>' + row.hero + (row.required ? ' <em style="color:#888;font-size:11px">(req)</em>' : '') + '</td>' +
+        '<td class="num bold">' + row.appearances.toLocaleString() + '</td>' +
+        '<td class="num bold">' + pct(row.observedPct, 1) + '</td>' +
+        '<td class="num">' + pct(row.expectedPct, 1) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    return '<div class="panel">' +
+      '<h2>Hero Appearance Frequency</h2>' +
+      '<p class="section-note">' + note + ' Click column headers to sort.</p>' +
+      colorKey('abs') +
+      '<table id="hero-table">' + tableHead('hero-table') + '<tbody>' + tbody + '</tbody></table>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // SECTION 3 — HERO TIER PAIRING DISTRIBUTION
+  // ============================================================
+
+  function renderTierPairs(data) {
+    var expectedKeys = data.pairingMode === 'sextile'
+      ? ['T1-T6', 'T2-T5', 'T3-T4', 'T1-T5', 'T2-T6']
+      : ['T1-T4', 'T2-T3'];
+
+    var unexpectedKeys = Object.keys(data.tierPairCounts).filter(function(k) {
+      return expectedKeys.indexOf(k) === -1;
+    }).sort();
+
+    var rows = expectedKeys.concat(unexpectedKeys).map(function(tp) {
+      var count     = data.tierPairCounts[tp] || 0;
+      var obsFrac   = data.totalHeroPairs > 0 ? count / data.totalHeroPairs : 0;
+      var expFrac   = expectedTierPairFrac(tp, data.pairingMode, data.adjacentProb);
+      var deviation = expFrac > 0 ? (obsFrac - expFrac) / expFrac : (count > 0 ? 999 : 0);
+      return {
+        tierPair:     tp,
+        count:        count,
+        obsFrac:      obsFrac,
+        expFrac:      expFrac,
+        deviation:    deviation,
+        isUnexpected: unexpectedKeys.indexOf(tp) !== -1
+      };
+    });
+
+    var state  = sortState['tier-table'];
+    var sorted = sortRows(rows, state.col, state.dir);
+
+    var tieredTotal = sumObj(data.tierPairCounts);
+    var untiered    = data.totalHeroPairs - tieredTotal;
+
+    var tbody = sorted.map(function(row) {
+      var devBg = deviationColor(row.obsFrac, row.expFrac);
+      return '<tr>' +
+        '<td><strong>' + row.tierPair + '</strong>' +
+          (row.isUnexpected ? ' <span class="muted">(unexpected)</span>' : '') + '</td>' +
+        '<td class="num">' + row.count.toLocaleString() + '</td>' +
+        '<td class="num bold">' + pct(row.obsFrac * 100, 2) + '</td>' +
+        '<td class="num">' + (row.expFrac > 0 ? pct(row.expFrac * 100, 2) : '—') + '</td>' +
+        '<td class="num" style="background:' + devBg + '">' + devStr(row.deviation, row.expFrac) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    if (untiered > 0) {
+      tbody += '<tr>' +
+        '<td><em>Untiered leftovers</em></td>' +
+        '<td class="num">' + untiered.toLocaleString() + '</td>' +
+        '<td colspan="3" class="muted">Pairs from unequal tier sizes (counted above by tier)</td>' +
+      '</tr>';
+    }
+
+    return '<div class="panel">' +
+      '<h2>Hero Tier Pairing Distribution</h2>' +
+      '<p class="section-note">' +
+        'Expected values assume equal tier sizes. Observed deviations are normal due to random hero selection. ' +
+        'Adjacent prob: ' + data.adjacentProbPct + '%. Click column headers to sort.' +
+      '</p>' +
+      colorKey('rel') +
+      '<table id="tier-table">' + tableHead('tier-table') + '<tbody>' + tbody + '</tbody></table>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // SECTION 4 — ASPECT PAIR DISTRIBUTION
+  // ============================================================
+
+  function renderAspectPairs(data) {
+    var DOUBLES = {
+      'Aggression + Aggression': true, 'Justice + Justice': true,
+      'Leadership + Leadership': true, 'Protection + Protection': true
+    };
+    var ALL_PAIR_KEYS = [
+      'Aggression + Aggression', 'Aggression + Justice',
+      'Aggression + Leadership', 'Aggression + Protection',
+      'Justice + Justice',       'Justice + Leadership',
+      'Justice + Protection',    'Leadership + Leadership',
+      'Leadership + Protection', 'Protection + Protection'
+    ];
+
+    var expDouble = expectedDoubleFrac(data.doubleWeight);
+    var expMixed  = expectedMixedFrac(data.doubleWeight);
+
+    var rows = ALL_PAIR_KEYS.map(function(key) {
+      var isDouble  = DOUBLES[key] === true;
+      var count     = data.aspectPairCounts[key] || 0;
+      var obsFrac   = data.totalAspectPairs > 0 ? count / data.totalAspectPairs : 0;
+      var expFrac   = isDouble ? expDouble : expMixed;
+      var deviation = expFrac > 0 ? (obsFrac - expFrac) / expFrac : (count > 0 ? 999 : 0);
+      return {
+        pair:      key,
+        type:      isDouble ? 'Double' : 'Mixed',
+        count:     count,
+        obsFrac:   obsFrac,
+        expFrac:   expFrac,
+        deviation: deviation,
+        isDouble:  isDouble
+      };
+    });
+
+    var state  = sortState['aspect-pair-table'];
+    var sorted = sortRows(rows, state.col, state.dir);
+
+    var totalDoubles = 0, totalMixed = 0;
+    rows.forEach(function(r) {
+      if (r.isDouble) totalDoubles += r.count;
+      else            totalMixed   += r.count;
+    });
+
+    var tbody = sorted.map(function(row) {
+      var devBg = deviationColor(row.obsFrac, row.expFrac);
+      return '<tr>' +
+        '<td>' + row.pair + '</td>' +
+        '<td>' + row.type + '</td>' +
+        '<td class="num">' + row.count.toLocaleString() + '</td>' +
+        '<td class="num bold">' + pct(row.obsFrac * 100, 2) + '</td>' +
+        '<td class="num">' + pct(row.expFrac * 100, 2) + '</td>' +
+        '<td class="num" style="background:' + devBg + '">' + devStr(row.deviation, row.expFrac) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    // Fixed subtotal footer rows (always at bottom, not sorted)
+    function subtotalRow(label, total, expFracTotal) {
+      var obsFrac = data.totalAspectPairs > 0 ? total / data.totalAspectPairs : 0;
+      var dev     = expFracTotal > 0 ? (obsFrac - expFracTotal) / expFracTotal : 0;
+      return '<tr style="background:#e8e8e8;font-weight:700;">' +
+        '<td>' + label + '</td><td></td>' +
+        '<td class="num">' + total.toLocaleString() + '</td>' +
+        '<td class="num">' + pct(obsFrac * 100, 2) + '</td>' +
+        '<td class="num">' + pct(expFracTotal * 100, 2) + '</td>' +
+        '<td class="num" style="background:' + deviationColor(obsFrac, expFracTotal) + '">' +
+          devStr(dev, expFracTotal) + '</td>' +
+      '</tr>';
+    }
+    tbody += subtotalRow('All Doubles', totalDoubles, 4 * expDouble);
+    tbody += subtotalRow('All Mixed',   totalMixed,   6 * expMixed);
+
+    return '<div class="panel">' +
+      '<h2>Aspect Pair Distribution</h2>' +
+      '<p class="section-note">' +
+        'Double weight: ' + data.doubleWeightPct + '%. ' +
+        'Expected: each double ≈ ' + pct(expDouble * 100, 2) + ', each mixed ≈ ' + pct(expMixed * 100, 2) + '. ' +
+        'P(double) = w/16, P(mixed) = (4−w)/24. Subtotal rows always stay at bottom. Click column headers to sort.' +
+      '</p>' +
+      colorKey('rel') +
+      '<table id="aspect-pair-table">' + tableHead('aspect-pair-table') + '<tbody>' + tbody + '</tbody></table>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // SECTION 5 — ASPECT BALANCE
+  // ============================================================
+
+  function renderAspectBalance(data) {
+    var totalSlots = data.totalAspectPairs * 2;
+
+    var rows = aspectsList.map(function(aspect) {
+      var appearances = data.aspectAppearances[aspect] || 0;
+      return {
+        aspect:      aspect,
+        appearances: appearances,
+        obsPct:      totalSlots > 0 ? (appearances / totalSlots) * 100 : 0
+      };
+    });
+
+    var state  = sortState['aspect-bal-table'];
+    var sorted = sortRows(rows, state.col, state.dir);
+
+    var tbody = sorted.map(function(row) {
+      var absDev = Math.abs(row.obsPct - 25);
+      var bg     = absDev < 1 ? '#c8e6c9' : (absDev < 2 ? '#fff9c4' : '#ffcdd2');
+      return '<tr>' +
+        '<td><strong>' + row.aspect + '</strong></td>' +
+        '<td class="num">' + row.appearances.toLocaleString() + '</td>' +
+        '<td class="num" style="background:' + bg + '">' + pct(row.obsPct, 2) + '</td>' +
+        '<td class="num">25.00%</td>' +
+      '</tr>';
+    }).join('');
+
+    // 3 sortable cols + 1 non-sortable "Expected %" — build thead manually
+    var balState = sortState['aspect-bal-table'];
+    var thead = '<thead><tr>' +
+      COLS['aspect-bal-table'].map(function(c) {
+        var cls = 'sortable' + (c.num ? ' num' : '') +
+                  (c.key === balState.col ? ' sort-' + balState.dir : '');
+        return '<th class="' + cls + '" data-col="' + c.key + '" data-def="' + c.def + '">' +
+               c.label + '</th>';
+      }).join('') +
+      '<th class="num">Expected %</th>' +
+    '</tr></thead>';
+
+    return '<div class="panel">' +
+      '<h2>Aspect Balance by Type</h2>' +
+      '<p class="section-note">' +
+        'Each aspect should appear in ≈ 25% of all aspect slots (aspect1 + aspect2 combined). ' +
+        'The re-roll logic preserves marginal uniformity regardless of double weight. ' +
+        'Color: &lt;1 pp green, 1–2 pp yellow, &gt;2 pp red. Click column headers to sort.' +
+      '</p>' +
+      '<table id="aspect-bal-table">' + thead + '<tbody>' + tbody + '</tbody></table>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // COLOUR KEY HELPER
+  // ============================================================
+
+  // type: 'abs' = absolute pp, 'rel' = relative %
+  function colorKey(type) {
+    var labels = type === 'abs'
+      ? ['&lt;5 pp', '5–10 pp', '&gt;10 pp']
+      : ['&lt;5% rel.', '5–15% rel.', '&gt;15% rel.'];
+    return '<div class="color-key">' +
+      '<span><span class="swatch" style="background:#c8e6c9"></span> ' + labels[0] + '</span>' +
+      '<span><span class="swatch" style="background:#fff9c4"></span> ' + labels[1] + '</span>' +
+      '<span><span class="swatch" style="background:#ffcdd2"></span> ' + labels[2] + '</span>' +
+    '</div>';
+  }
+
+  // ============================================================
+  // SORT HANDLER ATTACHMENT (all tables)
+  // ============================================================
+
+  function attachAllSortHandlers() {
+    Object.keys(COLS).forEach(function(tableId) {
+      var table = document.getElementById(tableId);
+      if (!table) return;
+      var ths = table.querySelectorAll('th.sortable');
+      for (var i = 0; i < ths.length; i++) {
+        ths[i].addEventListener('click', (function(th, tid) {
+          return function() {
+            var col   = th.getAttribute('data-col');
+            var def   = th.getAttribute('data-def') || 'asc';
+            var state = sortState[tid];
+            if (state.col === col) {
+              state.dir = state.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+              state.col = col;
+              state.dir = def;
+            }
+            renderResults(lastRunData);
+          };
+        })(ths[i], tableId));
+      }
+    });
+  }
+  </script>
+</body>
+</html>
