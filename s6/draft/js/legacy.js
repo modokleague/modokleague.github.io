@@ -446,7 +446,7 @@
      // ===== SEASON 6.0: Render the four draft groups =====
      function s6ItemCard(item) {
        return '<div class="hero-card" style="background: ' + s6ItemBg(item) +
-              '; color: #fff; padding: 12px 16px;">' + item.displayName + '</div>';
+              '; color: #000; border: 2px solid #000; padding: 12px 16px;">' + item.displayName + '</div>';
      }
 
      document.getElementById('resultPool').innerHTML = draftGroups.map(function(group, gi) {
@@ -737,7 +737,7 @@
    }
 
    function s6Card(item, extra) {
-     return '<div class="hero-card" style="background:' + s6ItemBg(item) + '; color:#fff; padding:10px 14px;">' +
+     return '<div class="hero-card" style="background:' + s6ItemBg(item) + '; color:#000; border:2px solid #000; padding:10px 14px;">' +
             item.displayName + (extra || '') + '</div>';
    }
 
@@ -818,7 +818,7 @@
                   ' <span style="font-size:0.8em;">- ' + item.draftedBy + '</span></div>';
          }
          var clickable = isPlayerTurn && !groupUsedByPlayer && currentRound <= maxRounds;
-         var style = 'background:' + s6ItemBg(item) + '; color:#fff; padding:10px 14px;' + (clickable ? ' cursor:pointer;' : ' opacity:0.7;');
+         var style = 'background:' + s6ItemBg(item) + '; color:#000; border:2px solid #000; padding:10px 14px;' + (clickable ? ' cursor:pointer;' : ' opacity:0.7;');
          var onclick = clickable ? (' onclick="draftS6Item(' + gi + ',' + ii + ')"') : '';
          return '<div class="hero-card" style="' + style + '"' + onclick + '>' + item.displayName + '</div>';
        }).join('');

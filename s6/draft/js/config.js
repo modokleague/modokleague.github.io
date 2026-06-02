@@ -72,25 +72,25 @@ var ASPECT_PAIRING_CONSTRAINTS = {
 var ASPECT_COLORS = {
   'Aggression': {
     light: '#ffebee',
-    main: '#f44336',
+    main: '#ef5350',
     dark: '#c62828',
     gradient: 'linear-gradient(145deg, #ffcdd2, #ef5350)'
   },
   'Justice': {
     light: '#fff9e1',
-    main: '#ffd700',
+    main: '#ffde33',
     dark: '#f9a825',
     gradient: 'linear-gradient(145deg, #fff59d, #ffd54f)'
   },
   'Leadership': {
     light: '#e3f2fd',
-    main: '#2196f3',
+    main: '#42a5f5',
     dark: '#1565c0',
     gradient: 'linear-gradient(145deg, #90caf9, #42a5f5)'
   },
   'Protection': {
     light: '#e8f5e9',
-    main: '#4caf50',
+    main: '#66bb6a',
     dark: '#2e7d32',
     gradient: 'linear-gradient(145deg, #a5d6a7, #66bb6a)'
   }
