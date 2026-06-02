@@ -683,13 +683,19 @@
    // Card background for an item. One aspect = solid colour; two aspects (Spider-Woman) =
    // a vertical 50/50 split of the two aspect colours, matching the S5 aspect-pair style.
    function s6ItemBg(item) {
-     var asps = item.aspects || [item.aspect];
-     if (asps.length >= 2) {
-       var c1 = s6Color(asps[0]);
-       var c2 = s6Color(asps[1]);
-       return 'linear-gradient(90deg, ' + c1 + ' 0%, ' + c1 + ' 50%, ' + c2 + ' 50%, ' + c2 + ' 100%)';
+     var asps = item.aspects || [];
+     if (asps.length === 0) {
+       // Aspect-agnostic hero (Adam Warlock): four-aspect split with ~3% soft seams.
+       var A = s6Color('Aggression'), J = s6Color('Justice'), L = s6Color('Leadership'), P = s6Color('Protection');
+       return 'linear-gradient(90deg, ' + A + ' 0%, ' + A + ' 23.5%, ' + J + ' 26.5%, ' + J + ' 48.5%, ' +
+              L + ' 51.5%, ' + L + ' 73.5%, ' + P + ' 76.5%, ' + P + ' 100%)';
      }
-     return s6Color(item.aspect);
+     if (asps.length >= 2) {
+       // Two aspects (Spider-Woman): split with a ~3% soft seam.
+       var c1 = s6Color(asps[0]), c2 = s6Color(asps[1]);
+       return 'linear-gradient(90deg, ' + c1 + ' 0%, ' + c1 + ' 48.5%, ' + c2 + ' 51.5%, ' + c2 + ' 100%)';
+     }
+     return s6Color(asps[0]);
    }
 
    function s6Card(item, extra) {

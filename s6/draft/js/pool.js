@@ -50,10 +50,15 @@ function s6RandomHero(heroPool, rng) {
 
 // Build a draftable item. Spider-Woman gets a distinct second aspect.
 function s6MakeItem(hero, aspect, rng, group) {
-  var aspects = [aspect];
-  if (hero === 'Spider-Woman') {
-    aspects.push(s6SecondAspect(aspect, rng));
-    aspects.sort(); // store and present Spider-Woman's two aspects alphabetically
+  var aspects;
+  if (hero === 'Adam Warlock') {
+    aspects = []; // aspect-agnostic: Adam Warlock takes no aspect
+  } else {
+    aspects = [aspect];
+    if (hero === 'Spider-Woman') {
+      aspects.push(s6SecondAspect(aspect, rng));
+      aspects.sort(); // store and present Spider-Woman's two aspects alphabetically
+    }
   }
   // Bot draft priority: hero+aspect community win rate (higher = better). Special cases:
   //   Adam Warlock takes no aspect -> use his overall win rate.
@@ -75,9 +80,9 @@ function s6MakeItem(hero, aspect, rng, group) {
   }
   return {
     hero: hero,
-    aspect: aspect,
+    aspect: aspects.length ? aspect : null,
     aspects: aspects,
-    displayName: hero + ' - ' + aspects.join(' / '),
+    displayName: aspects.length ? (hero + ' - ' + aspects.join(' / ')) : hero,
     tier: (typeof draftOrder !== 'undefined') ? draftOrder.indexOf(hero) : -1,
     group: (typeof group === 'number') ? group : -1,
     winRate: winRate,       // combo win rate (bot priority, higher = better)
