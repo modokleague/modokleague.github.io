@@ -177,6 +177,11 @@
    <div class="footer-note" id="footerNote" style="display: none;">
      <p>Seed used: <span id="displayedSeed"></span> | <a href="#" onclick="copyToClipboard(document.getElementById('displayedSeed').textContent); return false;">Copy Seed</a></p>
    </div>
+
+   <details id="draftLogPanel" style="margin-top: 30px;">
+     <summary style="cursor: pointer; font-weight: 600; font-size: 1.1rem; padding: 10px; color: #2c2c54;">Draft Log (picks attempted, re-rolled, made)</summary>
+     <div id="draftLog" style="margin-top: 10px; max-height: 320px; overflow-y: auto; padding: 12px; background: rgba(0,0,0,0.05); border-radius: 8px; font-family: monospace; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap;"></div>
+   </details>
  </div>
 
  <!-- JavaScript Files - Load in dependency order -->

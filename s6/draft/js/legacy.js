@@ -513,6 +513,10 @@
        currentRound = 1;
        isPlayerTurn = (draftOrderTeams[0] === playerTeamName);
 
+       s6ClearLog();
+       s6Log('Draft started. You are: ' + playerTeamName);
+       s6Log('Order: ' + draftOrderTeams.join(', '));
+
        var sim = document.getElementById('draftSimulator');
        if (sim) { sim.style.display = 'block'; sim.scrollIntoView({ behavior: 'smooth' }); }
 
@@ -565,6 +569,7 @@
      if (!item || item.drafted) { return; }
      if ((teamGroupsUsed[playerTeamName] || []).indexOf(groupIndex) !== -1) { return; }
      s6AssignItem(playerTeamName, item);
+     s6Log('R' + currentRound + ' ' + playerTeamName + ' (you) drafts: ' + item.displayName + ' [G' + (item.group + 1) + ']');
      advanceS6Turn();
    }
 
@@ -604,16 +609,23 @@
 
      var alreadyHas = s6TeamAspects(team);
      var pick = s6BotSelect(candidates);
+     s6Log('R' + currentRound + ' ' + team + ' attempts: ' + pick.displayName);
      // If the pick's aspect duplicates one the team already drafted, re-pick with the
      // configured chance. Re-triggers on each re-roll; capped iterations as a safety net.
      var tries = 0;
-     while (tries++ < 25 &&
-            pick.aspects.some(function(a){ return alreadyHas[a]; }) &&
-            Math.random() < (rePickPercentage / 100)) {
+     while (tries++ < 25) {
+       var dup = s6DupAspectOf(pick, alreadyHas);
+       if (!dup) { break; }
+       if (Math.random() >= (rePickPercentage / 100)) {
+         s6Log('   keeps it (already has ' + dup + ', no re-roll)');
+         break;
+       }
        pick = s6BotSelect(candidates);
+       s6Log('   re-rolls (already has ' + dup + '): ' + pick.displayName);
      }
 
      s6AssignItem(team, pick);
+     s6Log('R' + currentRound + ' ' + team + ' drafts: ' + pick.displayName + ' [G' + (pick.group + 1) + ']');
      updateAllTeamsDisplay();
      updateAvailableItemsDisplay();
      updateBotPriorityDisplay();
@@ -637,6 +649,7 @@
          } else {
            currentRound = maxRounds + 1;
            isPlayerTurn = false;
+           s6Log('Draft complete.');
            updateDraftStatus();
            updateAllTeamsDisplay();
            updateAvailableItemsDisplay();
@@ -667,6 +680,30 @@
    function s6Card(item, extra) {
      return '<div class="hero-card" style="background:' + s6Color(item.aspect) + '; color:#fff; padding:10px 14px;">' +
             item.displayName + (extra || '') + '</div>';
+   }
+
+   // ===== Draft log =====
+
+   function s6ClearLog() {
+     var el = document.getElementById('draftLog');
+     if (el) { el.innerHTML = ''; }
+   }
+
+   function s6Log(msg) {
+     var el = document.getElementById('draftLog');
+     if (!el) { return; }
+     var line = document.createElement('div');
+     line.textContent = msg;
+     el.appendChild(line);
+     el.scrollTop = el.scrollHeight;
+   }
+
+   // First aspect of item that the team already holds, or null.
+   function s6DupAspectOf(item, aspectSet) {
+     for (var i = 0; i < item.aspects.length; i++) {
+       if (aspectSet[item.aspects[i]]) { return item.aspects[i]; }
+     }
+     return null;
    }
 
    function updateDraftStatus() {
