@@ -251,10 +251,17 @@
        }).join('');
      }
 
-     if (bannedHeroesElement && bannedHeroes && bannedHeroes.length > 0) {
-       bannedHeroesElement.innerHTML = bannedHeroes.map(function(hero) {
-         return '<div class="hero-card">' + hero + '</div>';
-       }).join('');
+     var bannedNoteElement = document.getElementById('bannedNote');
+     if (bannedHeroesElement) {
+       if (bannedHeroes && bannedHeroes.length > 0) {
+         bannedHeroesElement.innerHTML = bannedHeroes.map(function(hero) {
+           return '<div class="hero-card">' + hero + '</div>';
+         }).join('');
+         if (bannedNoteElement) { bannedNoteElement.style.display = 'none'; }
+       } else {
+         bannedHeroesElement.innerHTML = '';
+         if (bannedNoteElement) { bannedNoteElement.style.display = 'block'; }
+       }
      }
    } catch (error) {
      // Silent error handling - preserve initialization flow
@@ -418,7 +425,7 @@
        return '<div class="result-section" style="margin-bottom: 20px; padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);">' +
                 '<h3 style="margin-bottom: 15px; font-size: 1.3rem; font-weight: 600; color: #2c2c54;">' + label + '</h3>' +
                 '<div class="hero-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">' +
-                  group.map(s6ItemCard).join('') +
+                  group.slice().sort(function(a, b){ return a.displayName.localeCompare(b.displayName); }).map(s6ItemCard).join('') +
                 '</div>' +
               '</div>';
      }).join('');
@@ -770,7 +777,11 @@
      el.innerHTML = draftGroups.map(function(group, gi) {
        var groupUsedByPlayer = playerUsed.indexOf(gi) !== -1;
        var label = (currentDraftMode === DRAFT_MODES.ORDER) ? ('Group ' + (gi + 1) + ' - ' + MAIN_ASPECTS[gi]) : ('Group ' + (gi + 1));
-       var cards = group.map(function(item, ii) {
+       // Display alphabetically by name, keeping each item's real index for the click handler.
+       var ordered = group.map(function(item, ii) { return { item: item, ii: ii }; })
+         .sort(function(a, b) { return a.item.displayName.localeCompare(b.item.displayName); });
+       var cards = ordered.map(function(rec) {
+         var item = rec.item, ii = rec.ii;
          if (item.drafted) {
            return '<div class="hero-card" style="opacity:0.35; padding:10px 14px;">' + item.displayName +
                   ' <span style="font-size:0.8em;">- ' + item.draftedBy + '</span></div>';
