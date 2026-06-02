@@ -88,6 +88,18 @@ function generateS6DraftPool(options, rng) {
       'Pool size too small for all required heroes (' + requiredHeroes.length +
       ' required, ' + totalSlots + ' slots). Increase pool size or disable required heroes.' };
   }
+  // No exact-duplicate hero+aspect combos: Order needs itemsPerGroup distinct heroes
+  // per aspect-bound group; Chaos needs totalSlots distinct hero+aspect combos overall.
+  if (mode === DRAFT_MODES.ORDER && itemsPerGroup > heroPool.length) {
+    return { groups: null, excluded: [], error:
+      'Order draft needs ' + itemsPerGroup + ' distinct heroes per group but only ' +
+      heroPool.length + ' are available. Reduce kouples/extras.' };
+  }
+  if (mode === DRAFT_MODES.CHAOS && totalSlots > heroPool.length * MAIN_ASPECTS.length) {
+    return { groups: null, excluded: [], error:
+      'Chaos draft needs ' + totalSlots + ' distinct hero+aspect combos but only ' +
+      (heroPool.length * MAIN_ASPECTS.length) + ' are possible. Reduce kouples/extras.' };
+  }
 
   var usedHeroes = {};        // hero -> true (for single universe uniqueness)
   var heroCounts = {};        // hero -> count across whole pool
@@ -100,6 +112,12 @@ function generateS6DraftPool(options, rng) {
     else if (single) { usedHeroes[hero] = true; }
   }
 
+  // Track exact hero+aspect combos already placed so none repeats.
+  // For Spider-Woman the key includes both of her aspects, so she may recur
+  // with a different aspect combination but never the identical pair.
+  var usedCombos = {};
+  function comboKey(item) { return item.hero + '|' + item.aspects.slice().sort().join(','); }
+
   // Build the four groups.
   var groups = [];
   var MAX_ATTEMPTS = 10000;
@@ -107,17 +125,25 @@ function generateS6DraftPool(options, rng) {
     var group = [];
     var groupAspect = (mode === DRAFT_MODES.ORDER) ? MAIN_ASPECTS[g] : null;
     for (var s = 0; s < itemsPerGroup; s++) {
-      var hero = null, aspect = null, attempts = 0;
+      var item = null, attempts = 0;
       while (attempts++ < MAX_ATTEMPTS) {
-        aspect = (mode === DRAFT_MODES.ORDER) ? groupAspect : s6RandomAspect(rng);
-        hero = s6RandomHero(heroPool, rng);
+        var aspect = (mode === DRAFT_MODES.ORDER) ? groupAspect : s6RandomAspect(rng);
+        var hero = s6RandomHero(heroPool, rng);
         if (isComboBanned(hero, aspect)) { continue; }
         if (single && usedHeroes[hero]) { continue; }
+        var cand = s6MakeItem(hero, aspect, rng, g);
+        if (usedCombos[comboKey(cand)]) { continue; } // reject exact-duplicate combo
+        item = cand;
         break;
       }
-      var item = s6MakeItem(hero, aspect, rng, g);
+      if (!item) {
+        // Constraints too tight to find a fresh combo; accept a plain roll.
+        item = s6MakeItem(s6RandomHero(heroPool, rng),
+          (mode === DRAFT_MODES.ORDER) ? groupAspect : s6RandomAspect(rng), rng, g);
+      }
+      usedCombos[comboKey(item)] = true;
       group.push(item);
-      bump(hero, 1);
+      bump(item.hero, 1);
     }
     groups.push(group);
   }
@@ -136,9 +162,17 @@ function generateS6DraftPool(options, rng) {
       if (requiredSet[target.hero] && heroCounts[target.hero] === 1) { continue; }
       break;
     }
-    var aspect = (mode === DRAFT_MODES.ORDER) ? MAIN_ASPECTS[gi] : s6RandomAspect(rng);
+    // Build R's item, avoiding an exact-duplicate combo where the aspect can vary.
+    var newItem, tries = 0;
+    do {
+      var asp = (mode === DRAFT_MODES.ORDER) ? MAIN_ASPECTS[gi] : s6RandomAspect(rng);
+      newItem = s6MakeItem(R, asp, rng, gi);
+      tries++;
+    } while (usedCombos[comboKey(newItem)] && tries < 50);
+    delete usedCombos[comboKey(target)];
     bump(target.hero, -1);
-    groups[gi][idx] = s6MakeItem(R, aspect, rng, gi);
+    groups[gi][idx] = newItem;
+    usedCombos[comboKey(newItem)] = true;
     bump(R, 1);
   });
 
