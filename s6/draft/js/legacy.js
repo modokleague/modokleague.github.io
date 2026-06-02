@@ -608,8 +608,15 @@
      if (candidates.length === 0) { advanceS6Turn(); return; }
 
      var alreadyHas = s6TeamAspects(team);
+     // A re-roll is only possible once the kouple already holds an aspect; otherwise the
+     // first pick can never be a duplicate, so skip the redundant "attempts" line.
+     var canRepick = false;
+     for (var a in alreadyHas) { if (alreadyHas.hasOwnProperty(a)) { canRepick = true; break; } }
+
      var pick = s6BotSelect(candidates);
-     s6Log('R' + currentRound + ' ' + team + ' attempts: ' + pick.displayName);
+     if (canRepick) {
+       s6Log('R' + currentRound + ' ' + team + ' attempts: ' + pick.displayName);
+     }
      // If the pick's aspect duplicates one the team already drafted, re-pick with the
      // configured chance. Re-triggers on each re-roll; capped iterations as a safety net.
      var tries = 0;
