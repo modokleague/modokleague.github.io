@@ -260,105 +260,62 @@
      // Silent error handling - preserve initialization flow
    }
 
-   // Update bot settings display
+   // Update bot settings display (S6: only the random-pick chance slider)
    function updateBotSettings() {
      return safeExecute(function() {
-       var randomnessSlider = document.getElementById('botRandomnessSlider');
        var surpriseSlider = document.getElementById('botSurpriseSlider');
-       var randomnessValue = document.getElementById('botRandomnessValue');
        var surpriseValue = document.getElementById('botSurpriseValue');
        var description = document.getElementById('botStrategyDescription');
+       if (!surpriseSlider) { return; }
 
-       botRandomnessPercentage = parseInt(randomnessSlider.value);
        botSurprisePercentage = parseInt(surpriseSlider.value);
+       if (surpriseValue) { surpriseValue.textContent = botSurprisePercentage + '%'; }
 
-       randomnessValue.textContent = botRandomnessPercentage + '%';
-       surpriseValue.textContent = botSurprisePercentage + '%';
-
-       // Generate combined strategy description
-       // Season 5.0: Bot strategy text (4-group mode only)
-       var roundText = '';
-       if (botRandomnessPercentage === 0) {
-         roundText = 'Bots always follow strict pattern: Hero in R1&3, Aspects in R2&4';
-       } else if (botRandomnessPercentage <= 25) {
-         roundText = 'Bots prefer Hero in R1&3, Aspects in R2&4, with ' + botRandomnessPercentage + '% chance to draft opposite type';
-       } else if (botRandomnessPercentage <= 75) {
-         roundText = 'Bots have ' + botRandomnessPercentage + '% chance to ignore round preferences';
-       } else {
-         roundText = 'Bots mostly ignore round preferences (' + botRandomnessPercentage + '% chaos)';
-       }
-
-       var surpriseText = '';
+       var surpriseText;
        if (botSurprisePercentage === 0) {
-         surpriseText = 'Always use tier list priorities';
-       } else if (botSurprisePercentage <= 10) {
-         surpriseText = botSurprisePercentage + '% chance for shocking surprise picks';
+         surpriseText = 'always use tier-list priority';
        } else if (botSurprisePercentage <= 25) {
-         surpriseText = botSurprisePercentage + '% chance to ignore tier lists completely';
+         surpriseText = botSurprisePercentage + '% chance of a completely random pick';
        } else if (botSurprisePercentage <= 50) {
-         surpriseText = botSurprisePercentage + '% chance for random picks (mixed strategy)';
+         surpriseText = botSurprisePercentage + '% chance of a random pick (mixed strategy)';
        } else {
-         surpriseText = botSurprisePercentage + '% chance for random picks (mostly chaos)';
+         surpriseText = botSurprisePercentage + '% chance of a random pick (mostly chaos)';
        }
 
-       description.textContent = roundText + '. ' + surpriseText + '.';
+       if (description) {
+         description.textContent = 'Bots draft one item per group, preferring higher-tier heroes, with a ' + surpriseText + '.';
+       }
      }, null, [], 'updateBotSettings');
    }
 
-   // Update max extras and default value based on draft pool groups
+   // Update the extras maximum hint and default value.
    function updateMaxExtras() {
      return safeExecute(function() {
        var numberOfTeams = parseInt(document.getElementById('teamsInput').value) || 10;
-       var draftPoolGroups = document.getElementById('draftPoolGroups').value;
        var extrasInput = document.getElementById('extrasInput');
-       
-       var maxExtras, defaultExtras;
-       if (draftPoolGroups === '4') {
-         // For 4-group mode: total heroes needed = 2 * (teams + extras per group)
-         maxExtras = Math.floor((marvelHeroes.length / 2) - numberOfTeams);
-         defaultExtras = 3;
-       } else if (draftPoolGroups === '6') {
-         // For 6-group mode: total heroes needed = 3 * (teams + extras per group)
-         maxExtras = Math.floor((marvelHeroes.length / 3) - numberOfTeams);
-         defaultExtras = 2;
-       }
-       
-       document.getElementById('maxExtras').textContent = maxExtras;
-       
-       // Update default value if current value is the old default or if switching modes
+
+       // Tightest constraint is Single Universe: 4 * (teams + extras) <= available heroes.
+       var maxExtras = Math.max(0, Math.floor(marvelHeroes.length / 4) - numberOfTeams);
+       var defaultExtras = 3;
+
+       var maxExtrasEl = document.getElementById('maxExtras');
+       if (maxExtrasEl) { maxExtrasEl.textContent = maxExtras; }
+
        var currentValue = parseInt(extrasInput.value) || 0;
-       
-       if (currentValue === 6 || currentValue === 3 || currentValue === 0) {
-         extrasInput.value = defaultExtras;
-       }
-       
-       // Ensure current value doesn't exceed new maximum
-       if (currentValue > maxExtras) {
-         extrasInput.value = maxExtras;
-       }
-       
+       if (currentValue === 0) { extrasInput.value = Math.min(defaultExtras, maxExtras); }
+       if (parseInt(extrasInput.value) > maxExtras) { extrasInput.value = maxExtras; }
        extrasInput.setAttribute('max', maxExtras);
-      
-      // Season 5.0: Update round preferences text (4-group mode only)
-      var roundPreferencesText = document.getElementById('roundPreferencesText');
-      if (roundPreferencesText) {
-        roundPreferencesText.textContent = 'Chance to ignore round preferences (Hero R1&3, Aspects R2&4)';
-      }
-       
-       // Season 5.0: Update UI text (4-group mode only)
-       document.getElementById('draftDescription').textContent = 'Each kouple drafts 2 heroes and 2 aspect pairs over 4 rounds';
-       document.getElementById('draftRulesText').innerHTML =
-         '<strong>Draft Rules:</strong> 4 rounds total. Each kouple picks 2 heroes and 2 aspect pairs. You can choose heroes or aspect pairs freely within constraints.<br>' +
-         '<strong>Group Restrictions (4-group mode):</strong> Each kouple can only draft one hero from each hero group AND one aspect pair from each aspect pair group. Second picks must be from opposite groups.<br>' +
-         '<strong>Bot Strategy:</strong> Three-stage system - 1) Check round preferences, 2) Check for surprise picks (random), 3) Use strategic selection.<br>' +
-         '<strong>Round Preferences:</strong> Bots prefer Hero in R1&R3, Aspects in R2&4. "Bot Ignore Round Preferences" slider controls chance to draft opposite type.<br>';
-       
-       var currentValue = parseInt(extrasInput.value) || 6;
-       if (currentValue > maxExtras) {
-         extrasInput.value = maxExtras;
+
+       var desc = document.getElementById('draftDescription');
+       if (desc) { desc.textContent = 'Each kouple drafts one item from each of the four groups over four rounds'; }
+
+       var rules = document.getElementById('draftRulesText');
+       if (rules) {
+         rules.innerHTML =
+           '<strong>Draft Rules:</strong> 4 rounds, snake order. Each kouple drafts exactly one hero+aspect item from each of the four groups (one pick per group).<br>' +
+           '<strong>Bot Strategy:</strong> bots prefer higher-tier heroes (weighted by the tier list), constrained to one pick per group, with a chance of a completely random pick.<br>';
        }
-       
-       // Update bot strategy text to reflect new draft mode
+
        updateBotSettings();
      }, null, [], 'updateMaxExtras');
    }
@@ -477,12 +434,8 @@
               '</div>';
      }).join('');
 
-     // S6 has no separate aspect-pair pool.
-     document.getElementById('resultTraitsPool').innerHTML = '';
-
      // Bot priority across all items.
      document.getElementById('resultDraftBot').innerHTML = s6BotPriority.map(s6ItemCard).join('');
-     document.getElementById('resultDraftBotTraits').innerHTML = '';
 
      document.getElementById('resultDraftOrder').innerHTML = teams.map(function(team, index) {
        return '<div class="kouple-card">' + (index + 1) + '. ' + team + '</div>';
@@ -772,8 +725,6 @@
        });
        el.innerHTML = remaining.slice(0, 20).map(function(it){ return s6Card(it); }).join('');
      }
-     var t = document.getElementById('botTraitsPriorityDisplay');
-     if (t) { t.innerHTML = ''; }
    }
 
    // Export the generated pool as text to the clipboard.
