@@ -53,6 +53,7 @@ function s6MakeItem(hero, aspect, rng, group) {
   var aspects = [aspect];
   if (hero === 'Spider-Woman') {
     aspects.push(s6SecondAspect(aspect, rng));
+    aspects.sort(); // store and present Spider-Woman's two aspects alphabetically
   }
   return {
     hero: hero,
