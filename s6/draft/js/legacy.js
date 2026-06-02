@@ -710,21 +710,25 @@
 
    function updateBotPriorityDisplay() {
      var el = document.getElementById('botPriorityDisplay');
-     if (el) {
-       var remaining = [];
-       for (var g = 0; g < draftGroups.length; g++) {
-         for (var i = 0; i < draftGroups[g].length; i++) {
-           if (!draftGroups[g][i].drafted) { remaining.push(draftGroups[g][i]); }
-         }
-       }
-       remaining.sort(function(a, b){
-         var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
-         var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
-         if (ta !== tb) { return ta - tb; }
-         return a.displayName.localeCompare(b.displayName);
-       });
-       el.innerHTML = remaining.slice(0, 20).map(function(it){ return s6Card(it); }).join('');
+     if (!el) { return; }
+     // Show every item in tier order; grey out ones already drafted (no longer available).
+     var all = [];
+     for (var g = 0; g < draftGroups.length; g++) {
+       for (var i = 0; i < draftGroups[g].length; i++) { all.push(draftGroups[g][i]); }
      }
+     all.sort(function(a, b){
+       var ta = (a.tier < 0) ? Number.MAX_SAFE_INTEGER : a.tier;
+       var tb = (b.tier < 0) ? Number.MAX_SAFE_INTEGER : b.tier;
+       if (ta !== tb) { return ta - tb; }
+       return a.displayName.localeCompare(b.displayName);
+     });
+     el.innerHTML = all.map(function(item){
+       if (item.drafted) {
+         return '<div class="hero-card" style="opacity:0.35; padding:10px 14px;">' + item.displayName +
+                ' <span style="font-size:0.8em;">- ' + item.draftedBy + '</span></div>';
+       }
+       return s6Card(item);
+     }).join('');
    }
 
    // Export the generated pool as text to the clipboard.
