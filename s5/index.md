@@ -106,7 +106,7 @@ Instead of regular Standard or Expert encounter sets, the following cards are us
 
 _(Inspired by the Gene Hack Man Con of Heroes 2024 Challenge)_
 
-**CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign SAURON to one hero as their nemesis minion and ARMADILLO to the other hero. These minions are included in the encounter deck built for this scenario and are not set aside like regular nemesis minions are. There are no nemesis side schemes for this scenario.
+**CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign SAURON to one hero as their nemesis minion and ARMADILLO to the other hero. These minions, and SAURON's LIFE DRAIN attachment are included in the encounter deck built for this scenario, not set aside like regular nemesis minions are. There are no nemesis side schemes for this scenario.
 
 **CONDITION 2:** Replace the HOPE SUMMERS ally from the Home Summers modular set with a modified version of the basic HOPE SUMMERS ally used in deck building. This copy of HOPE SUMMERS gains the text "Setup. The first player controls Hope Summers. Hope Summers does not count against your ally limit. If Hope Summers leaves play, the players lose the game." Additionally, change the card cost to "-". See below for a modified version of this card. 
 
@@ -125,7 +125,7 @@ _(Inspired by the Gene Hack Man Con of Heroes 2024 Challenge)_
 > 1. 🂡 The **Treacherous Encounter Set** is detailed in the next section.
 > 2. ♦️ Start on Mister Sinister III. When Mister Sinister III is defeated, advance to Mister Sinister IV (see image below). Mister Sinister IV is identical to Master Mold III except that he has 25 health per player, 4 Scheme and 3 Attack. As a reminder of the increased stats, slide a copy of the Inifinity Gauntlet or the Desparate side of Hope’s Captor attachment behind the villain, with the stat bonuses showing.
 > 3. 📎 **Condition:** When you complete Main scheme 1B, resolve the When Revealed ability of the Stage 2 main scheme you are removing from the game before advancing to the random stage 2A. 
-> 4. 🚧 **Setup:** Put the TELEPORTED AWAY side scheme into play. Put the ARMADILLO minion into play, engaged with one of the players. Put the SAURON minion into play engaged with the other player.
+> 4. 🚧 **Setup:** Put the TELEPORTED AWAY side scheme into play. Put the ARMADILLO minion into play, engaged with one of the players. Put the SAURON minion into play engaged with the other player (leave LIFE DRAIN in the encounter deck).
 > 5. 🎁 The players start the game with two of the Next Evolution Campaign Environments in play (Team Assembled, Safehouse Established, Geared Up, Mission Prepped, Practiced Maneurvers and Prepared Defenses). You do not need to include the associated campaign minion or side scheme with any of these environments. 
 
 ### 🂡 Treacherous Encounter Set 
