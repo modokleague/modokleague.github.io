@@ -296,8 +296,15 @@
      if (typeof updateMaxExtras === 'function') { updateMaxExtras(); }
    }
 
+   // Show the required heroes list (from data.js) under the Enable Required Heroes toggle.
+   function renderRequiredHeroes() {
+     var reqEl = document.getElementById('requiredHeroesDisplay');
+     if (reqEl) { reqEl.value = REQUIRED_HEROES.join(', '); }
+   }
+
    // Initialize hero lists
    try { renderHeroLists(); } catch (error) { /* preserve initialization flow */ }
+   try { renderRequiredHeroes(); } catch (error) { /* preserve initialization flow */ }
 
    // Update bot settings display (S6: only the random-pick chance slider)
    function updateBotSettings() {

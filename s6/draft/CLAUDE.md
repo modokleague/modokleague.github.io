@@ -44,7 +44,8 @@ The S5 build (frozen, deployed `V5.0.0-alpha.11`) remains at `s5/draft/`.
 
 `legacy.js` must **not** re-declare these; it reads them as globals set by `data.js` (loads first).
 
-Current `REQUIRED_HEROES`: `['Wonder Man', 'Hercules', 'Tigra', 'Hulkling', 'Falcon', 'Winter Soldier']`. Banned heroes in `legacy.js`: `[]` (none).
+Current `REQUIRED_HEROES`: `['Wonder Man', 'Hercules', 'Daredevil', 'Echo', 'Jessica Jones', 'Luke Cage']`. Banned heroes in `legacy.js`: `[]` (none).
+The Required Heroes box in index.html is filled from `REQUIRED_HEROES` on load (`renderRequiredHeroes` in legacy.js), so edit the list only in data.js.
 
 ---
 
