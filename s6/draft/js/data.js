@@ -17,16 +17,17 @@
 var draftOrder = [
   'Spider-Ham', 'Cable', 'Cyclops', 'Storm', 'Magik', 'Psylocke', 'Maria Hill',
   'Bishop', 'Spider-Man (Peter Parker)', 'Doctor Strange', 'Spider-Man (Miles Morales)',
-  'Captain Marvel', 'Scarlet Witch', 'X-23', 'Deadpool',
+  'Captain Marvel', 'Scarlet Witch', 'X-23', 
+  'Jessica Jones', 'Luke Cage', 'Deadpool',
   'Black Panther (Shuri)', 'Magneto', 'Ironheart', 'Vision', 'Captain America',
   'Domino', 'Angel', 'Shadowcat', 'Nova',
   'Nick Fury', 'Iron Man', 'Silk', 'Spider-Woman', 'SP//dr',
   'Wonder Man', 'Phoenix', 'Wolverine', 'Venom', 'Rogue', "Black Panther (T'Challa)",
-  'Ant-Man', 'Hercules', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee',
+  'Ant-Man', 'Daredevil', 'Hercules', 'Star-Lord', 'Spectrum', 'Colossus', 'Jubilee',
   'Gambit', 'Iceman', 'Rocket',
   'Falcon', 'Winter Soldier', 'Tigra', 'Hulkling',
   'Adam Warlock', 'Gamora', 'Ghost-Spider', 'Drax', 'Black Widow', 'Nightcrawler', 'Wasp',
-  'Ms Marvel', 'Nebula', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
+  'Ms Marvel', 'Nebula', 'Echo', 'She-Hulk', 'Thor', 'War Machine', 'Quicksilver',
   'Hawkeye', 'Groot', 'Valkyrie', 'Hulk'
 ];
 
@@ -36,7 +37,7 @@ var draftOrder = [
 // Current: Wonder Man (T3), Hercules (T4), Tigra (T5), Hulkling (T5), Falcon (T5), Winter Soldier (T5)
 // Updated: replaced Black Panther (Shuri) and Silk with Wonder Man and Hercules (S5 new additions)
 
-var REQUIRED_HEROES = [];
+var REQUIRED_HEROES = ['Wonder Man', 'Hercules', 'Daredevil', 'Echo', 'Jessica Jones', 'Luke Cage'];
 
 // ===== TEAM NAME POOLS =====
 // Alphabetized pools of villain/character names for team naming
