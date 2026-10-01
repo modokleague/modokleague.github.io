@@ -10,15 +10,15 @@ title: "Season 06 - MODOK League - Attachment Issues"
 > <br>🧬 Those Prelates are evolving and always show up with bonus abilities!
 
 ```
-* PRE-PAINTED DRAFT: Heroes come with predetermined aspects!
-* 👤👤👤👤 FOUR HERO+ASPECT GROUPS
+• PRE-PAINTED DRAFT: Heroes come with predetermined aspects!
+• 👤👤👤👤 FOUR HERO+ASPECT GROUPS
 ```
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s6/draft/" target = "_blank">🤖 S6 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 
 > 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
 
-## 📅 **CRITICAL DATES** 
+## 📅 **CRITICAL DATES (NEEDS TO BE UPDATED)** 
 
 |  | 🗓️ | ⏰|
 |--------------|-------------|-------------|
@@ -30,7 +30,11 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
-## 🏆 CHOOSE YOUR PLAY MODE
+## 🏆 GUANTLET CHALLENGE
+
+Everybody competes in **Friendly Neighborhood Mode**, where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty. However, those looking for an additional difficulty enhancer...
+
+## 🏆 CHOOSE YOUR PLAY MODE (REVISE THIS)
 
 Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! Participate in the official draft as a **registered** kouple or join the fun as an **unregistered** kouple. More details on the participation mode [page](https://modokleague.github.io/participation.html).
 
