@@ -10,8 +10,8 @@ title: "Season 06 - MODOK League - Attachment Issues"
 > <br>🧬 Those Prelates are evolving and always show up with bonus abilities!
 
 ```
-PRE-PAINTED DRAFT: Heroes come with predetermined aspects!
-👤👤👤👤 FOUR HERO+ASPECT GROUPS
+* PRE-PAINTED DRAFT: Heroes come with predetermined aspects!
+* 👤👤👤👤 FOUR HERO+ASPECT GROUPS
 ```
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s6/draft/" target = "_blank">🤖 S6 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
