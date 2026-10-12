@@ -6,7 +6,7 @@ title: "Season 06 - MODOK League - Attachment Issues"
  
 <div align="center"><header><h2>🧬🔗 ATTACHMENT ISSUES 🔗🧬</h2></header></div>
 
-> 🧤🤯 Face **THANOS** and **M.O.D.O.K.** with the Prelates minion spice sprinkled on top 🧤🤯
+> 🧤🤯 Face **THANOS** and **M.O.D.O.K.** with some Prelates minion spice sprinkled on top 🧤🤯
 > <br>🧬 Those Prelates are evolving and always show up with bonus abilities!
 
 ```
@@ -16,27 +16,31 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s6/draft/" target = "_blank">🤖 S6 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 
-> 📊 Submit ALL your games, kouples! Whether you're taking a loss in Friendly Neighborhood Mode, practicing your Gauntlet Mode strategy, or going for those official Gauntlet Mode points - we want it all!
+> 📊 Submit ALL your games, kouples! Let us share in your glorious victories and your agonizing defeats.
 
-## 📅 **CRITICAL DATES (NEEDS TO BE UPDATED)** 
+## 📅 **IMPORTANT DATES** 
 
 |  | 🗓️ | ⏰|
 |--------------|-------------|-------------|
-| 🚫 **Registration Closes** | Wednesday, March 18, 2026 | 11:59 PM PDT |
-| 📊 **Draft Pool Revealed** | Thursday, March 19,2026 | Morning |
-| 🚦 **Draft Begins** | Sunday, March 22, 2026 | 10:00 AM PDT |
-| 🏆 **Mid-Season Awards** | Monday, May 04, 2026 | Morning |
-| 🏁 **Season Ends** | Sunday, June 07, 2026 | 11:59 PM PDT |
+| 🚫 **Registration Closes** | Wednesday, Oct 28, 2026 | 11:59 PM PDT |
+| 📊 **Draft Pool Revealed** | Thursday, Oct 29, 2026 | Morning |
+| 🚦 **Draft Begins** | Sunday, Nov 1, 2026 | 10:00 AM PDT |
+| 🏆 **Mid-Season Awards** | Monday, Dec 13, 2026 | Morning |
+| 🏁 **Season Ends** | Sunday, Jan 17, 2026 | 11:59 PM PDT |
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
-
-## 🏆 GUANTLET CHALLENGE
-
-Everybody competes in **Friendly Neighborhood Mode**, where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty. However, those looking for an additional difficulty enhancer...
 
 ## 🏆 CHOOSE YOUR PLAY MODE (REVISE THIS)
 
 Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! Participate in the official draft as a **registered** kouple or join the fun as an **unregistered** kouple. More details on the participation mode [page](https://modokleague.github.io/participation.html).
+
+## 🏆 FRIENDLY NEIGHBOURHOOD MODE + GUANTLET CHALLENGE
+
+> **Friendly Neighborhood Mode for everybody:** This season every game count toward your score, where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty.
+
+> Plus, kouples wanting to push themselves with a little extra pressure can participate in the **Gauntlet Challenge**. 
+
+
 
 ### 🎯 Scoring
 
