@@ -44,12 +44,16 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 **CONDITION 1:** Prelates deck
 > **Setup:** Shuffle the Prelate modular set and place it Prelate face up. This is the Prelate deck.
+
 > Throughout the game the top card will be your next Prelate.
+
 > Defeated Prelates go face up on the bottom of the Prelate deck instead of to the Victory Display.
-> Each Prelate gains the following text: **Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
+
+> Each Prelate gains the following text: "**Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
 
 **CONDITION 2:** Masters of Evil deck
 > **Setup:** Build the Masters of Evil deck using Radioactive Man (Masters of Evil), Whirlwind (Masters of Evil), Melter (Masters of Evil), Boomerang (Siniter Syndicate), and Crossfire (Crossfire’s Crew). Shuffle them together and place them facedown near the Prelates deck. This is the Masters of Evil deck.
+
 > When a Masters of Evil card would be discarded or removed from play, it is placed in the Master of Evil deck discard.
 
 **CONDITION 3:** Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
