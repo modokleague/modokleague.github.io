@@ -30,82 +30,35 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
-## 🏆 CHOOSE YOUR PLAY MODE (REVISE THIS)
-
-Choose between **Friendly Neighborhood Mode** for maximum flexibility where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty, or jump into the intense **Gauntlet Mode** where you get ONE official shot per difficulty level to compete for the highest score against other legendary kouples! Participate in the official draft as a **registered** kouple or join the fun as an **unregistered** kouple. More details on the participation mode [page](https://modokleague.github.io/participation.html).
 
 ## 🏆 FRIENDLY NEIGHBOURHOOD MODE + GUANTLET CHALLENGE
 
-> **Friendly Neighborhood Mode for everybody:** This season every game count toward your score, where you can repeat attempts as many times as your heart desires to win at your highest possible difficulty.
+> **Friendly Neighbourhood Mode for everybody:** For this season, Friendly Neighbourhood Mode is the default scoring for all kouples. Every game count toward your score, where you can try as many times as you like to win at each difficulty. Your score in each scenario is your highest difficulty win.
 
-> Plus, kouples wanting to push themselves with a little extra pressure can participate in the **Gauntlet Challenge**. 
-
-
-
-### 🎯 Scoring
-
-> 🥊 Each round your score = the highest-difficulty you defeat! <br>
-> 🏆 Your season score is just the combined score from each round.
+> **Gauntlet Challenge:** In addition to the above, kouples wanting a little extra pressure can participate in the Gauntlet Challenge. Once per difficulty level, per scenario, you can specify ahead of time that you are going to take on the Gauntlet Challenge with that game. Your score in each scenario is your highest difficulty Gauntlet Challenge win.
 
 
-## ⚔️ ROUND 501: MOLDY OLDIES
+## ⚔️ ROUND 601: INFINITE PRELATES
 
-### Master Mold + Sentinels + Future Past + Obligations and Attachments Encounter Set + No Magneto ally (Base difficulty = 4☆)
+### Thanos + Menagerie Medley + Band of Badoon + Prelates + Masters of Evil (modified) (Base difficulty = 2☆)
 
-🚫 WHAT'S MISSING: Regular encounter and nemesis sets, plus the **Magneto ally** isn't showing up at difficulties of 4☆+
+**CONDITION 1:** Prelates deck
+> **Setup:** Shuffle the Prelate modular set and place it Prelate face up. This is the Prelate deck.
+> Throughout the game the top card will be your next Prelate.
+> Defeated Prelates go face up on the bottom of the Prelate deck instead of to the Victory Display.
+> Each Prelate gains the following text: **Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
 
-_(Inspired by Con of Heroes 2023 Challenge “Mark VII My Lunch” and a challenge Kakita Jamie brought to Con of Heroes 2025)_
+**CONDITION 2:** Masters of Evil deck
+> **Setup:** Build the Masters of Evil deck using Radioactive Man (Masters of Evil), Whirlwind (Masters of Evil), Melter (Masters of Evil), Boomerang (Siniter Syndicate), and Crossfire (Crossfire’s Crew). Shuffle them together and place them facedown near the Prelates deck. This is the Masters of Evil deck.
+> When a Masters of Evil card would be discarded or removed from play, it is placed in the Master of Evil deck discard.
 
-**CONDITION 1:** Instead of using your regular hero-specfiic nemesis sets, assign the following minions and side scheme as the heroes nemesis minions and side scheme
-> 🧲 **Replacement nemesis minion 1:** Put **Magneto 2.6 (Sci-Fi)** out of play and assign it to one of the heroes as their nemesis minion
-> 🌋 **Replacement nemesis minion 2:** Put **Avalanche 9.0 (Sci-Fi)** out of play and assign it to the other hero as their nemesis minion
-> ☄️ **Replacement nemesis side scheme:** Put the **ICE-Teroid M side scheme (Sci-Fi)** out of play. It is considered the nemesis side scheme for both heroes
+**CONDITION 3:** Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
 
-**CONDITION 2:** The **When Revelealed** text on **The Sentinel Factory (1B)** main scheme is changed to the following:
-> **When Revealed:** Choose one player to search the encounter deck for a copy of the Sentinel Mark V minion and reveal it. The other player searches the encounter deck for a copy of the Nimrod mion and reveals it. Shuffle the encounter deck.
 
-### 🏅 Difficulty Levels
+### 🏅 Difficulty Levels (coming soon)
 
-| ⭐ **Level** | 🂡 **Obligations and Attachments Encounter Set¹** |  **Villain Levels** | 🧲 **Magneto Ally²** | 🛠️ **Further Modifications** |
-|:-------------:|:---------------------:|:-----------------------------------:|:---------------------------------------:|:----------:|
-| ★★★★★★ | ✅ | III/IV³ | 🚫 | 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
-| ☆☆☆☆☆ | ✅ | II/III | 🚫 | 🚧 Nimrod's Portal + Stun Beam + Ignore Future Past Victory⁴ |
-| ☆☆☆☆ | ✅ | II/III | 🚫 | |
-| ☆☆☆ | ✅ | II/III | 🧲 | |
-| ☆☆ | ✅ | II/III | 🧲 | 🎁 Role upgrades + Metro PD⁵ |
-| ☆ | ✅ | I/II | 🧲 | 🎁 Role upgrades + Metro PD⁵ |
 
-> 1. 🂡 The **Obligations and Attachments Encounter Set** is detailed in the next section.
-> 2. 🧲 The **Magneto Ally** (Mutant Genesis 172B) is not added to the game at difficulties of 4☆+.
-> 3. 🤖 Start on Master Mold III. When Master Mold III is defeated, advance to Master Mold IV (see image below). Master Mold IV is identical to Master Mold III except that it has 18 health per player, 4* Scheme and 5 Attack. As a reminder of the increased stats, slide a copy of the Inifinity Gauntlet or the Desparate side of Hope’s Captor attachment behind the villain, with the stat bonuses showing.
-> 4. 🚧 Difficulty enhancements:
->    * **Condition:** Ignore the Victory keyword on all cards in the FUTURE PAST modular set, meaning they do not go to the victory display when defeated.
->    * **Setup:** After resolving the When Revealed effect on Main Scheme 1B, find a copy of the STUN BEAM attachment and attach it to the NIMROD ally.
->    * **Setup:** Find and reveal a copy of the NIMROD'S PORTAL side scheme.
-> 5. 🎁 Hero benefits:
->    * **Setup:** Each player may start with any one role upgrade in play from the Mutant Genesis campaign. These role upgrades may be from the same or different roles.
->    * **Setup:** The players start with METRO P.D. support in play. This card is the back side of the FRIGHTENED POLICE side scheme (Mutant Genesis campaign card 1/5)
-
-### 🂡 Obligations and Attachments Encounter Set 
-
-Instead of regular Standard or Expert encounter sets, the following cards are used to make up the encounter set:
-
-1. ANALYSIS PARALYSIS (side scheme, Whispers of Paranoia)
-2. CITIZEN V'S SWORD (attachemnt, Thunderbolts) - Any text referring to Citizen V instead refers to "the villain"
-3. HIGH-TECH ARMAMENT (attachement, Winter Soldier Nemesis)
-4. HUNTED (obligation, Distopian Nightmare)
-5. LIFE DRAIN (attachment, Sauron)
-6. OLD GRUDGE (attachment, Whispers of Paranoia)
-7. PAPARAZZI (obligation, Mojo)
-8. PAST MACHINATIONS (treachery, Kang)
-9. TABULA RASA (attachment, Deadpool Nemesis)
-10. SUPERHUMAN STRENGTH (attachment, She-Hulk Leader) - Any text referring to She-Hulk instead refers to "the villain"
-
-### Modified and alt-art cards
-<img src="Master_Mold_II.png" alt="Master Mold II alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_III.png" alt="Master Mold III alt" style="width:300px;height:430px;">&nbsp;<img src="Master_Mold_IV.png" alt="Master Mold IV modified" style="width:300px;height:430px;">
-<p><img src="The_Sentinel_Factory.png" alt="The Sentinel Factory modified" style="width:430px;height:300px;"></p>
-
-## ⚔️ ROUND 502: SOUPED-UP SINISTER
+## ⚔️ ROUND 602: PRELATE BREAKOUT
 
 ### Mister Sinister +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
 
