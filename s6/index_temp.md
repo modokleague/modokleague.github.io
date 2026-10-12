@@ -1,5 +1,5 @@
 ---
-title: "Season 06 - MODOK League - Attachment Issues"
+title: "Season 06 - MODOK League - Prelate Pandemonium"
 ---
 
 <div align="center"><header><h1>🏆🏆🏆🏆🏆🏆 MODOK LEAGUE SEASON 06 🏆🏆🏆🏆🏆🏆</h1></header></div>  
@@ -49,6 +49,8 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 > Defeated Prelates go face up on the bottom of the Prelate deck instead of to the Victory Display.
 
+> Each Prelate loses its text related to engaging with the first player.
+
 > Each Prelate gains the following text: "**Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
 
 **CONDITION 2:** Masters of Evil deck
@@ -58,13 +60,12 @@ title: "Season 06 - MODOK League - Attachment Issues"
 
 **CONDITION 3:** Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
 
-
 ### 🏅 Difficulty Levels (coming soon)
 
 
 ## ⚔️ ROUND 602: PRELATE BREAKOUT
 
-### Mister Sinister +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
+### M.O.D.O.K. +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
 
 🚫 WHAT'S MISSING: Regular encounter and nemesis sets + the Hope Summers ally as it appears in the Hope Summer modular set
 
