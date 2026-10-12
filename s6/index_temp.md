@@ -65,7 +65,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 ## ⚔️ ROUND 602: PRELATE BREAKOUT
 
-### M.O.D.O.K. +  Flight/Telepathy/Super Strength + Armadillo + Sauron + Hope Summers + Treacherous Encounter Set (Base difficulty = 4☆)
+### M.O.D.O.K. + Dangerous Recruits + Annoying Attachments\* (Base difficulty = 4☆)
 
 🚫 WHAT'S MISSING: Regular encounter and nemesis sets + the Hope Summers ally as it appears in the Hope Summer modular set
 
