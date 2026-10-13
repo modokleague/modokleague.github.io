@@ -86,7 +86,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 **CONDITION 1:** Holding Cells
 > **Setup:** Remove the wild resource HOLDING CELL (M.O.D.O.K. #5) from the game. There will be only 3 holding cells in the game
 
-> The Forced Interrupt on each HOLDING CELL is replaced with "**Forced Interrupt:** When the last lock counter is removed from here, remove this card from play and put the top Prelate from the Prelate deck in play engaged with the first player. Attach assigned attachments to his Prelate."
+> The Forced Interrupt on each HOLDING CELL is replaced with "**Forced Interrupt:** When the last lock counter is removed from here, remove this card from play and put the top Prelate from the Prelate deck in play engaged with the first player. Attach assigned attachments to this Prelate."
 
 > Add the following text to M.O.D.O.K.  "**Forced Interrupt:**" At the end of Stage 1 of the Villain Phase remove a lock counter from the HOLDING CELL with the fewest lock counters (players choose if tied) and flip over an Annoying Attachment and assign it to the top Prelate in the Prelate deck. Players do not need to execute this Forced Interrupt if they have removed one or more lock counters by an effect other than this forced interrupt since the previous Villain Phase Stage 1." For example, if you defeated an ADAPTOID during the previous Villain Phase or the most recent Player Phase, you do not need to execute this Forced Interrupt. It is recommended to use a Yes/No style of counter that you flip to Yes when the players (not this Forced Interrupt) remove a counter from a HOLDING CELL, and then this counter flips to No at the end of Villain Phase Stage 1.
 
