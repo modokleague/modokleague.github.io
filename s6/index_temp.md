@@ -4,7 +4,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 <div align="center"><header><h1>🏆🏆🏆🏆🏆🏆 MODOK LEAGUE SEASON 06 🏆🏆🏆🏆🏆🏆</h1></header></div>  
  
-<div align="center"><header><h2>🧬🔗 ATTACHMENT ISSUES 🔗🧬</h2></header></div>
+<div align="center"><header><h2>🧬🔗 PRELATE PANDEMONIUM🔗🧬</h2></header></div>
 
 > 🧤🤯 Face **THANOS** and **M.O.D.O.K.** with some Prelates minion spice sprinkled on top 🧤🤯
 > <br>🧬 Those Prelates are evolving and always show up with bonus abilities!
@@ -31,12 +31,21 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
 
-## 🏆 FRIENDLY NEIGHBOURHOOD MODE + GUANTLET CHALLENGE
+## 🏆 PLAY MODE 
 
-> **Friendly Neighbourhood Mode for everybody:** For this season, Friendly Neighbourhood Mode is the default scoring for all kouples. Every game count toward your score, where you can try as many times as you like to win at each difficulty. Your score in each scenario is your highest difficulty win.
+> **Friendly Neighbourhood Mode for everybody:** For this season, Friendly Neighbourhood Mode is the default scoring for all kouples. Every game counts toward your score, where you can try as many times as you like to win at each difficulty. Your score in each scenario is your highest difficulty win.
 
-> **Gauntlet Challenge:** In addition to the above, kouples wanting a little extra pressure can participate in the Gauntlet Challenge. Once per difficulty level, per scenario, you can specify ahead of time that you are going to take on the Gauntlet Challenge with that game. Your score in each scenario is your highest difficulty Gauntlet Challenge win.
+### ⚠️🧤 CHALLENGE MODE 1: GAUNTLET CHALLENGE 🧤⚠️
 
+📢 Win or go home once per difficulty
+
+> Once per difficulty level, per scenario, you can specify ahead of time that you are going to take on the Gauntlet Challenge with that game. Your score in each scenario is your highest difficulty Gauntlet Challenge win. Uses the regular score submission form.
+
+### 💚🥊 CHALLENGE MODE 2: SHE-HULK'S PUNCH CLUB 🥊💚
+
+📢 Compete for bragging rights with your off-picks
+
+> After you earn your top score in a round, take your unused picks from that round and try to top the Punch Club leaderboard following Friendly Neighborhood Mode scoring rules. Uses the regular score submission form.
 
 ## ⚔️ ROUND 601: INFINITE PRELATES
 
@@ -118,12 +127,13 @@ The following cards make up a distinct deck called the **Annoying Attachments** 
 17. ENERGY BARRIER (Zero Tolerance)
 18. NEUROLOGICAL IMPLANTS (Zola)
 
+
 ## 📚 **DECK-BUILDING**
 
 🩷 You can swap out any drafted aspect for 'Pool<br>
 📜 Standard deck-building rules apply<br>
 ✨ Regular uniqueness rules during play<br>
-🔧 Modify decks and practice as much as you want between official attempts and rounds, including swapping aspects between heroes
+
 
 ## 📝 THE DRAFT
 
@@ -132,24 +142,13 @@ The following cards make up a distinct deck called the **Annoying Attachments** 
 | 🎮 **Feature** | 📋 **Details** |
 |----------------|----------------|
 | 👥 **Division Size** | Maximum 12 kouples per division |
-| 📚 **Draft Groups** | 2 hero-pair groups + 2 aspect-pair groups |
+| 📚 **Draft Groups** | 4 groups of hero+aspect selections |
 | 📦 **Pool Size** | 3 more than needed per draft group |
-| 🦸‍♂️ **Hero Pool** | Hero pairs, partnering stronger heroes with weaker hereos. <br>All heroes through Wonder Man & Hercules (no bans) |
-| 🌈 **Aspect Pool** | Aspect pairs, with two-of-a-kind less likely |
+| 🦸‍♂️ **Hero Pool** | All heroes through Jessica Jones & Luke Cage |
 | 🚫 **Pick Restrictions** | 1 pick per draft group |
 | ⏱️ **Pick Timer** | 24 hours per selection |
 | 🤖 **Auto-Pick** | Draft-bot chooses if you miss your window |
 | 🐍 **Draft Format** | 4 rounds, snake order (A→B→C then C→B→A) |
 
-**Further draft notes:**
-> * **Spider-Woman:** If Spider-Woman is added to the pool, she will have a pre-selected aspect that you must use, and then her other aspect will be whichever of your drafted aspects that you assign to her.<br>
-> * **Adam Warlock:** If you draft Adam Warlock, the aspect that you assign to him must be one of the four aspects that you use to build his deck.
-
 Use the Draft-o-Matic at the top of the page to generate example draft pools or even simulate your own draft.
-
-## 💚🥊 SHE-HULK'S PUNCH CLUB 🥊💚
-
-📢 Compete for bragging rights with your off-picks
-
-> After you earn your top score in a round, take your unused hero pair and aspect pair from that round and try to top the Punch Club leaderboard following Friendly Neighborhood Mode scoring rules. Uses the regular score submission form.
 
