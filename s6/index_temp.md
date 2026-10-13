@@ -6,7 +6,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
  
 <div align="center"><header><h2>🧬🔗 PRELATE PANDEMONIUM🔗🧬</h2></header></div>
 
-> 🧤🤯 Face **THANOS** and **M.O.D.O.K.** with some Prelates minion spice sprinkled on top 🧤🤯
+> 🧤🤯 Face **THANOS** and **M.O.D.O.K.** with some Prelates spice sprinkled on top 🤯🧤
 > <br>🧬 Those Prelates are evolving and always show up with bonus abilities!
 
 ```
@@ -35,13 +35,13 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 > **Friendly Neighbourhood Mode for everybody:** For this season, Friendly Neighbourhood Mode is the default scoring for all kouples. Every game counts toward your score, where you can try as many times as you like to win at each difficulty. Your score in each scenario is your highest difficulty win.
 
-### ⚠️🧤 CHALLENGE MODE 1: GAUNTLET CHALLENGE 🧤⚠️
+### ⚠️🧤 Challenge Mode 1: Gauntlet Challenge 🧤⚠️
 
 📢 Win or go home once per difficulty
 
 > Once per difficulty level, per scenario, you can specify ahead of time that you are going to take on the Gauntlet Challenge with that game. Your score in each scenario is your highest difficulty Gauntlet Challenge win. Uses the regular score submission form.
 
-### 💚🥊 CHALLENGE MODE 2: SHE-HULK'S PUNCH CLUB 🥊💚
+### 💚🥊 Challenge Mode 2: She-Hulk's Punch Club 🥊💚
 
 📢 Compete for bragging rights with your off-picks
 
