@@ -16,7 +16,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 <div align="center"><header><h3><a href="https://modokleague.github.io/s6/draft/" target = "_blank">🤖 S6 Draft-o-matic Draft Pool Generator and Simulator (link) 🤖</a></h3></header></div>
 
-> 📊 Submit ALL your games, kouples! Let us share in your glorious victories and your agonizing defeats.
+> 📊 (link coming soon) Submit ALL your games, kouples! Let us share in your glorious victories and your agonizing defeats.
 
 ## 📅 **IMPORTANT DATES** 
 
