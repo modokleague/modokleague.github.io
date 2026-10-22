@@ -68,12 +68,12 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 | ⭐ **Level** | 🂡 **Encounter Set / Difficulty** | 🧟 **Setup: Start with a Prelate in play** | 🔼 **Setup: Additional acceleration tokens** | ⚠️ **ARMOROED ASSAULT** | 🧤 **Infinity Gauntlet deck runs out** | 😈 **Thanos III** |
 |-------------|---------------------|----------------------------------|---------------------------------------|------------------------------|------------------------------|------------------------------|
-| ★★★★★★ | Standard III + Expert I<br>Thanos II/III<br>Heroic 1| ✅ | 🔼🔼 | Setup: Starts in play | Find Armored Assault + new Prelate² | Advance to Main Scheme Stage 2³ |
-| ☆☆☆☆☆ | Standard III + Expert I | ✅ | 🔼🔼 | Setup: Starts in play | Find Armored Assault + new Prelate² | Advance to Main Scheme Stage 2³ |
-| ☆☆☆☆ | Standard III + Expert I | ✅ | 🔼 | Setup: Starts in play | New Prelate¹ |
-| ☆☆☆ | Standard III + Expert I | ✅ |  |  | New Prelate¹ |
-| ☆☆ | Standard III + Expert I |  |  |  | New Prelate¹ |
-| ☆ | Standard III |  |  |  | New Prelate¹ |
+| ★★★★★★ | Standard III + Expert I,<br>Thanos II/III,<br>Heroic 1| ✅ | 🔼🔼 | Setup: Starts in play | Find Armored Assault + new Prelate² | Advance to Main Scheme Stage 2³ |
+| ☆☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | ✅ | 🔼🔼 | Setup: Starts in play | Find Armored Assault + new Prelate² | Advance to Main Scheme Stage 2³ |
+| ☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | ✅ | 🔼 | Setup: Starts in play | New Prelate¹ |
+| ☆☆☆ | Standard III + Expert I,<br>Thanos II/III | ✅ |  |  | New Prelate¹ |
+| ☆☆ | Standard III + Expert I,<br>Thanos II/III |  |  |  | New Prelate¹ |
+| ☆ | Standard III,<br>Thanos I/II |  |  |  | New Prelate¹ |
 
 > 1. 🂡 The **Modified Mastes of Evil** deck is detailed in the next section.
 
