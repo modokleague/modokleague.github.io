@@ -63,7 +63,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 > Each Prelate gains the following text: "**Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
 
 
-### 🏅 Difficulty Levels (coming soon)
+### 🏅 Difficulty Levels
 
 | ⭐ **Level** | 📚 **Encounter Set / Difficulty** | 🎁 **Added During Setup**  | ⚠️ **ARMOROED ASSAULT³** | 🧤 **Infinity Gauntlet deck runs out** | 😈 **Thanos III** |
 |-------------|--------|--------|---------|------|------|
