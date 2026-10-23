@@ -79,7 +79,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 > 3. The ARMORED ASSAULT side scheme (Armadillo modular set) starts in play during setup. It is considered part of the main encounter deck for all game effects (discard, etc).
 > 4. Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
 > 5. Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, find ARMORED ASSAULT and put it into play. Then reveal the top card of the Prelate deck and give it to the active player."
-> 6. When the players defeat Thanos II and advance to Thanos 3, advance the Main Scheme to Stage 2. If already on Main Scheme Stage 2, Main Scheme 2A’s When Revealed effect triggers a second time.
+> 6. When the players defeat Thanos II and advance to Thanos III, advance the Main Scheme to Stage 2. If already on Main Scheme Stage 2, Main Scheme 2A’s When Revealed effect triggers a second time.
 
 
 
