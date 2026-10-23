@@ -66,13 +66,13 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 ### 🏅 Difficulty Levels (coming soon)
 
 | ⭐ **Level** | 📚 **Encounter Set / Difficulty** | 🎁 **Added During Setup**  | ⚠️ **ARMOROED ASSAULT³** | 🧤 **Infinity Gauntlet deck runs out** | 😈 **Thanos III** |
-|-------------|---------------------|----------------------------------|---------------------------------------|------------------------------|------------------------------|------------------------------|
+|-------------|--------|--------|---------|------|---|------|
 | ★★★★★★ | Standard III + Expert I,<br>Thanos II/III,<br>Heroic 1| Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
 | ☆☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
-| ☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼² | Setup: Starts in play | New Prelate⁴ |
-| ☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹  |  | New Prelate⁴ |
-| ☆☆ | Standard III + Expert I,<br>Thanos II/III |  |  |  | New Prelate⁴ |
-| ☆ | Standard III,<br>Thanos I/II |  |  |  | New Prelate⁴ |
+| ☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼² | Setup: Starts in play | New Prelate⁴ | |
+| ☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹  |  | New Prelate⁴ | |
+| ☆☆ | Standard III + Expert I,<br>Thanos II/III |  |  |  | New Prelate⁴ | |
+| ☆ | Standard III,<br>Thanos I/II |  |  |  | New Prelate⁴ | |
 
 > 1. Choose a player to start with a Prelate minion in play with a Masters of Evil card assigned to it as additional text, As per the modified Prelate Forced Response.
 > 2. The main scheme begins with 1 or 2 additional acceleration tokens added to it, according to the number of icons shown.
