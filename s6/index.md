@@ -49,7 +49,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 ## ⚔️ ROUND 601: INFINITE PRELATES
 
-### Thanos + Menagerie Medley + Band of Badoon + Prelates + Modified Masters of Evil 🂡 (Base difficulty = 2☆)
+### Thanos + 📚 Prelates (separate deck) + 📚 Modified Masters of Evil (separate deck) + Menagerie Medley + Band of Badoon (Base difficulty = 2☆)
 
 **CONDITION 1:** Prelates deck
 > **Setup:** Shuffle the Prelate modular set and place it Prelate face up. This is the Prelates deck.
@@ -62,13 +62,28 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 > Each Prelate gains the following text: "**Forced Response:** When this Prelate minion enters play, draw the top card of the Masters of Evil deck and assign it this Prelate minion before any other enters play effects trigger. The Masters of Evil minion loses its card type and is no longer a card that can be targeted by game effects. All non-trait text from the Master of Evil minion's text box is considered to be additional text in the Prelate minion's text box." Abilities that trigger when the Masters of Evil minion would have activated, such as Melter's ability that triggers when he attacks, trigger for the Prelate during their same type of activation.
 
-**CONDITION 2:** Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
 
 ### 🏅 Difficulty Levels (coming soon)
 
-> 1. 🂡 The **Modified Mastes of Evil** deck is detailed in the next section.
+| ⭐ **Level** | 📚 **Encounter Set / Difficulty** | 🎁 **Added During Setup**  | ⚠️ **ARMOROED ASSAULT³** | 🧤 **Infinity Gauntlet deck runs out** | 😈 **Thanos III** |
+|-------------|--------|--------|---------|------|------|
+| ★★★★★★ | Standard III + Expert I,<br>Thanos II/III,<br>Heroic 1| Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
+| ☆☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
+| ☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼² | Setup: Starts in play | New Prelate⁴ | |
+| ☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹  |  | New Prelate⁴ | |
+| ☆☆ | Standard III + Expert I,<br>Thanos II/III |  |  | New Prelate⁴ | |
+| ☆ | Standard III,<br>Thanos I/II |  |  | New Prelate⁴ | |
 
-### 🂡 Modified Masters of Evil
+> 1. Choose a player to start with a Prelate minion in play with a Masters of Evil card assigned to it as additional text, As per the modified Prelate Forced Response.
+> 2. The main scheme begins with 1 or 2 additional acceleration tokens added to it, according to the number of icons shown.
+> 3. The ARMORED ASSAULT side scheme (Armadillo modular set) starts in play during setup. It is considered part of the main encounter deck for all game effects (discard, etc).
+> 4. Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, reveal the top card of the Prelate deck and give it to the active player." This will most commonly occur during one of Thanos' activations, which could result in the Prelate minion activating during the Enemies Activate portion of the Villain Phase. Fun!
+> 5. Thanos' **Forced Response** is replaced with "**Forced Response:** After the infinity stone deck runs out, find ARMORED ASSAULT and put it into play. Then reveal the top card of the Prelate deck and give it to the active player."
+> 6. When the players defeat Thanos II and advance to Thanos III, advance the Main Scheme to Stage 2. If already on Main Scheme Stage 2, Main Scheme 2A’s When Revealed effect triggers a second time.
+
+
+
+### 📚 Modified Masters of Evil
 
 The following cards make up a distinct deck called the **Masters of Evil** deck. When a card from this deck would be discarded or removed from play, it is placed in the Master of Evil deck discard. Other Masters of Evil minions, such as Shuri's nemesis, are considered distinct from this deck if they ever come into play.
 
