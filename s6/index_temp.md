@@ -66,7 +66,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 ### 🏅 Difficulty Levels (coming soon)
 
 | ⭐ **Level** | 📚 **Encounter Set / Difficulty** | 🎁 **Added During Setup**  | ⚠️ **ARMOROED ASSAULT³** | 🧤 **Infinity Gauntlet deck runs out** | 😈 **Thanos III** |
-|-------------|--------|--------|---------|------|---|------|
+|-------------|--------|--------|---------|------|------|
 | ★★★★★★ | Standard III + Expert I,<br>Thanos II/III,<br>Heroic 1| Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
 | ☆☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
 | ☆☆☆☆ | Standard III + Expert I,<br>Thanos II/III | Prelate¹<br>🔼² | Setup: Starts in play | New Prelate⁴ | |
