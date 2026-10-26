@@ -115,7 +115,16 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 
 
 
-### 🏅 Difficulty Levels (coming soon)
+### 🏅 Difficulty Levels 
+
+| ⭐ **Level** | 📚 **Encounter Set / Difficulty** | 🎁 **Added During Setup**  | ⚠️ **???** | 🧤 **???** | 😈 **???** |
+|-------------|--------|--------|---------|------|------|
+| ★★★★★★ | Standard III + Expert I,<br>M.O.D.O.K. (B),<br>Heroic 1| Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
+| ☆☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | Prelate¹<br>🔼🔼² | Setup: Starts in play | Find ARMORED ASSAULT + new Prelate⁵ | Advance to Main Scheme Stage 2⁶ |
+| ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | Prelate¹<br>🔼² | Setup: Starts in play | New Prelate⁴ | |
+| ☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | Prelate¹  |  | New Prelate⁴ | |
+| ☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) |  |  | New Prelate⁴ | |
+| ☆ | Standard III,<br>M.O.D.O.K. (A) |  |  | New Prelate⁴ | |
 
 > 1. 🂡 The **Annoying Attachments** deck is detailed in the next section.
 
