@@ -118,7 +118,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 ### 🏅 Difficulty Levels 
 
 | ⭐ **Level** | 📚 **Encounter Set / Difficulty** | ❤️ **Adaptoid Augmentation**  | ⚠️ **Enters Play Effect** | 😈 **Prelates** |
-|-------------|--------|--------|---------|------|------|
+|-------------|--------|--------|---------|------|
 | ★★★★★★ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP  + Attachments | Adaptoids and Prelates activate after entering play¹ | Prelates gain the ADAPTOID trait |
 | ☆☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments | Adaptoids and Prelates activate after entering play¹ |  |
 | ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments |  |  |
