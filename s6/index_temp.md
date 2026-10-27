@@ -119,14 +119,15 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 
 | ⭐ **Level** | 📚 **Encounter Set / Difficulty** | ❤️ **Adaptoid Augmentation**  | ⚠️ **Enters Play Effect** | 😈 **Prelates** |
 |-------------|--------|--------|---------|------|
-| ★★★★★★ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP  + Attachments | Adaptoids and Prelates activate after entering play¹ | Prelates gain the ADAPTOID trait |
-| ☆☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments | Adaptoids and Prelates activate after entering play¹ |  |
-| ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments |  |  |
+| ★★★★★★ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ | Adaptoids and Prelates activate after entering play² | Prelates gain the ADAPTOID trait |
+| ☆☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ | Adaptoids and Prelates activate after entering play² |  |
+| ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ |  |  |
 | ☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP |  |  |
 | ☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 5 HP (regular) |  |  |
 | ☆ | Standard III,<br>M.O.D.O.K. (A) | 5 HP | 5 HP (regular) |  |
 
-> 1. This does not include Adaptoids that enter play during setup
+> 1. When an ADAPTOID enters play (including during setup), flip over X+1 Annoying Attachments and attach them to that ADAPTOID, ignoring all keyword restrictions. X = the number of Holding Cells that have been removed from the game. 
+> 2. This does not include Adaptoids that enter play during setup
 
 ### 📚 Annoying Attachments
 
