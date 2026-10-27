@@ -124,7 +124,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 | ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ |  |  |
 | ☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP |  |  |
 | ☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 5 HP (regular) |  |  |
-| ☆ | Standard III,<br>M.O.D.O.K. (A) | 5 HP | 5 HP (regular) |  |
+| ☆ | Standard III,<br>M.O.D.O.K. (A) | 5 HP (regular) |  |  |
 
 > 1. When an ADAPTOID enters play (including during setup), flip over X+1 Annoying Attachments and attach them to that ADAPTOID, ignoring all keyword restrictions. X = the number of Holding Cells that have been removed from the game. 
 > 2. This does not include Adaptoids that enter play during setup
