@@ -101,9 +101,11 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 **CONDITION 1:** Holding Cells
 > **Setup:** Remove the wild resource HOLDING CELL (M.O.D.O.K. #5) from the game. There will be only 3 holding cells in the game
 
+> The first ADAPTOID Environments put into play during setup is always PSIONIC UPGRADE. Any further ADAPTOID Environments put into play are random, according to the regular game rules.
+
 > The Forced Interrupt on each HOLDING CELL is replaced with "**Forced Interrupt:** When the last lock counter is removed from here, remove this card from play and put the top Prelate from the Prelate deck in play engaged with the first player. Attach assigned attachments to this Prelate."
 
-> Add the following text to M.O.D.O.K.  "**Forced Interrupt:**" At the end of Stage 1 of the Villain Phase remove a lock counter from the HOLDING CELL with the fewest lock counters (players choose if tied) and flip over an Annoying Attachment and assign it to the top Prelate in the Prelate deck. Players do not need to execute this Forced Interrupt if they have removed one or more lock counters by an effect other than this forced interrupt since the previous Villain Phase Stage 1." For example, if you defeated an ADAPTOID during the previous Villain Phase or the most recent Player Phase, you do not need to execute this Forced Interrupt. It is recommended to use a Yes/No style of counter that you flip to Yes when the players (not this Forced Interrupt) remove a counter from a HOLDING CELL, and then this counter flips to No at the end of Villain Phase Stage 1.
+> Add the following text to M.O.D.O.K.  "**Forced Interrupt:**" At the end of Stage 1 of the Villain Phase remove a lock counter from the HOLDING CELL with the fewest lock counters (players choose if tied) and flip over an Annoying Attachment and assign it to the top Prelate in the Prelate deck. Players do not need to execute this Forced Interrupt if they have removed one or more lock counters since the previous Villain Phase Stage 1, by an effect other than this forced interrupt." For example, if you defeated an ADAPTOID during the previous Villain Phase or the most recent Player Phase, you do not need to execute this Forced Interrupt. It is recommended to use a Yes/No style of counter that you flip to Yes when the players (not this Forced Interrupt) remove a counter from a HOLDING CELL, and then this counter flips to No at the end of Villain Phase Stage 1.
 
 
 **CONDITION 2:** Prelates deck
@@ -113,15 +115,23 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 
 > Each Prelate RETAINS its text related to engaging with the first player.
 
+### 🏅 Difficulty Levels 
 
+| ⭐ **Level** | 📚 **Encounter Set / Difficulty** | ❤️ **Adaptoid Augmentation**  | ⚠️ **Enters Play Effect** | 😈 **Prelates** |
+|-------------|--------|--------|---------|------|
+| ★★★★★★ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ | Adaptoids and Prelates activate after entering play² | Prelates gain the ADAPTOID trait |
+| ☆☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ | Adaptoids and Prelates activate after entering play² |  |
+| ☆☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP + Attachments¹ |  |  |
+| ☆☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 10 HP |  |  |
+| ☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 5 HP (regular) |  |  |
+| ☆ | Standard III,<br>M.O.D.O.K. (A) | 5 HP | 5 HP (regular) |  |
 
-### 🏅 Difficulty Levels (coming soon)
+> 1. When an ADAPTOID enters play (including during setup), flip over X+1 Annoying Attachments and attach them to that ADAPTOID, ignoring all keyword restrictions. X = the number of Holding Cells that have been removed from the game. 
+> 2. This does not include Adaptoids that enter play during setup
 
-> 1. 🂡 The **Annoying Attachments** deck is detailed in the next section.
+### 📚 Annoying Attachments
 
-### 🂡 Annoying Attachments
-
-The following cards make up a distinct deck called the **Annoying Attachments** deck. When a card from this deck would be discarded or removed from play, it is placed in the Annoying Attachments discard. Other minion attachments, including a possible second copy of GENE THERAPY in the game are considered distinct from this deck if they ever come into play. Ignore any keyword restrictions on these cards that would restrict you from being able to attach them to a Prelate minion or an Adaptoid minion.
+The following cards make up a distinct deck called the **Annoying Attachments** deck. When a card from this deck would be discarded or removed from play, it is placed in the Annoying Attachments discard. Other minion attachments, including a possible second copy of GENE THERAPY in the game are considered distinct from this deck if they ever come into play. Ignore any keyword restrictions on these cards that would restrict you from being able to attach them to a Prelate minion or an Adaptoid minion. It is recommended to use a distinct card sleeve for cards in this deck.
 
 1. GENE THERAPY (Cyclops Nemesis)
 2. MAD JACK'S PLATFORM (Deadly Duo)
