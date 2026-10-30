@@ -24,9 +24,9 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 |--------------|-------------|-------------|
 | 🚫 **Registration Closes** | Wednesday, Oct 28, 2026 | 11:59 PM PDT |
 | 📊 **Draft Pool Revealed** | Thursday, Oct 29, 2026 | Morning |
-| 🚦 **Draft Begins** | Sunday, Nov 1, 2026 | 10:00 AM PDT |
+| 🚦 **Draft Begins** | Sunday, Nov 1, 2026 | 10:00 AM PCT |
 | 🏆 **Mid-Season Awards** | Monday, Dec 13, 2026 | Morning |
-| 🏁 **Season Ends** | Sunday, Jan 17, 2027 | 11:59 PM PDT |
+| 🏁 **Season Ends** | Sunday, Jan 17, 2027 | 11:59 PM PCT |
 
 > Join our [Discord server](https://discord.gg/6b4zBfchhA)
 
