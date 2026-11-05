@@ -111,9 +111,14 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 **CONDITION 2:** Prelates deck
 > **Setup:** Shuffle the Prelate modular set and place it Prelate face up. This is the Prelates deck.
 
-> Throughout the game the top card will be your next Prelate. Whenever a new Prelate becomes the top card of this deck (including the start of the game), flip over X+1 Annoying Attachments and assign them to this Prelate, where X = the number of Holding Cells that have been removed from the game. When this Prelate enters play, all its assigned attachments will be attached to it.
+> Throughout the game the top card will be your next Prelate. Whenever a new Prelate becomes the top card of this deck (including the start of the game), flip over X+1 Annoying Attachments and assign them to this Prelate, where X = the number of Holding Cells that have been opened. When this Prelate enters play, all its assigned attachments will be attached to it.
 
 > Each Prelate RETAINS its text related to engaging with the first player.
+
+**CONDITION 3:** Additional win condition
+> **Setup:** In addition to win condition of there needing to be no holding cells in play to win by defeating M.O.D.O.K., there also needs to be no Prelate minions in play
+
+> Throughout the game the top card will be your next Prelate. Whenever a new Prelate becomes the top card of this deck (including the start of the game), flip over X+1 Annoying Attachments and assign them to 
 
 ### 🏅 Difficulty Levels 
 
@@ -126,7 +131,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 | ☆☆ | Standard III + Expert I,<br>M.O.D.O.K. (B) | 5 HP (regular) |  |  |
 | ☆ | Standard III,<br>M.O.D.O.K. (A) | 5 HP (regular) |  |  |
 
-> 1. When an ADAPTOID enters play (including during setup), flip over X+1 Annoying Attachments and attach them to that ADAPTOID, ignoring all keyword restrictions. X = the number of Holding Cells that have been removed from the game. 
+> 1. When an ADAPTOID enters play (including during setup), flip over X+1 Annoying Attachments and attach them to that ADAPTOID, ignoring all keyword restrictions. X = the number of Holding Cells that have been opened. 
 > 2. This does not include Adaptoids that enter play during setup
 
 ### 📚 Annoying Attachments
