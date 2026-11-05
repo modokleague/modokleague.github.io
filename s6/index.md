@@ -49,7 +49,7 @@ title: "Season 06 - MODOK League - Prelate Pandemonium"
 
 ## ⚔️ ROUND 601: INFINITE PRELATES
 
-### Thanos + 📚 Prelates (separate deck) + 📚 Modified Masters of Evil (separate deck) + Menagerie Medley + Band of Badoon (Base difficulty = 2☆)
+### Thanos + Infinity Gauntlet + 📚 Prelates (separate deck) + 📚 Modified Masters of Evil (separate deck) + Menagerie Medley + Band of Badoon (Base difficulty = 2☆)
 
 **CONDITION 1:** Prelates deck
 > **Setup:** Shuffle the Prelate modular set and place it Prelate face up. This is the Prelates deck.
