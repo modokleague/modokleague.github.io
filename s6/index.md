@@ -116,7 +116,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 > Each Prelate RETAINS its text related to engaging with the first player.
 
 **CONDITION 3:** Additional win condition
-> **Setup:** In addition to win condition of there needing to be no holding cells in play to win by defeating M.O.D.O.K., there also needs to be no Prelate minions in play
+> **Setup:** In addition to the win condition of there needing to be no holding cells in play to win by defeating M.O.D.O.K., there also needs to be no Prelate minions in play
 
 > Throughout the game the top card will be your next Prelate. Whenever a new Prelate becomes the top card of this deck (including the start of the game), flip over X+1 Annoying Attachments and assign them to 
 
