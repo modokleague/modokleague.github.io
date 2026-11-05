@@ -99,7 +99,7 @@ The following cards make up a distinct deck called the **Masters of Evil** deck.
 ### M.O.D.O.K. + Dangerous Recruits + Annoying Attachments 🂡 (Base difficulty = 2☆)
 
 **CONDITION 1:** Holding Cells
-> **Setup:** Remove the wild resource HOLDING CELL (M.O.D.O.K. #5) from the game. There will be only 3 holding cells in the game
+> **Setup:** Remove the wild resource HOLDING CELL (M.O.D.O.K. #5) from the game. There will be only 3 holding cells in the game. All three remaining holding cells start in play instead of as part of a holding cell deck.
 
 > The first ADAPTOID Environments put into play during setup is always PSIONIC UPGRADE. Any further ADAPTOID Environments put into play are random, according to the regular game rules.
 
